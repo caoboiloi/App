@@ -7,9 +7,11 @@
 
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tlLogin"
+        app:tabIndicatorColor="@android:color/holo_orange_light"
         android:layout_width="match_parent"
-        android:background = "@android:color/primary_text_dark"
-        style="@style/AppTheme"
+        app:tabTextColor="@android:color/black"
+        app:tabSelectedTextColor="@android:color/holo_orange_dark"
+        android:background = "#E8E3E3"
         app:tabIndicatorHeight="3dp"
         android:layout_height="wrap_content">
 

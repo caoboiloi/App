@@ -32,9 +32,27 @@ public class Login_Signin extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login__signin);
 
+        getSupportActionBar().hide();
+
         tabLayout = findViewById(R.id.tlLogin);
         viewPager = findViewById(R.id.pager);
 
+        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
+            @Override
+            public void onTabSelected(TabLayout.Tab tab) {
+                
+            }
+
+            @Override
+            public void onTabUnselected(TabLayout.Tab tab) {
+
+            }
+
+            @Override
+            public void onTabReselected(TabLayout.Tab tab) {
+
+            }
+        });
 
         loginFragment = new LoginFragment();
         signupFragment = new SignupFragment();
