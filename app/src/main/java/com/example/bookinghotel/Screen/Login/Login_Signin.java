@@ -1,4 +1,4 @@
-package com.example.bookinghotel;
+package com.example.bookinghotel.Screen.Login;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -7,16 +7,14 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
-import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.transition.Fade;
-import android.util.Log;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-import android.widget.Toast;
+import android.widget.CheckBox;
 
+import com.example.bookinghotel.Fragment.LoginFragment;
+import com.example.bookinghotel.Fragment.SignupFragment;
+import com.example.bookinghotel.R;
 import com.google.android.material.tabs.TabLayout;
 
 import java.util.ArrayList;
@@ -27,32 +25,19 @@ public class Login_Signin extends AppCompatActivity {
     private ViewPager viewPager;
     LoginFragment loginFragment;
     SignupFragment signupFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login__signin);
 
         getSupportActionBar().hide();
-
+        Intent intent = getIntent();
+        overridePendingTransition(R.anim.fadeout, R.anim.fadein);
         tabLayout = findViewById(R.id.tlLogin);
         viewPager = findViewById(R.id.pager);
 
-        tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
-            @Override
-            public void onTabSelected(TabLayout.Tab tab) {
-                
-            }
 
-            @Override
-            public void onTabUnselected(TabLayout.Tab tab) {
-
-            }
-
-            @Override
-            public void onTabReselected(TabLayout.Tab tab) {
-
-            }
-        });
 
         loginFragment = new LoginFragment();
         signupFragment = new SignupFragment();

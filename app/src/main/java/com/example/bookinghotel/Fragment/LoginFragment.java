@@ -1,7 +1,9 @@
-package com.example.bookinghotel;
+package com.example.bookinghotel.Fragment;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,26 +11,22 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.text.Editable;
-import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
+import com.example.bookinghotel.Screen.Home.Home;
+import com.example.bookinghotel.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-
-import java.util.concurrent.Executor;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -41,6 +39,8 @@ public class LoginFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     Button btn;
+    private SharedPreferences pref;
+    CheckBox cbRemember;
     TextInputLayout emailLabel, passLabel;
     TextInputEditText etEmail,etPass;
     private FirebaseAuth mAuth;
@@ -89,7 +89,20 @@ public class LoginFragment extends Fragment {
         passLabel = rootView.findViewById(R.id.passLabel);
         etEmail = rootView.findViewById(R.id.etEmail);
         etPass = rootView.findViewById(R.id.etPass);
+        cbRemember = rootView.findViewById(R.id.cbRemember);
+        pref = this.getActivity().getPreferences(Context.MODE_PRIVATE);
+
         return rootView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        String emailRemember = pref.getString("email", "");
+        String passRemember = pref.getString("pass", "");
+        etEmail.setText(emailRemember);
+        etPass.setText(passRemember);
+
     }
 
     @Override
@@ -136,7 +149,7 @@ public class LoginFragment extends Fragment {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String email = etEmail.getText().toString();
+                final String email = etEmail.getText().toString();
                 final String pass = etPass.getText().toString();
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 if(email.equals("") ){
@@ -164,6 +177,18 @@ public class LoginFragment extends Fragment {
                                         passLabel.setHelperText("Sai tài khoản hoặc mật khẩu");
                                         progress.dismiss();
                                     } else {
+                                        //Luu mat khau
+                                        if(cbRemember.isChecked()){
+                                            SharedPreferences.Editor editor = pref.edit();
+                                            editor.putString("email", email);
+                                            editor.putString("pass", pass);
+                                            editor.apply();
+                                        }else{
+                                            SharedPreferences.Editor editor = pref.edit();
+                                            editor.putString("email", "");
+                                            editor.putString("pass", "");
+                                            editor.apply();
+                                        }
                                         Intent intent = new Intent(getActivity(), Home.class);
                                         startActivity(intent);
                                         progress.dismiss();
