@@ -61,7 +61,7 @@
                 android:checked="true"
                 android:id="@+id/cbRemember"
                 android:layout_marginTop="-20dip"
-                android:buttonTint="@color/blue"
+                android:buttonTint="#03A9F4"
                 android:text="Nhớ mật khẩu" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -73,6 +73,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/ripple_button"
             android:backgroundTint="@android:color/holo_red_light"
+            app:backgroundTint="#FFFF4444"
             android:text="Đăng Nhập" />
 
 

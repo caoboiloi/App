@@ -25,6 +25,7 @@ public class Home extends AppCompatActivity {
     Button btnLogoout, btnUser, btnShowUser;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,6 +48,7 @@ public class Home extends AppCompatActivity {
         btnUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 User user = new User("lucpk", "lucpk12@gmail.com");
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
                 FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
@@ -56,6 +58,7 @@ public class Home extends AppCompatActivity {
                 } else {
                     // No user is signed in
                 }
+
             }
         });
         //read data
@@ -75,8 +78,7 @@ public class Home extends AppCompatActivity {
 
                     @Override
                     public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        Log.e("test", "Failed to read value.", error.toException());
+                        Log.e("test", "Failed to read value.");
                     }
                 });
             }

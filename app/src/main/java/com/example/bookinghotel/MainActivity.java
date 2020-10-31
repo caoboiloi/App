@@ -31,12 +31,18 @@ public class MainActivity extends AppCompatActivity {
             public void run() {
                 try {
                     super.run();
-                    if (mAuth.getCurrentUser() == null){
-                        Intent i = new Intent(MainActivity.this,
+                    sleep(1000);
+                    FirebaseUser currentUser = mAuth.getCurrentUser();
+                    Intent i;
+                    if (currentUser != null){
+                        i = new Intent(MainActivity.this,
+                                Home.class);
+                    }else{
+                        i = new Intent(MainActivity.this,
                                 Login_Signin.class);
-                        startActivity(i);
-                        finish();
                     }
+                    startActivity(i);
+                    finish();
                 } catch (Exception e) {
 
                 }
@@ -45,17 +51,6 @@ public class MainActivity extends AppCompatActivity {
         welcomeThread.start();
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        Intent i = new Intent(MainActivity.this,
-                Home.class);
-        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-        String email = user.getEmail();
-        startActivity(i);
-        finish();
-    }
 
 
 }

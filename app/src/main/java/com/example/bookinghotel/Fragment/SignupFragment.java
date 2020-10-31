@@ -1,16 +1,27 @@
 package com.example.bookinghotel.Fragment;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.example.bookinghotel.R;
+
+import java.util.Calendar;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -27,7 +38,9 @@ public class SignupFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-
+    private FragmentActivity myContext;
+    EditText etDate;
+    Button btntest;
     public SignupFragment() {
         // Required empty public constructor
     }
@@ -64,13 +77,48 @@ public class SignupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_signup, container, false);
-        btn = (TextView) rootView.findViewById(R.id.tvText);
+//        btn = (TextView) rootView.findViewById(R.id.tvText);
+        etDate = rootView.findViewById(R.id.etDate);
+        btntest = rootView.findViewById(R.id.test);
         return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        btn.setText("1231213123");
+
+        btntest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DialogFragment newFragment = new DatePickerFragment();
+                newFragment.show(myContext.getFragmentManager(), "datePicker");
+            }
+        });
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        myContext=(FragmentActivity) context;
+        super.onAttach(context);
+    }
+
+    public static class DatePickerFragment extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @Override
+        public Dialog onCreateDialog(Bundle savedInstanceState) {
+            // Use the current date as the default date in the picker
+            final Calendar c = Calendar.getInstance();
+            int year = c.get(Calendar.YEAR);
+            int month = c.get(Calendar.MONTH);
+            int day = c.get(Calendar.DAY_OF_MONTH);
+
+            // Create a new instance of DatePickerDialog and return it
+            return new DatePickerDialog(getActivity(), this, year, month, day);
+        }
+
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            // Do something with the date chosen by the user
+        }
     }
 }
