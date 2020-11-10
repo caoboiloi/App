@@ -3,7 +3,9 @@ package com.example.bookinghotel.Fragment;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -11,15 +13,29 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bookinghotel.R;
+import com.example.bookinghotel.Screen.Home.Home;
+import com.example.bookinghotel.entity.User;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.textfield.TextInputLayout;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.Calendar;
 
@@ -39,8 +55,12 @@ public class SignupFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private FragmentActivity myContext;
-    EditText etDate;
-    Button btntest;
+    EditText etConfirm, etName, etPhone, etEmail, etPass;
+    TextView tvError;
+    Button btnSignup;
+    RadioButton rbMale, rbFemale;
+
+
     public SignupFragment() {
         // Required empty public constructor
     }
@@ -77,9 +97,16 @@ public class SignupFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView =  inflater.inflate(R.layout.fragment_signup, container, false);
-//        btn = (TextView) rootView.findViewById(R.id.tvText);
-        etDate = rootView.findViewById(R.id.etDate);
-        btntest = rootView.findViewById(R.id.test);
+//        etDate = rootView.findViewById(R.id.etDate);
+        etName = rootView.findViewById(R.id.etName);
+        etPass = rootView.findViewById(R.id.etPass);
+        etPhone = rootView.findViewById(R.id.etPhone);
+        etEmail = rootView.findViewById(R.id.etEmail);
+        btnSignup = rootView.findViewById(R.id.btnSignup);
+        rbMale  = rootView.findViewById(R.id.rbMale);
+        rbFemale  = rootView.findViewById(R.id.rbFemale);
+        etConfirm = rootView.findViewById(R.id.etConfirm);
+        tvError = rootView.findViewById(R.id.tverror);
         return rootView;
     }
 
@@ -87,11 +114,75 @@ public class SignupFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        btntest.setOnClickListener(new View.OnClickListener() {
+        btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogFragment newFragment = new DatePickerFragment();
-                newFragment.show(myContext.getFragmentManager(), "datePicker");
+                final String email = etEmail.getText().toString();
+                final String name = etName.getText().toString();
+                final String pass = etPass.getText().toString();
+                final String confirmPass = etConfirm.getText().toString();
+                final String phone = etPhone.getText().toString();
+                final FirebaseAuth mAuth;
+                String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
+                if(name.equals("")){
+                    Toast.makeText(myContext, "Tên không được để trống", Toast.LENGTH_SHORT).show();
+                    etName.requestFocus();
+                }
+                else if(phone.length() < 10){
+                    Toast.makeText(myContext, "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
+                    etPhone.requestFocus();
+                }
+                else if(email.equals("") || !email.trim().matches(emailPattern)){
+                    Toast.makeText(myContext, "Email không hợp lệ", Toast.LENGTH_SHORT).show();
+                    etEmail.requestFocus();
+                }else if (pass.length() < 8){
+                    Toast.makeText(myContext, "Mật khẩu phải trên 7 kí tự", Toast.LENGTH_SHORT).show();
+                    etPass.requestFocus();
+                }
+                else if(!pass.equals(confirmPass)){
+                    Toast.makeText(myContext, "Xác nhận mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
+                    etConfirm.requestFocus();
+                }
+                else if(!rbFemale.isChecked() && !rbMale.isChecked()){
+                    Toast.makeText(myContext, "Bạn phải chọn giới tính", Toast.LENGTH_SHORT).show();
+                }
+                else{
+                    final ProgressDialog progress = new ProgressDialog(getActivity());
+                    progress.setMessage("Đang đăng kí...");
+                    progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+                    progress.show();
+                    mAuth = FirebaseAuth.getInstance();
+                    mAuth.createUserWithEmailAndPassword(email, pass)
+                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
+                                @Override
+                                public void onComplete(@NonNull Task<AuthResult> task) {
+                                    if (task.isSuccessful()) {
+                                        // Sign in success, update UI with the signed-in user's information
+                                        FirebaseUser user = mAuth.getCurrentUser();
+                                        progress.dismiss();
+
+                                        User u = new User(name, email);
+                                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+                                        FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
+                                        if (userID != null) {
+                                            String id = user.getUid();
+                                            mDatabase.child(id).setValue(u);
+                                            Intent intent = new Intent(getActivity(), Home.class);
+                                            startActivity(intent);
+                                            getActivity().finish();
+                                        } else {
+                                            // No user is signed in
+                                        }
+
+                                    } else {
+                                        progress.dismiss();
+                                        tvError.setText("Email đã được đăng kí");
+                                    }
+
+                                }
+                            });
+
+                }
             }
         });
     }
@@ -102,23 +193,5 @@ public class SignupFragment extends Fragment {
         super.onAttach(context);
     }
 
-    public static class DatePickerFragment extends DialogFragment
-            implements DatePickerDialog.OnDateSetListener {
 
-        @Override
-        public Dialog onCreateDialog(Bundle savedInstanceState) {
-            // Use the current date as the default date in the picker
-            final Calendar c = Calendar.getInstance();
-            int year = c.get(Calendar.YEAR);
-            int month = c.get(Calendar.MONTH);
-            int day = c.get(Calendar.DAY_OF_MONTH);
-
-            // Create a new instance of DatePickerDialog and return it
-            return new DatePickerDialog(getActivity(), this, year, month, day);
-        }
-
-        public void onDateSet(DatePicker view, int year, int month, int day) {
-            // Do something with the date chosen by the user
-        }
-    }
 }

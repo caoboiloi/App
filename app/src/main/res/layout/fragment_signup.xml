@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="15dip"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".Fragment.SignupFragment">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"
-            >
+            android:paddingBottom="100dp"
+            android:paddingTop="20dip"
+            android:orientation="vertical">
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textFieldName"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -35,6 +38,7 @@
 
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textFieldPhone"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -76,14 +80,15 @@
 
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/textFieldPass"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Mật khẩu"
+                app:endIconMode="password_toggle"
                 app:boxStrokeColor="@android:color/holo_blue_light"
-                app:endIconMode="clear_text"
                 app:errorEnabled="true"
                 app:hintTextColor="@android:color/holo_blue_light"
                 app:placeholderTextColor="@color/colorPurple">
@@ -96,61 +101,63 @@
 
 
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/textFieldDate"
+                android:id="@+id/textFieldConfirm"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Ngày sinh"
+                android:hint="Xác nhận mật khẩu"
+                app:endIconMode="password_toggle"
                 app:boxStrokeColor="@android:color/holo_blue_light"
-                app:endIconMode="clear_text"
                 app:errorEnabled="true"
                 app:hintTextColor="@android:color/holo_blue_light"
                 app:placeholderTextColor="@color/colorPurple">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etDate"
+                    android:id="@+id/etConfirm"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
 
                     />
 
-            <Button
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="dsa"
-                android:id="@+id/test"
-                />
             </com.google.android.material.textfield.TextInputLayout>
+
             <RadioGroup
                 android:id="@+id/rgGender"
-                android:checkedButton="@+id/radio_button_1"
-                android:layout_width="match_parent"
                 style="Widget.MaterialComponents.CompoundButton.RadioButton"
-                android:orientation="horizontal"
-                android:layout_height="wrap_content">
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:checkedButton="@+id/radio_button_1"
+                android:orientation="horizontal">
+
                 <RadioButton
                     android:id="@+id/rbMale"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-
                     android:layout_marginRight="10dip"
-                    android:text="Nam"/>
+                    android:text="Nam" />
+
                 <RadioButton
                     android:id="@+id/rbFemale"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="Nữ"/>
+                    android:text="Nữ" />
             </RadioGroup>
-            <Button
-                app:backgroundTint="#FFFF4444"
-                android:layout_marginTop="10dip"
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Đăng Ký"
+                android:id="@+id/tverror"
+                android:textColor="@android:color/holo_red_light" />
+            <Button
+                android:id="@+id/btnSignup"
                 style="@style/RedButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
                 android:background="@drawable/ripple_button"
-                />
+                android:text="Đăng Ký"
+                app:backgroundTint="#FFFF4444" />
         </LinearLayout>
     </ScrollView>
 

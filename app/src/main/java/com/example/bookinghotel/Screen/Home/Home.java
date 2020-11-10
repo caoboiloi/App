@@ -22,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class Home extends AppCompatActivity {
-    Button btnLogoout, btnUser, btnShowUser;
+    Button btnLogoout, btnShowUser;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -33,7 +33,7 @@ public class Home extends AppCompatActivity {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_home);
         btnLogoout = findViewById(R.id.btnLogout);
-        btnUser = findViewById(R.id.bntUser);
+
         btnShowUser = findViewById(R.id.showUser);
         btnLogoout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -45,22 +45,7 @@ public class Home extends AppCompatActivity {
                 finish();
             }
         });
-        btnUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-                User user = new User("lucpk", "lucpk12@gmail.com");
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
-                FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
-                if (userID != null) {
-                    String id = userID.getUid();
-                    mDatabase.child(id).setValue(user);
-                } else {
-                    // No user is signed in
-                }
-
-            }
-        });
         //read data
         btnShowUser.setOnClickListener(new View.OnClickListener() {
             @Override
