@@ -161,7 +161,7 @@ public class SignupFragment extends Fragment {
                                         FirebaseUser user = mAuth.getCurrentUser();
                                         progress.dismiss();
 
-                                        User u = new User(name, email);
+                                        User u = new User(name, email,"");
                                         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
                                         FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
                                         if (userID != null) {

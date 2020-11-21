@@ -4,18 +4,31 @@ public class User {
     private String name;
     private String email;
     private String id;
+    private String love;
+
     public User() {
 
     }
-    public User(String name, String email, String id) {
+
+    public User(String name, String email, String id, String love) {
         this.name = name;
         this.email = email;
         this.id = id;
+        this.love = love;
     }
 
-    public User(String name, String email) {
+    public User(String name, String email, String love) {
         this.name = name;
         this.email = email;
+        this.love = love;
+    }
+
+    public String getLove() {
+        return love;
+    }
+
+    public void setLove(String love) {
+        this.love = love;
     }
 
     public String getName() {
@@ -40,5 +53,15 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "name='" + name + '\'' +
+                ", email='" + email + '\'' +
+                ", id='" + id + '\'' +
+                ", love='" + love + '\'' +
+                '}';
     }
 }

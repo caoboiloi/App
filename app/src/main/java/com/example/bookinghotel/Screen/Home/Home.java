@@ -57,8 +57,8 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Home extends BaseActivity {
-    Button btnLogoout, btnShowUser, btnLocation, btnHotel;
-    TextView tvInfo;
+    Button btnShowUser;
+
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -74,24 +74,21 @@ public class Home extends BaseActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_home);
-        btnLogoout = findViewById(R.id.btnLogout);
-        btnLocation = findViewById(R.id.location);
-        btnShowUser = findViewById(R.id.showUser);
-        tvInfo = findViewById(R.id.tvInfo);
-        btnHotel = findViewById(R.id.btnHotel);
-        //dang xuat
-        btnLogoout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent i = new Intent(Home.this,
-                        Login_Signin.class);
-                startActivity(i);
-                finish();
-            }
-        });
 
-        //read data user
+        btnShowUser = findViewById(R.id.btnUser);
+        //dang xuat
+//        btnLogoout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FirebaseAuth.getInstance().signOut();
+//                Intent i = new Intent(Home.this,
+//                        Login_Signin.class);
+//                startActivity(i);
+//                finish();
+//            }
+//        });
+
+//        //read data user
         btnShowUser.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,7 +100,7 @@ public class Home extends BaseActivity {
 
                         User user = dataSnapshot.getValue(User.class);
 
-                        Log.e("test", "User name: " + user.getName() + ", email " + user.getEmail());
+                        Log.e("test", user.toString());
                     }
 
                     @Override
@@ -114,75 +111,59 @@ public class Home extends BaseActivity {
 
             }
         });
+//
 
-        btnLocation.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-                    if (!hasPermission(LOCATION)) {
-                        requestLocation(view);
-                    }
-                    if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-                        requestLocation(view);
-
-                    } else {
-                        try {
-                            getLocation();
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-
-        });
-//        show all hotel
-        btnHotel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-//                String HoltelId = "2";
+//        read location
+//        btnLocation.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+//                    if (!hasPermission(LOCATION)) {
+//                        requestLocation(view);
+//                    }
+//                    if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+//                        requestLocation(view);
+//
+//                    } else {
+//                        try {
+//                            getLocation();
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                }
+//
+//        });
+//   show all hotel
+//        btnHotel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
 //                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
-//                Log.e("test", mDatabase.child("3").toString());
-//                mDatabase.child(HoltelId).addValueEventListener(new ValueEventListener() {
+//
+//                mDatabase.addValueEventListener(new ValueEventListener() {
 //                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+//                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+//                            Hotel hotel = postSnapshot.getValue(Hotel.class);
+//                            hotels.add(hotel);
+//                        }
+//                        for (Hotel i:hotels)
+//                        {
+//                            Log.e("Name",i.toString());
 //
-//                        Hotel hotel = dataSnapshot.getValue(Hotel.class);
-//
-//                        Log.e("test",hotel.toString() );
-//                        tvInfo.setText("Average ratring : "+hotel.getAveRating());
+//                        }
 //                    }
 //
 //                    @Override
-//                    public void onCancelled(DatabaseError error) {
-//                        Log.e("test", "Failed to read value.");
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
 //                    }
 //                });
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
-
-                mDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
-                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                            Hotel hotel = postSnapshot.getValue(Hotel.class);
-                            hotels.add(hotel);
-                        }
-                        for (Hotel i:hotels)
-                        {
-                            Log.e("Name",i.toString());
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-            }
-        });
+//
+//            }
+//        });
 
     }
 
@@ -212,41 +193,8 @@ public class Home extends BaseActivity {
         if (!hasPermission(LOCATION)) {
             return;
         }
-
-        createLocationRequest();
-
-        LocationSettingsRequest settingsRequest = new
-                LocationSettingsRequest.Builder()
-                .addLocationRequest(request).build();
-
-        SettingsClient settingsClient = LocationServices.getSettingsClient(this);
-        Task<LocationSettingsResponse> responseTask =
-                settingsClient.checkLocationSettings(settingsRequest);
-
-        responseTask.addOnSuccessListener(response -> {
-            tvInfo.setText("Location Settings đã OK");
-            tvInfo.setTextColor(ContextCompat.getColor(this,
-                    R.color.blue));
-        }).addOnFailureListener(e -> {
-            tvInfo.setText("Location Settings chưa OK");
-            tvInfo.setTextColor(ContextCompat.getColor(this,
-                    R.color.colorPrimary));
-            if (e instanceof ResolvableApiException) {
-                ResolvableApiException ex = (ResolvableApiException) e;
-                try {
-                    ex.startResolutionForResult(this, 100);
-                } catch (IntentSender.SendIntentException sendIntentException) {
-                    sendIntentException.printStackTrace();
-                }
-            }
-        });
     }
-    private void createLocationRequest() {
-         request = new LocationRequest();
-        request.setInterval(15000);
-        request.setFastestInterval(10000);
-        request.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-    }
+
     private void getLocation() throws IOException {
         if (ActivityCompat.checkSelfPermission(
                 this,Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
