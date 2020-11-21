@@ -24,5 +24,20 @@
         android:text="showUser"
         android:id="@+id/showUser"
         />
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Location"
+        android:id="@+id/location"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tvInfo"
+        />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="get Hotel"
+        android:id="@+id/btnHotel"/>
 </LinearLayout>
