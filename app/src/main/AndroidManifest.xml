@@ -13,8 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Screen.Home.Home"></activity>
-        <activity android:name=".Screen.Login.Login_Signin">
+        <activity android:name=".Screen.Home.Home" android:theme="@style/AppTheme1"></activity>
+        <activity android:name=".Screen.Login.Login_Signin" >
         </activity>
         <activity
             android:name=".MainActivity"

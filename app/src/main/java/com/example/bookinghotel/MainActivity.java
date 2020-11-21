@@ -21,10 +21,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         mAuth = FirebaseAuth.getInstance();
         setContentView(R.layout.activity_main);
-//        FirebaseDatabase database = FirebaseDatabase.getInstance();
-//        DatabaseReference myRef = database.getReference("message");
-//
-//        myRef.setValue("Hello, World!");
+
         Thread welcomeThread = new Thread() {
 //
 //            @Override

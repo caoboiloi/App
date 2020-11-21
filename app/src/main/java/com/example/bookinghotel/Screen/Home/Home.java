@@ -68,6 +68,7 @@ public class Home extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide();
         String latitude, longitude;
         client = LocationServices.getFusedLocationProviderClient(this);
 

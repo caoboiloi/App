@@ -2,14 +2,23 @@
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight">
         <!-- Customize your theme here -->
-        <item name="colorPrimary">#000000</item>
-        <item name="colorPrimaryDark">#121212</item>
+<!--        <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
+
     </style>
     <style name="RedButton" >
         <item name="colorPrimary">#E91E63</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">#2196F3</item>
     </style>
+    <style name="AppTheme1" parent="Theme.MaterialComponents.DayNight">
+        <!-- Customize your theme here -->
+        <!--        <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>-->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
 
+    </style>
 </resources>
