@@ -57,7 +57,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Home extends BaseActivity {
-    Button btnShowUser;
+    Button btnShowUser, btnLogoout;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -74,19 +74,19 @@ public class Home extends BaseActivity {
         mAuth = FirebaseAuth.getInstance();
         mDatabase = FirebaseDatabase.getInstance().getReference();
         setContentView(R.layout.activity_home);
-
+        btnLogoout = findViewById(R.id.btnLogout);
         btnShowUser = findViewById(R.id.btnUser);
         //dang xuat
-//        btnLogoout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FirebaseAuth.getInstance().signOut();
-//                Intent i = new Intent(Home.this,
-//                        Login_Signin.class);
-//                startActivity(i);
-//                finish();
-//            }
-//        });
+        btnLogoout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(Home.this,
+                        Login_Signin.class);
+                startActivity(i);
+                finish();
+            }
+        });
 
 //        //read data user
         btnShowUser.setOnClickListener(new View.OnClickListener() {
