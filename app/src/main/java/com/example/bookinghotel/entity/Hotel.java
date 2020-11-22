@@ -9,23 +9,23 @@ public class Hotel {
     double longitude;
     String name;
     Room room;
-    ArrayList<Integer> rating;
+    ArrayList<ArrayList<String>> rating;
     public Hotel() {
     }
 
 
-    public Hotel(double lat, double longitude, String name, Room room, ArrayList<Integer> rating) {
+    public Hotel(double lat, double longitude, String name, Room room, ArrayList<ArrayList<String>> rating) {
         this.lat = lat;
         this.longitude = longitude;
         this.name = name;
         this.room = room;
         this.rating = rating;
     }
-    public ArrayList<Integer> getRating() {
+    public ArrayList<ArrayList<String>> getRating() {
         return rating;
     }
 
-    public void setRating(ArrayList<Integer> rating) {
+    public void setRating(ArrayList<ArrayList<String>> rating) {
         this.rating = rating;
     }
 
@@ -60,21 +60,21 @@ public class Hotel {
     public void setRoom(Room room) {
         this.room = room;
     }
-    public float getAveRating(){
-        Integer total = 0 ;
-        Integer numberRating=0;
-        for(int i=1;i<=this.rating.size()-1;i++){
-            numberRating += this.rating.get(i);
-            total += i * this.rating.get(i);
-        }
-        return  (float) total / (numberRating);
-    }
+//    public float getAveRating(){
+//        Integer total = 0 ;
+//        Integer numberRating=0;
+//        for(int i=1;i<=this.rating.size()-1;i++){
+//            numberRating += this.rating.get(i);
+//            total += i * this.rating.get(i);
+//        }
+//        return  (float) total / (numberRating);
+//    }
     @Override
     public String toString() {
         return "Hotel{" +
                 "lat=" + lat +
                 ", longitude=" + longitude +
-                ", rating=" + getAveRating() +
+                ", rating=" + rating +
                 ", name='" + name + '\'' +
                 ", romm='" + room.toString() + '\'' +
                 '}';

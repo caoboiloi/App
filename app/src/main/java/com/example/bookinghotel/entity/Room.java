@@ -1,5 +1,7 @@
 package com.example.bookinghotel.entity;
 
+import java.util.ArrayList;
+
 public class Room {
     private Type large;
     private Type medium;
@@ -36,7 +38,7 @@ public class Room {
     public String toString() {
         return "Room{" +
                 "large:" + large.toString() +
-                ", medium:" + large.toString() +
+                ", medium:" + medium.toString() +
                 '}';
     }
 }
@@ -44,15 +46,26 @@ class Type {
     private Integer available;
     private Integer total;
     private Integer price;
-    public Type(Integer available, Integer total,Integer price) {
+    private ArrayList<String> image;
+    public Type(Integer available, Integer total,Integer price,ArrayList<String> image) {
         this.available = available;
         this.total = total;
         this.price = price;
+        this.image = image;
     }
 
     public Type() {
 
     }
+
+    public ArrayList<String> getImage() {
+        return image;
+    }
+
+    public void setImage(ArrayList<String> image) {
+        this.image = image;
+    }
+
     public Integer getPrice() {
         return price;
     }
@@ -78,6 +91,6 @@ class Type {
 
     @Override
     public String toString() {
-        return "available=" + available +", total=" + total+", price=" + this.price  ;
+        return "available=" + available +", total=" + total+", price=" + this.price+" imge:"+image  ;
     }
 }
