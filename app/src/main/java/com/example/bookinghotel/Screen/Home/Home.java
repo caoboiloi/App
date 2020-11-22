@@ -57,7 +57,7 @@ import java.util.Locale;
 import java.util.Map;
 
 public class Home extends BaseActivity {
-    Button btnShowUser, btnLogoout;
+    Button btnShowUser, btnLogoout,btnHotel;
 
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
@@ -77,6 +77,7 @@ public class Home extends BaseActivity {
         setContentView(R.layout.activity_home);
         btnLogoout = findViewById(R.id.btnLogout);
         btnShowUser = findViewById(R.id.btnUser);
+        btnHotel = findViewById(R.id.btnHotel);
         //dang xuat
         btnLogoout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,35 +137,35 @@ public class Home extends BaseActivity {
 //
 //        });
 //   show all hotel
-//        btnHotel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
-//
-//                mDatabase.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
-//                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-//                            Hotel hotel = postSnapshot.getValue(Hotel.class);
-//                            hotels.add(hotel);
-//                        }
-//                        for (Hotel i:hotels)
-//                        {
-//                            Log.e("Name",i.toString());
-//
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
-//
-//            }
-//        });
+        btnHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
+
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                            Hotel hotel = postSnapshot.getValue(Hotel.class);
+                            hotels.add(hotel);
+                        }
+                        for (Hotel i:hotels)
+                        {
+                            Log.e("Name",i.toString());
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+
+            }
+        });
 
     }
 

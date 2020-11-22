@@ -77,7 +77,6 @@ public class Hotel {
                 ", rating=" + getAveRating() +
                 ", name='" + name + '\'' +
                 ", romm='" + room.toString() + '\'' +
-                ", avage rating='" + room.toString() + '\'' +
                 '}';
     }
     public boolean isEmpty(String string) {

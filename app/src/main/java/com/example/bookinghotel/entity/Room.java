@@ -4,14 +4,17 @@ public class Room {
     private Type large;
     private Type medium;
 
+
     public Room(Type large, Type medium) {
         this.large = large;
         this.medium = medium;
+
     }
     public Room() {
-        this.large = large;
-        this.medium = medium;
+
     }
+
+
 
     public Type getLarge() {
         return large;
@@ -32,24 +35,31 @@ public class Room {
     @Override
     public String toString() {
         return "Room{" +
-                "large=" + large.toString() +
-                ", medium=" + large.toString() +
+                "large:" + large.toString() +
+                ", medium:" + large.toString() +
                 '}';
     }
 }
 class Type {
     private Integer available;
     private Integer total;
-
-    public Type(Integer available, Integer total) {
+    private Integer price;
+    public Type(Integer available, Integer total,Integer price) {
         this.available = available;
         this.total = total;
+        this.price = price;
     }
 
     public Type() {
 
     }
+    public Integer getPrice() {
+        return price;
+    }
 
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
     public Integer getAvailable() {
         return available;
     }
@@ -68,6 +78,6 @@ class Type {
 
     @Override
     public String toString() {
-        return "available=" + available +", total=" + total ;
+        return "available=" + available +", total=" + total+", price=" + this.price  ;
     }
 }
