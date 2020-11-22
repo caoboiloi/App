@@ -142,7 +142,7 @@ public class Home extends BaseActivity {
             public void onClick(View view) {
 
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
-
+//                mDatabase.child("1").child("name").setValue("Hotel bigger123");
                 mDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -153,9 +153,11 @@ public class Home extends BaseActivity {
                         }
                         for (Hotel i:hotels)
                         {
-                            Log.e("Name",i.toString());
-
+                            Log.e("test", i.toString());
                         }
+
+
+
                     }
 
                     @Override

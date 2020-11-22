@@ -93,4 +93,5 @@ class Type {
     public String toString() {
         return "available=" + available +", total=" + total+", price=" + this.price+" imge:"+image  ;
     }
+
 }
