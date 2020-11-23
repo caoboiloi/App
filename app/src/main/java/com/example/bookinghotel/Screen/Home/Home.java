@@ -7,6 +7,7 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.app.AlertDialog;
+import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -78,6 +79,12 @@ public class Home extends BaseActivity {
         btnLogoout = findViewById(R.id.btnLogout);
         btnShowUser = findViewById(R.id.btnUser);
         btnHotel = findViewById(R.id.btnHotel);
+        Intent intent = getIntent();
+        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+            String query = intent.getStringExtra(SearchManager.QUERY);
+            Log.e("test", query);
+        }
+
         //dang xuat
         btnLogoout.setOnClickListener(new View.OnClickListener() {
             @Override

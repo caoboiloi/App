@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Hotel {
     Integer id;
+    String image;
     double lat;
     double longitude;
     String name;
@@ -15,13 +16,22 @@ public class Hotel {
     }
 
 
-    public Hotel(Integer id,double lat, double longitude, String name, Room room, ArrayList<Rating> rating) {
+    public Hotel(Integer id,double lat, double longitude, String name, Room room, ArrayList<Rating> rating,String image) {
         this.id =id;
         this.lat = lat;
         this.longitude = longitude;
         this.name = name;
         this.room = room;
         this.rating = rating;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Integer getId() {
@@ -87,6 +97,7 @@ public class Hotel {
     public String toString() {
         return "Hotel{" +
                 " id=" + id +
+                " imaage=" + image +
                 " lat=" + lat +
                 ", longitude=" + longitude +
                 ", averating=" + getAveRating() +
