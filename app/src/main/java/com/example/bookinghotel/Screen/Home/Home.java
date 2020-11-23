@@ -20,8 +20,13 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.SubMenu;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -59,7 +64,7 @@ import java.util.Map;
 
 public class Home extends BaseActivity {
     Button btnShowUser, btnLogoout,btnHotel;
-
+    EditText etDiemden;
     private FirebaseAuth mAuth;
     private DatabaseReference mDatabase;
 
@@ -79,11 +84,29 @@ public class Home extends BaseActivity {
         btnLogoout = findViewById(R.id.btnLogout);
         btnShowUser = findViewById(R.id.btnUser);
         btnHotel = findViewById(R.id.btnHotel);
-        Intent intent = getIntent();
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            Log.e("test", query);
-        }
+        etDiemden = findViewById(R.id.etDiemden);
+
+
+        etDiemden.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu menu = new PopupMenu(Home.this, view);
+
+                menu.getMenu().add("Hồ Chí Minh");
+                menu.getMenu().add("Hà Nội");
+                menu.getMenu().add("Đà Nẵng");
+
+                menu.show();
+
+                //registering popup with OnMenuItemClickListener
+                menu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    public boolean onMenuItemClick(MenuItem item) {
+                        etDiemden.setText(item.getTitle());
+                        return true;
+                    }
+                });
+            }
+        });
 
         //dang xuat
         btnLogoout.setOnClickListener(new View.OnClickListener() {
