@@ -4,21 +4,33 @@
         <!-- Customize your theme here -->
 <!--        <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>-->
         <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">#00695C</item>
         <item name="colorAccent">@color/colorAccent</item>
 
     </style>
     <style name="RedButton" >
         <item name="colorPrimary">#E91E63</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">#00695C</item>
         <item name="colorAccent">#2196F3</item>
     </style>
     <style name="AppTheme1" parent="Theme.MaterialComponents.DayNight">
         <!-- Customize your theme here -->
         <!--        <item name="bottomNavigationStyle">@style/Widget.MaterialComponents.BottomNavigationView.Colored</item>-->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#00838F</item>
+        <item name="colorPrimaryDark">#00695C</item>
         <item name="colorAccent">@color/colorAccent</item>
+
+    </style>
+    <style name="BottomNavigatin" parent="Widget.MaterialComponents.BottomNavigationView.Colored">
+        <item name="materialThemeOverlay">@style/ThemeOverlay.App.BottomNavigationView</item>
+        <item name="colorPrimary">#FF4081</item>
+        <item name="colorOnPrimary">#FF4081</item>
+
+    </style>
+    <style name="ThemeOverlay.App.BottomNavigationView" parent="">
+        <item name="colorPrimary">#00695C</item>
+        <item name="colorOnPrimary">@android:color/white</item>
+        <item name="colorAccent">#FF4081</item>
 
     </style>
 </resources>

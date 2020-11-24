@@ -1,13 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
-        android:id="@+id/page_1"
-        android:enabled="true"
-        android:icon="@drawable/ic_close_24dp"
-        android:title="Page1"/>
+        android:id="@+id/navigation_shop"
+        android:icon="@drawable/ic_baseline_business_24"
+        android:title="@string/title_hotel" />
+
     <item
-        android:id="@+id/page_2"
-        android:enabled="true"
+        android:id="@+id/navigation_like"
+        android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:title="@string/title_like" />
+
+    <item
+        android:id="@+id/navigation_cart"
         android:icon="@drawable/ic_close_24dp"
-        android:title="Page2"/>
+        android:title="@string/title_cart" />
+
+    <item
+        android:id="@+id/navigation_profile"
+        android:icon="@drawable/ic_close_24dp"
+        android:title="@string/title_profile" />
+
 </menu>

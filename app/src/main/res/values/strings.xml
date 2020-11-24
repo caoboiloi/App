@@ -2,4 +2,8 @@
     <string name="app_name">BookingHotel</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_hotel">Shop</string>
+    <string name="title_like">Favorite</string>
+    <string name="title_cart">Cart</string>
+    <string name="title_profile">Profile</string>
 </resources>
