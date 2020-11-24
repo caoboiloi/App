@@ -1,13 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".HotelDetail">
 
-    <ScrollView
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                style="@style/ThemeOverlay.App.BottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/white"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:menu="@menu/hotel_detail"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
+                app:title="Hotel deteail" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+    <ScrollView
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
         <LinearLayout
@@ -18,24 +43,6 @@
 
             >
 
-            <com.google.android.material.appbar.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <com.google.android.material.appbar.MaterialToolbar
-                    android:id="@+id/topAppBar"
-                    style="@style/ThemeOverlay.App.BottomNavigationView"
-                    android:layout_width="match_parent"
-                    android:layout_height="?attr/actionBarSize"
-                    android:background="@android:color/white"
-                    app:expandedTitleMarginBottom="28dp"
-                    android:elevation="0dp"
-                    app:expandedTitleMarginStart="72dp"
-                    app:menu="@menu/hotel_detail"
-                    app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
-                    app:title="Hotel deteail" />
-
-            </com.google.android.material.appbar.AppBarLayout>
 
             <ImageView
                 android:id="@+id/ivHotel"
@@ -159,11 +166,12 @@
                 android:layout_height=".5dp"
                 android:layout_marginLeft="10dp"
                 android:background="#000000" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
-                android:text="ád"/>
+                android:text="ád" />
 
         </LinearLayout>
     </ScrollView>
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>
