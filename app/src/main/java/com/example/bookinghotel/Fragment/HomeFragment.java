@@ -115,6 +115,7 @@ public class HomeFragment extends Fragment {
 
         recyclerView = rootView.findViewById(R.id.recyclerView_hotel);
         initHotels();
+        getDataHotel();
         adapter = new HotelAdapter(getActivity(),hotels);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
@@ -123,21 +124,45 @@ public class HomeFragment extends Fragment {
         return rootView;
     }
 
-//    Khởi tạo dữ liệu giả để test
     private void initHotels() {
         hotels = new ArrayList<>();
 
         for (int i = 0; i < 5; i++) {
             ArrayList<String> list = new ArrayList<String>();
             list.add("sdfsd");
-            Type t = new Type(123123,123123,1231,list);
-            Room r = new Room(t,t);
-            Rating ra = new Rating("qweqwe","qweqwe",12312,"sdfsdf");
+            Type t = new Type(123123, 123123, 1231, list);
+            Room r = new Room(t, t);
+            Rating ra = new Rating("qweqwe", "qweqwe", 12312, "sdfsdf");
             ArrayList<Rating> listRating = new ArrayList<>();
             listRating.add(ra);
-            hotels.add(new Hotel(123,23423,23423, "TRAN HUYNH HOTEL",r,listRating,"1231"));
+            hotels.add(new Hotel(123, 23423, 23423, "TRAN HUYNH HOTEL", r, listRating, "1231"));
         }
     }
+
+    public void getDataHotel() {
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                hotels = new ArrayList<>();
+                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+                    Hotel hotel = postSnapshot.getValue(Hotel.class);
+                    hotels.add(hotel);
+                }
+                for (Hotel i : hotels) {
+                    Log.e("TEST", i.toString());
+                }
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
@@ -162,6 +187,8 @@ public class HomeFragment extends Fragment {
                 });
             }
         });
+
+
 
 
 
