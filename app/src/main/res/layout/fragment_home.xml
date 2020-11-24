@@ -108,14 +108,11 @@
             android:id="@+id/recyclerView_hotel"
             android:layout_marginTop="10dip">
 
-<<<<<<< Updated upstream
         </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
 
 
-=======
-    </LinearLayout>
->>>>>>> Stashed changes
+
 
 
 </androidx.core.widget.NestedScrollView>
