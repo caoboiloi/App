@@ -9,8 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        >
+        android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
             android:paddingLeft="30dp"
@@ -20,15 +19,12 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:elevation="25dp"
-            android:background="@drawable/rounded_corner_button"
-
-            >
+            android:background="@drawable/rounded_corner_button">
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/outlinedTextField"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Điểm đến"
-
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -36,32 +32,23 @@
                     android:id="@+id/etDiemden"
                     android:focusable="false"
                     android:layout_height="wrap_content"
-                    android:editable="false"
-                    />
+                    android:editable="false" />
                 <TextView
                     android:layout_marginTop="10dp"
                     android:layout_width="match_parent"
                     android:layout_height=".3dp"
-                    android:background="@android:color/black"
-
-                    />
+                    android:background="@android:color/black" />
             </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:padding="10dip"
-
-
-                >
+                android:padding="10dip">
                 <LinearLayout
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-
-
-                    android:orientation="vertical"
-                    >
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -77,17 +64,13 @@
                 <TextView
                     android:layout_width=".4dp"
                     android:layout_height="match_parent"
-                    android:background="@android:color/black"
-
-                    />
+                    android:background="@android:color/black" />
                 <LinearLayout
                     android:paddingLeft="15dp"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:orientation="vertical"
-
-                    >
+                    android:orientation="vertical">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -119,11 +102,15 @@
                 android:gravity="center"
                 android:text="Tìm khách sạn"/>
         </LinearLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dip">
 
-
-
->
+        </androidx.recyclerview.widget.RecyclerView>
     </LinearLayout>
+
+
 
 
 </androidx.core.widget.NestedScrollView>

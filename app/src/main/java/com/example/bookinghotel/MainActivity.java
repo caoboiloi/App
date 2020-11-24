@@ -13,6 +13,7 @@ import com.example.bookinghotel.Screen.Login.Login_Signin;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+// Intro
 public class MainActivity extends AppCompatActivity {
     private SharedPreferences pref;
     private FirebaseAuth mAuth;

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+// Permission
 public class BaseActivity extends AppCompatActivity {
 
     public static final String LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;

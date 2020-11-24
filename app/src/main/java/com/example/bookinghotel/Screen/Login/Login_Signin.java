@@ -20,6 +20,7 @@ import com.google.android.material.tabs.TabLayout;
 import java.util.ArrayList;
 import java.util.List;
 
+// Login_signup Activity
 public class Login_Signin extends AppCompatActivity {
     private TabLayout tabLayout;
     private ViewPager viewPager;

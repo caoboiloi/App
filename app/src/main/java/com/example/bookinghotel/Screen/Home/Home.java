@@ -74,6 +74,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+// Main Activity
 public class Home extends AppCompatActivity {
     private ActionBar toolbar;
     BottomNavigationView navigation;
