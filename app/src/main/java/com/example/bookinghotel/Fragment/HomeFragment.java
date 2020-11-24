@@ -127,7 +127,7 @@ public class HomeFragment extends Fragment {
     private void initHotels() {
         hotels = new ArrayList<>();
 
-        for (int i = 0; i < 60; i++) {
+        for (int i = 0; i < 5; i++) {
             ArrayList<String> list = new ArrayList<String>();
             list.add("sdfsd");
             Type t = new Type(123123,123123,1231,list);
