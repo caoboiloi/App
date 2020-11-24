@@ -31,6 +31,5 @@
         <item name="colorPrimary">#00695C</item>
         <item name="colorOnPrimary">@android:color/white</item>
         <item name="colorAccent">#FF4081</item>
-
     </style>
 </resources>
