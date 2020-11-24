@@ -1,5 +1,6 @@
 package com.example.bookinghotel.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.location.LocationManager;
 import android.os.Bundle;
@@ -114,32 +115,12 @@ public class HomeFragment extends Fragment {
         etDiemden = rootView.findViewById(R.id.etDiemden);
 
         recyclerView = rootView.findViewById(R.id.recyclerView_hotel);
-        initHotels();
-        getDataHotel();
-        adapter = new HotelAdapter(getActivity(),hotels);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setAdapter(adapter);
 
-        return rootView;
-    }
+        final ProgressDialog progress = new ProgressDialog(getActivity());
+        progress.setMessage("Đang tải dữ liệu...");
+        progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
+        progress.show();
 
-    private void initHotels() {
-        hotels = new ArrayList<>();
-
-        for (int i = 0; i < 5; i++) {
-            ArrayList<String> list = new ArrayList<String>();
-            list.add("sdfsd");
-            Type t = new Type(123123, 123123, 1231, list);
-            Room r = new Room(t, t);
-            Rating ra = new Rating("qweqwe", "qweqwe", 12312, "sdfsdf");
-            ArrayList<Rating> listRating = new ArrayList<>();
-            listRating.add(ra);
-            hotels.add(new Hotel(123, 23423, 23423, "TRAN HUYNH HOTEL", r, listRating, "1231"));
-        }
-    }
-
-    public void getDataHotel() {
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -149,11 +130,12 @@ public class HomeFragment extends Fragment {
                     Hotel hotel = postSnapshot.getValue(Hotel.class);
                     hotels.add(hotel);
                 }
-                for (Hotel i : hotels) {
-                    Log.e("TEST", i.toString());
-                }
+//                for (Hotel i : hotels) {
+//                    Log.e("TEST", i.toString());
+//                }
 
 
+                progress.dismiss();
             }
 
             @Override
@@ -161,8 +143,17 @@ public class HomeFragment extends Fragment {
 
             }
         });
-    }
 
+//        hotels không load được - sửa phần này
+        adapter = new HotelAdapter(getActivity(),hotels);
+        adapter.notifyDataSetChanged();
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
+        return rootView;
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {

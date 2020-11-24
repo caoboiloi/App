@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -41,9 +42,11 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.MyHolder> {
         Hotel h = data.get(position);
 
 //        holder.name_hotel.setText(h.getName());
+        Log.e("error",h.getName().toString());
 //        holder.type_hotel.setText(h.getRoom().getLarge().getPrice());
 //        holder.price_hotel.setText(h.getRoom().getLarge().getPrice());
 
+//        SET BASE64 IMG
 //        byte[] decodedString = Base64.decode(h.getImage(), Base64.DEFAULT);
 //        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
 //
