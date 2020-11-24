@@ -1,18 +1,23 @@
 package com.example.bookinghotel.Fragment;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 
+import com.example.bookinghotel.HotelDetail;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
 import com.example.bookinghotel.entity.Hotel;
@@ -37,10 +42,11 @@ public class FavoriteFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    Button btnShowUser, btnLogoout,btnHotel;
+    Button btnShowUser, btnLogoout, btnHotel, btnShowHotel;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    ImageView ivImage;
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -77,10 +83,14 @@ public class FavoriteFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView =  inflater.inflate(R.layout.fragment_favorite, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
         btnLogoout = rootView.findViewById(R.id.btnLogout);
         btnShowUser = rootView.findViewById(R.id.btnUser);
         btnHotel = rootView.findViewById(R.id.btnHotel);
+        btnShowHotel = rootView.findViewById(R.id.btnShowHotel);
+
+
+
         return rootView;
     }
 
@@ -136,11 +146,9 @@ public class FavoriteFragment extends Fragment {
                             Hotel hotel = postSnapshot.getValue(Hotel.class);
                             hotels.add(hotel);
                         }
-                        for (Hotel i:hotels)
-                        {
+                        for (Hotel i : hotels) {
                             Log.e("test", i.toString());
                         }
-
 
 
                     }
@@ -151,6 +159,13 @@ public class FavoriteFragment extends Fragment {
                     }
                 });
 
+            }
+        });
+        btnShowHotel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), HotelDetail.class);
+                getActivity().startActivity(intent);
             }
         });
     }
