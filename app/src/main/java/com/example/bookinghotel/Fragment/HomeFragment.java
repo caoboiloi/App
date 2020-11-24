@@ -7,6 +7,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.PopupMenu;
 
+import com.example.bookinghotel.Adapter.HotelAdapter;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Home.Home;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
@@ -57,6 +61,11 @@ public class HomeFragment extends Fragment {
     private FusedLocationProviderClient client;
     LocationManager locationManager;
     LocationRequest request;
+
+    // Hotel Adapter
+    private ArrayList<Hotel> hotels;
+    private HotelAdapter adapter;
+    private RecyclerView recyclerView;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -99,8 +108,24 @@ public class HomeFragment extends Fragment {
         mDatabase = FirebaseDatabase.getInstance().getReference();
         etDiemden = rootView.findViewById(R.id.etDiemden);
 
+        recyclerView = rootView.findViewById(R.id.recyclerView_hotel);
+//        initHotels();
+        adapter = new HotelAdapter(getActivity(),hotels);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.setAdapter(adapter);
+
         return rootView;
     }
+
+//    Khởi tạo dữ liệu giả để test
+//    private void initHotels() {
+//        hotels = new ArrayList<>();
+//
+//        for (int i = 0; i < 60; i++) {
+//            hotels.add(new Hotel());
+//        }
+//    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
