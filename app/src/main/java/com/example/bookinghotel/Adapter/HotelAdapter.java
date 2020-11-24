@@ -40,14 +40,14 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.MyHolder> {
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
         Hotel h = data.get(position);
 
-        holder.name_hotel.setText(h.getName());
-        holder.type_hotel.setText(h.getRoom().getLarge().getPrice());
-        holder.price_hotel.setText(h.getRoom().getLarge().getPrice());
+//        holder.name_hotel.setText(h.getName());
+//        holder.type_hotel.setText(h.getRoom().getLarge().getPrice());
+//        holder.price_hotel.setText(h.getRoom().getLarge().getPrice());
 
-        byte[] decodedString = Base64.decode(h.getImage(), Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-
-        holder.image_hotel.setImageBitmap(decodedByte);
+//        byte[] decodedString = Base64.decode(h.getImage(), Base64.DEFAULT);
+//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+//
+//        holder.image_hotel.setImageBitmap(decodedByte);
     }
 
     @Override

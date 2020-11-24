@@ -7,6 +7,7 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -24,8 +25,6 @@ import com.example.bookinghotel.Adapter.HotelAdapter;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Home.Home;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
-import com.example.bookinghotel.entity.Hotel;
-import com.example.bookinghotel.entity.User;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -37,6 +36,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+
+import com.example.bookinghotel.entity.Hotel;
+import com.example.bookinghotel.entity.User;
+import com.example.bookinghotel.entity.Room;
+import com.example.bookinghotel.entity.Type;
+import com.example.bookinghotel.entity.Rating;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -109,7 +114,7 @@ public class HomeFragment extends Fragment {
         etDiemden = rootView.findViewById(R.id.etDiemden);
 
         recyclerView = rootView.findViewById(R.id.recyclerView_hotel);
-//        initHotels();
+        initHotels();
         adapter = new HotelAdapter(getActivity(),hotels);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL,false));
         recyclerView.setHasFixedSize(true);
@@ -119,13 +124,20 @@ public class HomeFragment extends Fragment {
     }
 
 //    Khởi tạo dữ liệu giả để test
-//    private void initHotels() {
-//        hotels = new ArrayList<>();
-//
-//        for (int i = 0; i < 60; i++) {
-//            hotels.add(new Hotel());
-//        }
-//    }
+    private void initHotels() {
+        hotels = new ArrayList<>();
+
+        for (int i = 0; i < 60; i++) {
+            ArrayList<String> list = new ArrayList<String>();
+            list.add("sdfsd");
+            Type t = new Type(123123,123123,1231,list);
+            Room r = new Room(t,t);
+            Rating ra = new Rating("qweqwe","qweqwe",12312,"sdfsdf");
+            ArrayList<Rating> listRating = new ArrayList<>();
+            listRating.add(ra);
+            hotels.add(new Hotel(123,23423,23423, "TRAN HUYNH HOTEL",r,listRating,"1231"));
+        }
+    }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
