@@ -7,6 +7,8 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.bookinghotel.R;
 
@@ -48,6 +50,8 @@ public class InfoFragment extends Fragment {
         return fragment;
     }
 
+    LinearLayout personalinfo, experience, review;
+    TextView personalinfobtn, experiencebtn, reviewbtn;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,12 +59,72 @@ public class InfoFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_info, container, false);
+
+        View rootView = inflater.inflate(R.layout.fragment_info, container, false);
+
+        personalinfo = rootView.findViewById(R.id.personalinfo);
+        experience = rootView.findViewById(R.id.experience);
+        review = rootView.findViewById(R.id.review);
+        personalinfobtn = rootView.findViewById(R.id.personalinfobtn);
+        experiencebtn = rootView.findViewById(R.id.experiencebtn);
+        reviewbtn = rootView.findViewById(R.id.reviewbtn);
+        /*making personal info visible*/
+        personalinfo.setVisibility(View.VISIBLE);
+        experience.setVisibility(View.GONE);
+        review.setVisibility(View.GONE);
+
+
+        personalinfobtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                personalinfo.setVisibility(View.VISIBLE);
+                experience.setVisibility(View.GONE);
+                review.setVisibility(View.GONE);
+                personalinfobtn.setTextColor(getResources().getColor(R.color.blue));
+                experiencebtn.setTextColor(getResources().getColor(R.color.grey));
+                reviewbtn.setTextColor(getResources().getColor(R.color.grey));
+
+            }
+        });
+
+        experiencebtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                personalinfo.setVisibility(View.GONE);
+                experience.setVisibility(View.VISIBLE);
+                review.setVisibility(View.GONE);
+                personalinfobtn.setTextColor(getResources().getColor(R.color.grey));
+                experiencebtn.setTextColor(getResources().getColor(R.color.blue));
+                reviewbtn.setTextColor(getResources().getColor(R.color.grey));
+
+            }
+        });
+
+        reviewbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                personalinfo.setVisibility(View.GONE);
+                experience.setVisibility(View.GONE);
+                review.setVisibility(View.VISIBLE);
+                personalinfobtn.setTextColor(getResources().getColor(R.color.grey));
+                experiencebtn.setTextColor(getResources().getColor(R.color.grey));
+                reviewbtn.setTextColor(getResources().getColor(R.color.blue));
+
+            }
+        });
+
+        return rootView;
+
+
     }
 }
