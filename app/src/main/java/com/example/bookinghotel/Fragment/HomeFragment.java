@@ -35,6 +35,7 @@ import com.example.bookinghotel.Adapter.HotelAdapter;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Home.Home;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
+import com.example.bookinghotel.entity.Booked;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -167,7 +168,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
-        String city = pref.getString("city","");
+        String city = pref.getString("city","Hồ Chí Minh");
         String room = pref.getString("room","Medium");
         String date = pref.getString("date","4/8-6/8");
         etDiemden.setText(city);
@@ -257,14 +258,29 @@ public class HomeFragment extends Fragment {
                         return;
                     }
 
+
                     mDatabase.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            hotels.clear();
                             for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+
                                 Hotel hotel = postSnapshot.getValue(Hotel.class);
-                                hotels.add(hotel);
+                                //filter hotel
+                                if(tvRoomSize.getText().toString().equals("Medium")){
+                                    if(hotel.getRoom().getMedium().getAvailable() > 0){
+                                        hotels.add(hotel);
+                                        Log.e("test", hotel.getBookeds().toString());
+                                    }
+                                }else{
+                                    if(hotel.getRoom().getLarge().getAvailable() > 0){
+                                        hotels.add(hotel);
+                                        Log.e("test", hotel.getBookeds().toString());
+                                    }
+                                }
 
                             }
+
                             adapter.notifyDataSetChanged();
                             progressBar_cyclic.setVisibility(View.GONE);
                         }

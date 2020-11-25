@@ -11,12 +11,13 @@ public class Hotel {
     double longitude;
     String name;
     Room room;
-    ArrayList<Rating> rating;
+    ArrayList<Rating> rating = new  ArrayList<Rating>();
+    ArrayList<Booked> bookeds = new ArrayList<Booked>();
     public Hotel() {
     }
 
 
-    public Hotel(Integer id,double lat, double longitude, String name, Room room, ArrayList<Rating> rating,String image) {
+    public Hotel(Integer id,double lat, double longitude, String name, Room room, ArrayList<Rating> rating,String image, ArrayList<Booked> bookeds) {
         this.id =id;
         this.lat = lat;
         this.longitude = longitude;
@@ -24,6 +25,15 @@ public class Hotel {
         this.room = room;
         this.rating = rating;
         this.image = image;
+        this.bookeds = bookeds;
+    }
+
+    public ArrayList<Booked> getBookeds() {
+        return bookeds;
+    }
+
+    public void setBookeds(ArrayList<Booked> bookeds) {
+        this.bookeds = bookeds;
     }
 
     public String getImage() {
@@ -97,12 +107,12 @@ public class Hotel {
     public String toString() {
         return "Hotel{" +
                 " id=" + id +
-                " imaage=" + image +
                 " lat=" + lat +
                 ", longitude=" + longitude +
                 ", averating=" + getAveRating() +
                 ", name='" + name + '\'' +
                 ", romm='" + room.toString() + '\'' +
+                ", booked='" + bookeds.toString() + '\'' +
                 '}';
     }
     public boolean isEmpty(String string) {
