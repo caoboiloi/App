@@ -288,8 +288,9 @@ public class HomeFragment extends Fragment {
                                         ArrayList<Long> end = i.getEnd();
                                         for (int j = 0; j < begin.size(); j++) {
 //                                            Log.e("a",begin.get(j)+" "+end.get(j) );
-                                            Log.e("asd", "Da dc book : begin1 "+readDate(begin.get(j)) +"  "+"end1 "+readDate(end.get(j)));
+
                                             if(startDate <= end.get(j) && startDate >= begin.get(j) || endDate <= end.get(j) && endDate >= begin.get(j)){
+                                                Log.e("asd", "Da dc book : begin1 "+readDate(begin.get(j)) +"  "+"end1 "+readDate(end.get(j)));
                                                 break;
                                             }
                                             if(j == begin.size()-1){
