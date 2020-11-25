@@ -131,6 +131,12 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+//        RoundedBitmapDrawable img = RoundedBitmapDrawableFactory.create(getResources(),bitmap);
+//        img.setCornerRadius(radius);
+//
+//        imageView.setImageDrawable(img);
+
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
         String latitude, longitude;

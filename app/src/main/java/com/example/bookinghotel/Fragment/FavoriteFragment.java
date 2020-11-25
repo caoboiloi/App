@@ -89,8 +89,6 @@ public class FavoriteFragment extends Fragment {
         btnHotel = rootView.findViewById(R.id.btnHotel);
         btnShowHotel = rootView.findViewById(R.id.btnShowHotel);
 
-
-
         return rootView;
     }
 

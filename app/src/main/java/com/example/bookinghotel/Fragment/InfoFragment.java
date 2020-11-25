@@ -2,8 +2,11 @@ package com.example.bookinghotel.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +14,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bookinghotel.R;
+import com.example.bookinghotel.entity.Hotel;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import com.example.bookinghotel.entity.User;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -50,8 +64,13 @@ public class InfoFragment extends Fragment {
         return fragment;
     }
 
-    LinearLayout personalinfo, experience, review;
-    TextView personalinfobtn, experiencebtn, reviewbtn;
+    LinearLayout personalinfo, booking_details, review;
+    TextView personalinfobtn, booking_details_btn, reviewbtn;
+
+    TextView name_user, des_user, phone_user, email_user, address_user;
+
+    User user;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,40 +89,52 @@ public class InfoFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.fragment_info, container, false);
 
         personalinfo = rootView.findViewById(R.id.personalinfo);
-        experience = rootView.findViewById(R.id.experience);
+        booking_details = rootView.findViewById(R.id.booking_details);
         review = rootView.findViewById(R.id.review);
         personalinfobtn = rootView.findViewById(R.id.personalinfobtn);
-        experiencebtn = rootView.findViewById(R.id.experiencebtn);
+        booking_details_btn = rootView.findViewById(R.id.booking_details_btn);
         reviewbtn = rootView.findViewById(R.id.reviewbtn);
         /*making personal info visible*/
         personalinfo.setVisibility(View.VISIBLE);
-        experience.setVisibility(View.GONE);
+        booking_details.setVisibility(View.GONE);
         review.setVisibility(View.GONE);
 
+        name_user = rootView.findViewById(R.id.name_user);
+        phone_user = rootView.findViewById(R.id.phone_user);
+        des_user = rootView.findViewById(R.id.des_user);
+        email_user = rootView.findViewById(R.id.email_user);
+        address_user = rootView.findViewById(R.id.address_user);
+
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
 
         personalinfobtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 personalinfo.setVisibility(View.VISIBLE);
-                experience.setVisibility(View.GONE);
+                booking_details.setVisibility(View.GONE);
                 review.setVisibility(View.GONE);
                 personalinfobtn.setTextColor(getResources().getColor(R.color.blue));
-                experiencebtn.setTextColor(getResources().getColor(R.color.grey));
+                booking_details_btn.setTextColor(getResources().getColor(R.color.grey));
                 reviewbtn.setTextColor(getResources().getColor(R.color.grey));
 
             }
         });
 
-        experiencebtn.setOnClickListener(new View.OnClickListener() {
+        booking_details_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 personalinfo.setVisibility(View.GONE);
-                experience.setVisibility(View.VISIBLE);
+                booking_details.setVisibility(View.VISIBLE);
                 review.setVisibility(View.GONE);
                 personalinfobtn.setTextColor(getResources().getColor(R.color.grey));
-                experiencebtn.setTextColor(getResources().getColor(R.color.blue));
+                booking_details_btn.setTextColor(getResources().getColor(R.color.blue));
                 reviewbtn.setTextColor(getResources().getColor(R.color.grey));
 
             }
@@ -114,17 +145,36 @@ public class InfoFragment extends Fragment {
             public void onClick(View v) {
 
                 personalinfo.setVisibility(View.GONE);
-                experience.setVisibility(View.GONE);
+                booking_details.setVisibility(View.GONE);
                 review.setVisibility(View.VISIBLE);
                 personalinfobtn.setTextColor(getResources().getColor(R.color.grey));
-                experiencebtn.setTextColor(getResources().getColor(R.color.grey));
+                booking_details_btn.setTextColor(getResources().getColor(R.color.grey));
                 reviewbtn.setTextColor(getResources().getColor(R.color.blue));
 
             }
         });
 
-        return rootView;
+        DatabaseReference UserData = FirebaseDatabase.getInstance().getReference("Users");
 
+//      Load user from id
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        UserData.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                user = dataSnapshot.getValue(User.class);
+
+//              set data in TextView
+                name_user.setText(user.getName());
+                des_user.setText(user.getLove());
+                email_user.setText(user.getEmail());
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.e("test", "Failed to read value.");
+            }
+        });
 
     }
 }

@@ -13,6 +13,7 @@ public class BaseActivity extends AppCompatActivity {
     public static final String LOCATION = Manifest.permission.ACCESS_FINE_LOCATION;
     public static final String CONTACT = Manifest.permission.READ_CONTACTS;
     public static final String CALL = Manifest.permission.CALL_PHONE;
+    public static final String BIND = Manifest.permission.BIND_WALLPAPER;
 
     public static final int ALLOWED = PackageManager.PERMISSION_GRANTED;
     public static final int DENIED = PackageManager.PERMISSION_DENIED;
