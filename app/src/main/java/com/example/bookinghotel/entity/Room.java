@@ -27,7 +27,14 @@ public class Room {
     public Type getMedium() {
         return medium;
     }
+    public Type getTypeByName(String name) {
+        if(name.equals("Medium")){
+            return medium;
+        }else{
+            return large;
+        }
 
+    }
     public void setMedium(Type medium) {
         this.medium = medium;
     }

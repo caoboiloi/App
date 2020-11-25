@@ -51,7 +51,7 @@ public class Type {
 
     @Override
     public String toString() {
-        return "available=" + available +", total=" + total+", price=" + this.price+" imge:"+image  ;
+        return "available=" + available +", total=" + total+", price=" + this.price+" image:"+image  ;
     }
 
 }

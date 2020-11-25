@@ -56,6 +56,7 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
+import java.util.stream.Collectors;
 
 import com.example.bookinghotel.entity.Hotel;
 import com.example.bookinghotel.entity.User;
@@ -94,7 +95,8 @@ public class HomeFragment extends Fragment {
     private ArrayList<Hotel> hotels = new ArrayList<Hotel>();
     private HotelAdapter adapter;
     private RecyclerView recyclerView;
-
+    Long startDate = 1606867200000L;
+    Long endDate = 1607126400000L;
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -170,7 +172,7 @@ public class HomeFragment extends Fragment {
         super.onResume();
         String city = pref.getString("city","Hồ Chí Minh");
         String room = pref.getString("room","Medium");
-        String date = pref.getString("date","4/8-6/8");
+        String date = pref.getString("date","2/12-5/12");
         etDiemden.setText(city);
         tvRoomSize.setText(room);
         tvDate.setText(date);
@@ -191,8 +193,8 @@ public class HomeFragment extends Fragment {
                 picker.show(getFragmentManager(), picker.toString());
                 picker.addOnPositiveButtonClickListener(new MaterialPickerOnPositiveButtonClickListener<Pair<Long, Long>>() {
                     @Override public void onPositiveButtonClick(Pair<Long,Long> selection) {
-                        Long startDate = selection.first;
-                        Long endDate = selection.second;
+                        startDate = selection.first;
+                        endDate = selection.second;
                         tvDate.setText(date.format(startDate)+"-"+date.format(endDate));
                     }
                 });
@@ -246,6 +248,7 @@ public class HomeFragment extends Fragment {
                 adapter = new HotelAdapter(getActivity(), hotels);
                 recyclerView.setAdapter(adapter);
                 String city = etDiemden.getText().toString();
+//                Log.e("test", startDate+" "+endDate);
                 if (city.trim().equals("")) {
                     return;
                 } else {
@@ -263,19 +266,36 @@ public class HomeFragment extends Fragment {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             hotels.clear();
+                            Log.e("asd", "begin "+readDate(startDate) +"  "+"end "+readDate(endDate));
                             for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
                                 Hotel hotel = postSnapshot.getValue(Hotel.class);
-                                //filter hotel
-                                if(tvRoomSize.getText().toString().equals("Medium")){
-                                    if(hotel.getRoom().getMedium().getAvailable() > 0){
-                                        hotels.add(hotel);
-                                        Log.e("test", hotel.getBookeds().toString());
-                                    }
+
+                                ArrayList<Booked> booked = hotel.getBookeds();
+                                String typeRoom = tvRoomSize.getText().toString();
+                                Integer numberRoom = hotel.getRoom().getTypeByName(typeRoom).getTotal();
+                                //getALl booked
+                                ArrayList<Booked> bookeds = hotel.getBookeds();
+                                //filter by roomsize
+                                ArrayList<Booked> bookedsFilter = (ArrayList<Booked>) bookeds.stream().filter(p->p.getTypeRoom().equals(typeRoom)).collect(Collectors.toList());
+
+                                //check
+                                if(bookedsFilter.size() < hotel.getRoom().getTypeByName(typeRoom).getTotal()){
+                                    hotels.add(hotel);
                                 }else{
-                                    if(hotel.getRoom().getLarge().getAvailable() > 0){
-                                        hotels.add(hotel);
-                                        Log.e("test", hotel.getBookeds().toString());
+                                    for(Booked i : bookedsFilter){
+                                        ArrayList<Long> begin = i.getBegin();
+                                        ArrayList<Long> end = i.getEnd();
+                                        for (int j = 0; j < begin.size(); j++) {
+//                                            Log.e("a",begin.get(j)+" "+end.get(j) );
+                                            Log.e("asd", "Da dc book : begin1 "+readDate(begin.get(j)) +"  "+"end1 "+readDate(end.get(j)));
+                                            if(startDate <= end.get(j) && startDate >= begin.get(j) || endDate <= end.get(j) && endDate >= begin.get(j)){
+                                                break;
+                                            }
+                                            if(j == begin.size()-1){
+                                                hotels.add(hotel);
+                                            }
+                                        }
                                     }
                                 }
 
@@ -293,7 +313,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
 
 //        read location
 //        btnLocation.setOnClickListener(new View.OnClickListener() {
@@ -318,5 +337,8 @@ public class HomeFragment extends Fragment {
 //        });
 
     }
-
+    String readDate(Long a){
+        DateFormat date = new SimpleDateFormat("dd/MM");
+        return date.format(a);
+    }
 }

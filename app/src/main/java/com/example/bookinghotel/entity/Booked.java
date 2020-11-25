@@ -1,18 +1,20 @@
 package com.example.bookinghotel.entity;
 
+import java.util.ArrayList;
+
 public class Booked {
     private int id;
-    private String begin;
-    private String end;
+    private ArrayList<Long> begin;
+    private ArrayList<Long> end;
     private String typeRoom;
     public Booked() {
     }
 
-    public Booked(int id, String begin, String end, String typeRoom) {
+    public Booked(int id, ArrayList<Long> begin, ArrayList<Long> end, String typeRoom) {
+        this.id = id;
         this.begin = begin;
         this.end = end;
         this.typeRoom = typeRoom;
-        this.id = id;
     }
 
     public int getId() {
@@ -23,19 +25,19 @@ public class Booked {
         this.id = id;
     }
 
-    public String getBegin() {
+    public ArrayList<Long> getBegin() {
         return begin;
     }
 
-    public void setBegin(String begin) {
+    public void setBegin(ArrayList<Long> begin) {
         this.begin = begin;
     }
 
-    public String getEnd() {
+    public ArrayList<Long> getEnd() {
         return end;
     }
 
-    public void setEnd(String end) {
+    public void setEnd(ArrayList<Long> end) {
         this.end = end;
     }
 
@@ -50,10 +52,10 @@ public class Booked {
     @Override
     public String toString() {
         return "Booked{" +
-                "begin='" + begin + '\'' +
-                ", end='" + end + '\'' +
+                "id=" + id +
+                ", begin=" + begin +
+                ", end=" + end +
                 ", typeRoom='" + typeRoom + '\'' +
-                ", id  =" + id +
                 '}';
     }
 }
