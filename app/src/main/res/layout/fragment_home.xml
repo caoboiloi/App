@@ -40,11 +40,13 @@
                     android:background="@android:color/black" />
             </com.google.android.material.textfield.TextInputLayout>
             <LinearLayout
+
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:padding="10dip">
                 <LinearLayout
+                    android:id="@+id/llDate"
                     android:layout_weight="1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
@@ -102,13 +104,27 @@
                 android:gravity="center"
                 android:text="Tìm khách sạn"/>
         </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/recyclerView_hotel"
-            android:layout_marginTop="10dip">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <ProgressBar
+                android:paddingTop="50dp"
+                android:id="@+id/progressBar_cyclic"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <androidx.recyclerview.widget.RecyclerView
+                android:background="@android:color/white"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/recyclerView_hotel"
+                android:layout_marginTop="10dip">
+            </androidx.recyclerview.widget.RecyclerView>
+        </LinearLayout>
 
-        </androidx.recyclerview.widget.RecyclerView>
+
+
     </LinearLayout>
 
 

@@ -92,7 +92,7 @@ public class Home extends AppCompatActivity {
         layoutParams.setBehavior(new BottomNavigationBehavior());
 
         toolbar = getSupportActionBar();
-        toolbar.setTitle("Shop");
+        toolbar.setTitle("Hotel");
         loadFragment(new HomeFragment());
 
     }
@@ -105,12 +105,12 @@ public class Home extends AppCompatActivity {
 
             switch (item.getItemId()) {
                 case R.id.navigation_shop:
-                    toolbar.setTitle("Shop");
+                    toolbar.setTitle("Hotel");
                     fragment = new HomeFragment();
                     loadFragment(fragment);
                     return true;
                 case R.id.navigation_like:
-                    toolbar.setTitle("My Gifts");
+                    toolbar.setTitle("Favorite");
                     fragment = new FavoriteFragment();
                     loadFragment(fragment);
                     return true;
