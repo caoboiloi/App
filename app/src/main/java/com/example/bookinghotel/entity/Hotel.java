@@ -2,6 +2,7 @@ package com.example.bookinghotel.entity;
 
 import android.util.Log;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class Hotel {
@@ -13,6 +14,7 @@ public class Hotel {
     Room room;
     ArrayList<Rating> rating = new  ArrayList<Rating>();
     ArrayList<Booked> bookeds = new ArrayList<Booked>();
+    String path;
     public Hotel() {
     }
 
@@ -26,6 +28,14 @@ public class Hotel {
         this.rating = rating;
         this.image = image;
         this.bookeds = bookeds;
+    }
+
+    public String getPath() {
+        return path;
+    }
+
+    public void setPath(String path) {
+        this.path = path;
     }
 
     public ArrayList<Booked> getBookeds() {

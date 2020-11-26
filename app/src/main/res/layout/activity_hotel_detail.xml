@@ -26,10 +26,23 @@
                 app:layout_scrollFlags="scroll|enterAlways|snap"
                 app:menu="@menu/hotel_detail"
                 app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
-                app:title="Hotel deteail" />
+                app:title="Hotel detail" />
 
         </com.google.android.material.appbar.AppBarLayout>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <ProgressBar
+            android:layout_gravity="center"
+            android:id="@+id/progressBar_cyclic_detail"
+            android:visibility="gone"
+            android:scaleX="0.1"
+            android:scaleY="0.1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
 
     <ScrollView
         android:layout_width="wrap_content"
@@ -118,6 +131,7 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/tvInfoRate1"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Rất tốt"
@@ -125,6 +139,7 @@
                             android:textStyle="bold" />
 
                         <TextView
+                            android:id="@+id/tvInfoRate"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Dựa trên 32 nhận xét trên mạng" />
@@ -174,4 +189,5 @@
 
         </LinearLayout>
     </ScrollView>
+    </LinearLayout>
 </LinearLayout>

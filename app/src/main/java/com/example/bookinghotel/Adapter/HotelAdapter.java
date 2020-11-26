@@ -1,10 +1,12 @@
 package com.example.bookinghotel.Adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
+import android.os.Parcelable;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,10 +19,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.bookinghotel.HotelDetail;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.entity.Hotel;
+import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.io.Serializable;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
@@ -46,6 +51,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.MyHolder> {
         MyHolder holder = new MyHolder(view);
         return holder;
     }
+
 
     @Override
     public void onBindViewHolder(@NonNull MyHolder holder, int position) {
@@ -75,8 +81,19 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.MyHolder> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Intent intent = new Intent(context, HotelDetail.class);
+                intent.putExtra("path",  h.getPath());
+                intent.putExtra("hotelname",  h.getName());
+                context.startActivity(intent);
+            }
+        });
 
     }
+
 
     @Override
     public int getItemCount() {
