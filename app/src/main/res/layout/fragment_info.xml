@@ -24,6 +24,8 @@
         android:padding="16dp">
 
         <ImageView
+            android:clickable="true"
+            android:background="?selectableItemBackground"
             android:id="@+id/topAppBar"
             android:layout_width="40dp"
             android:layout_height="40dp"
