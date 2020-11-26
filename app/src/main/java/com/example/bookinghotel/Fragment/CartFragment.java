@@ -2,11 +2,14 @@ package com.example.bookinghotel.Fragment;
 
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.bookinghotel.R;
 
@@ -48,6 +51,9 @@ public class CartFragment extends Fragment {
         return fragment;
     }
 
+    LinearLayout booked, canceled;
+    TextView booked_btn, canceled_btn;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -61,6 +67,33 @@ public class CartFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_cart, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_cart, container, false);
+
+        booked = rootView.findViewById(R.id.booked);
+        canceled = rootView.findViewById(R.id.cancel);
+
+        booked_btn = rootView.findViewById(R.id.booked_btn);
+        canceled_btn = rootView.findViewById(R.id.cancel_btn);
+
+        return rootView;
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        booked_btn.setOnClickListener((View v) -> {
+            booked.setVisibility(View.VISIBLE);
+            canceled.setVisibility(View.GONE);
+            booked_btn.setTextColor(getResources().getColor(R.color.blue));
+            canceled_btn.setTextColor(getResources().getColor(R.color.grey));
+        });
+
+        canceled_btn.setOnClickListener((View v) -> {
+            canceled.setVisibility(View.VISIBLE);
+            booked.setVisibility(View.GONE);
+            canceled_btn.setTextColor(getResources().getColor(R.color.blue));
+            booked_btn.setTextColor(getResources().getColor(R.color.grey));
+        });
     }
 }

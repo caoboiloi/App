@@ -5,10 +5,14 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -18,6 +22,7 @@ import android.widget.TextView;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
 import com.example.bookinghotel.entity.Hotel;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -72,7 +77,7 @@ public class InfoFragment extends Fragment {
 
     TextView name_user, des_user, phone_user, email_user, address_user, sex_user, job_user, job_user_main, workplace_user;
 
-    ImageView btnLogoout;
+    ImageView btnLogoout, topAppBar;
 
     User user;
 
@@ -115,6 +120,7 @@ public class InfoFragment extends Fragment {
         workplace_user = rootView.findViewById(R.id.workplace_user);
 
         btnLogoout = rootView.findViewById(R.id.btnLogout);
+        topAppBar = rootView.findViewById(R.id.topAppBar);
 
         return rootView;
     }
@@ -173,6 +179,9 @@ public class InfoFragment extends Fragment {
                 startActivity(i);
                 getActivity().finish();
             }
+        });
+
+        topAppBar.setOnClickListener((View v) -> {
         });
 
         DatabaseReference UserData = FirebaseDatabase.getInstance().getReference("Users");
