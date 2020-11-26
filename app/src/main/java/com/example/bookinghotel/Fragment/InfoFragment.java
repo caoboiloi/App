@@ -1,5 +1,6 @@
 package com.example.bookinghotel.Fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -10,10 +11,12 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.bookinghotel.R;
+import com.example.bookinghotel.Screen.Login.Login_Signin;
 import com.example.bookinghotel.entity.Hotel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -69,6 +72,8 @@ public class InfoFragment extends Fragment {
 
     TextView name_user, des_user, phone_user, email_user, address_user;
 
+    ImageView btnLogoout;
+
     User user;
 
     @Override
@@ -104,6 +109,8 @@ public class InfoFragment extends Fragment {
         des_user = rootView.findViewById(R.id.des_user);
         email_user = rootView.findViewById(R.id.email_user);
         address_user = rootView.findViewById(R.id.address_user);
+
+        btnLogoout = rootView.findViewById(R.id.btnLogout);
 
         return rootView;
     }
@@ -151,6 +158,16 @@ public class InfoFragment extends Fragment {
                 booking_details_btn.setTextColor(getResources().getColor(R.color.grey));
                 reviewbtn.setTextColor(getResources().getColor(R.color.blue));
 
+            }
+        });
+
+        btnLogoout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseAuth.getInstance().signOut();
+                Intent i = new Intent(getActivity(), Login_Signin.class);
+                startActivity(i);
+                getActivity().finish();
             }
         });
 
