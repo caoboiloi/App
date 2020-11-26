@@ -70,7 +70,7 @@ public class InfoFragment extends Fragment {
     LinearLayout personalinfo, booking_details, review;
     TextView personalinfobtn, booking_details_btn, reviewbtn;
 
-    TextView name_user, des_user, phone_user, email_user, address_user;
+    TextView name_user, des_user, phone_user, email_user, address_user, sex_user, job_user, job_user_main, workplace_user;
 
     ImageView btnLogoout;
 
@@ -109,6 +109,10 @@ public class InfoFragment extends Fragment {
         des_user = rootView.findViewById(R.id.des_user);
         email_user = rootView.findViewById(R.id.email_user);
         address_user = rootView.findViewById(R.id.address_user);
+        sex_user = rootView.findViewById(R.id.sex_user);
+        job_user = rootView.findViewById(R.id.job_user);
+        job_user_main = rootView.findViewById(R.id.job_user_main);
+        workplace_user = rootView.findViewById(R.id.workplace_user);
 
         btnLogoout = rootView.findViewById(R.id.btnLogout);
 
@@ -185,6 +189,12 @@ public class InfoFragment extends Fragment {
                 name_user.setText(user.getName());
                 des_user.setText(user.getLove());
                 email_user.setText(user.getEmail());
+                phone_user.setText(user.getPhone());
+                sex_user.setText(user.getSex());
+                address_user.setText(user.getAddress());
+                job_user.setText(user.getJob());
+                job_user_main.setText(user.getJob());
+                workplace_user.setText(user.getWorkplace());
             }
 
             @Override

@@ -78,6 +78,62 @@
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress" />
 
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldAddress"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                app:boxStrokeColor="@android:color/holo_blue_light"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:hintTextColor="@android:color/holo_blue_light"
+                app:placeholderTextColor="@color/colorPurple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldJob"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Job"
+                app:boxStrokeColor="@android:color/holo_blue_light"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:hintTextColor="@android:color/holo_blue_light"
+                app:placeholderTextColor="@color/colorPurple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etJob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/textFieldWorkplace"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Workplace"
+                app:boxStrokeColor="@android:color/holo_blue_light"
+                app:endIconMode="clear_text"
+                app:errorEnabled="true"
+                app:hintTextColor="@android:color/holo_blue_light"
+                app:placeholderTextColor="@color/colorPurple">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etWorkplace"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 

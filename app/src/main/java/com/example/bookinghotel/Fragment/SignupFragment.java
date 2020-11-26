@@ -55,7 +55,7 @@ public class SignupFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private FragmentActivity myContext;
-    EditText etConfirm, etName, etPhone, etEmail, etPass;
+    EditText etConfirm, etName, etPhone, etEmail, etPass, etAddress, etJob, etWorkplace;
     TextView tvError;
     Button btnSignup;
     RadioButton rbMale, rbFemale;
@@ -102,6 +102,10 @@ public class SignupFragment extends Fragment {
         etPass = rootView.findViewById(R.id.etPass);
         etPhone = rootView.findViewById(R.id.etPhone);
         etEmail = rootView.findViewById(R.id.etEmail);
+        etAddress = rootView.findViewById(R.id.etAddress);
+        etJob = rootView.findViewById(R.id.etJob);
+        etWorkplace = rootView.findViewById(R.id.etWorkplace);
+
         btnSignup = rootView.findViewById(R.id.btnSignup);
         rbMale  = rootView.findViewById(R.id.rbMale);
         rbFemale  = rootView.findViewById(R.id.rbFemale);
@@ -122,6 +126,9 @@ public class SignupFragment extends Fragment {
                 final String pass = etPass.getText().toString();
                 final String confirmPass = etConfirm.getText().toString();
                 final String phone = etPhone.getText().toString();
+                final String address = etAddress.getText().toString();
+                final String job = etJob.getText().toString();
+                final String workplace = etWorkplace.getText().toString();
                 final FirebaseAuth mAuth;
                 String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
                 if(name.equals("")){
@@ -146,12 +153,25 @@ public class SignupFragment extends Fragment {
                 else if(!rbFemale.isChecked() && !rbMale.isChecked()){
                     Toast.makeText(myContext, "Bạn phải chọn giới tính", Toast.LENGTH_SHORT).show();
                 }
+                else if(address.equals("")) {
+                    Toast.makeText(myContext, "Địa chỉ không được để trống", Toast.LENGTH_SHORT).show();
+                    etName.requestFocus();
+                }
+                else if(job.equals("")) {
+                    Toast.makeText(myContext, "Nghề nghiệp không được để trống", Toast.LENGTH_SHORT).show();
+                    etName.requestFocus();
+                }
+                else if(workplace.equals("")) {
+                    Toast.makeText(myContext, "Nơi làm việc không được để trống", Toast.LENGTH_SHORT).show();
+                    etName.requestFocus();
+                }
                 else{
                     final ProgressDialog progress = new ProgressDialog(getActivity());
                     progress.setMessage("Đang đăng kí...");
                     progress.setCancelable(false); // disable dismiss by tapping outside of the dialog
                     progress.show();
                     mAuth = FirebaseAuth.getInstance();
+//                    post user
                     mAuth.createUserWithEmailAndPassword(email, pass)
                             .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
                                 @Override
@@ -166,8 +186,13 @@ public class SignupFragment extends Fragment {
                                         FirebaseUser userID = FirebaseAuth.getInstance().getCurrentUser();
 
                                         if (userID != null) {
+                                            String sex = null;
                                             String id = user.getUid();
-                                            User u = new User(name, email, id,"");
+                                            if (rbMale.isChecked())
+                                                sex = "Nam";
+                                            else if (rbFemale.isChecked())
+                                                sex = "Nữ";
+                                            User u = new User(name, email, id,"", phone, sex, address, job, workplace);
                                             mDatabase.child(id).setValue(u);
                                             Intent intent = new Intent(getActivity(), Home.class);
                                             startActivity(intent);

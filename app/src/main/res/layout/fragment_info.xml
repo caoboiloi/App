@@ -126,8 +126,9 @@
                     android:layout_gravity="center">
                     <TextView
                         android:id="@+id/name_user"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center"
                         android:layout_marginTop="10dp"
                         android:fontFamily="@font/proximanovaregular"
                         android:textColor="#424242"
@@ -135,10 +136,11 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/job_user_main"
+                        android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:fontFamily="@font/proximanovaregular"
-                        android:text="Android Developer"
+                        android:text=""
                         android:gravity="center"
                         android:textSize="14sp" />
 
@@ -401,6 +403,31 @@
                                 android:layout_height="40dp"
                                 android:background="@drawable/circular_grey_bordersolid"
                                 android:padding="10dp"
+                                android:src="@drawable/ic_sex" />
+
+                            <TextView
+                                android:id="@+id/sex_user"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="20dp"
+                                android:textColor="@color/goodgrey"
+                                android:text=""
+                                android:textSize="15sp"
+                                android:fontFamily="@font/proximanovaregular" />
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_marginTop="10dip"
+                            android:layout_height="wrap_content"
+                            android:gravity="center_vertical"
+                            android:paddingRight="8dp">
+
+                            <ImageView
+                                android:layout_width="40dp"
+                                android:layout_height="40dp"
+                                android:background="@drawable/circular_grey_bordersolid"
+                                android:padding="10dp"
                                 android:src="@drawable/ic_call_24dp" />
 
                             <TextView
@@ -521,33 +548,12 @@
                                 android:src="@drawable/paintbrush" />
 
                             <TextView
+                                android:id="@+id/job_user"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:text="Android dev, web dev"
+                                android:text=""
                                 android:textSize="15sp"/>
-                        </LinearLayout>
-
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="10dp"
-                            android:gravity="center_vertical"
-                            android:paddingRight="8dp">
-
-                            <ImageView
-                                android:layout_width="40dp"
-                                android:layout_height="40dp"
-                                android:background="@drawable/circular_grey_bordersolid"
-                                android:padding="10dp"
-                                android:src="@drawable/ic_email_24dp" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:layout_marginLeft="20dp"
-                                android:text="loihuynh.it@gmail.com"
-                                android:textSize="15sp" />
                         </LinearLayout>
 
                         <LinearLayout
@@ -565,10 +571,11 @@
                                 android:src="@drawable/ic_location_24dp" />
 
                             <TextView
+                                android:id="@+id/workplace_user"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="20dp"
-                                android:text="TDTU university"
+                                android:text=""
                                 android:textSize="15sp" />
                         </LinearLayout>
 
