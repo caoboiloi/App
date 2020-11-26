@@ -250,6 +250,7 @@ public class HomeFragment extends Fragment {
         btnFind.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                DatabaseReference mDatabase = null;
                 progressBar_cyclic.setVisibility(View.VISIBLE);
                 adapter = new HotelAdapter(getActivity(), hotels);
                 recyclerView.setAdapter(adapter);
@@ -259,12 +260,11 @@ public class HomeFragment extends Fragment {
                     return;
                 } else {
                     if (city.equals("Hồ Chí Minh")) {
-                        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
-                    } else {
-                        hotels.clear();
-                        adapter.notifyDataSetChanged();
-                        progressBar_cyclic.setVisibility(View.GONE);
-                        return;
+                        mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
+                    } else if (city.equals("Đà Nẵng")) {
+                        mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/DaNang");
+                    }else if (city.equals("Hà Nội")) {
+                        mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HaNoi");
                     }
 
 
@@ -285,7 +285,7 @@ public class HomeFragment extends Fragment {
                                 //filter by roomsize
                                 ArrayList<Booked> bookedsFilter = (ArrayList<Booked>) bookeds.stream().filter(p->p.getTypeRoom().equals(typeRoom)).collect(Collectors.toList());
 
-                                //check
+//                                check
                                 if(bookedsFilter.size() < hotel.getRoom().getTypeByName(typeRoom).getTotal()){
                                     hotels.add(hotel);
                                 }else{
@@ -307,7 +307,7 @@ public class HomeFragment extends Fragment {
                                 }
 
                             }
-
+//
                             adapter.notifyDataSetChanged();
                             progressBar_cyclic.setVisibility(View.GONE);
                         }
