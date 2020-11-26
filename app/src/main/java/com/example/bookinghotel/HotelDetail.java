@@ -18,8 +18,10 @@ import com.example.bookinghotel.entity.Booked;
 import com.example.bookinghotel.entity.Comment;
 import com.example.bookinghotel.entity.Hotel;
 import com.example.bookinghotel.entity.Rating;
+import com.example.bookinghotel.entity.User;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -39,6 +41,7 @@ public class HotelDetail extends AppCompatActivity {
     CommentAdapter adapter;
     private DatabaseReference mDatabase;
     Hotel hotel = new Hotel();
+    ArrayList<String> favorite = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,25 +56,55 @@ public class HotelDetail extends AppCompatActivity {
         progressBar_cyclic_detail= findViewById(R.id.progressBar_cyclic_detail);
         tvHotelName = findViewById(R.id.tvHotelName);
 
-        adapter = new CommentAdapter(HotelDetail.this, comments_data);
-        topAppBar.setNavigationOnClickListener(v -> {
-            // Handle navigation icon press
-            finish();
-        });
-
-        topAppBar.setOnMenuItemClickListener(item -> {
-            int id = item.getItemId();
-
-            item.setIcon(R.drawable.ic_baseline_favorite_24_red);
-
-            return true;
-        });
-
         Intent intent = getIntent();
         String path = intent.getExtras().getString("path", "");
         String hotelname = intent.getExtras().getString("hotelname", "Hotel detail");
         topAppBar.setTitle(hotelname);
         progressBar_cyclic_detail.setVisibility(View.VISIBLE);
+        adapter = new CommentAdapter(HotelDetail.this, comments_data);
+
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+
+        topAppBar.setNavigationOnClickListener(v -> {
+            // Handle navigation icon press
+            finish();
+        });
+        topAppBar.setOnMenuItemClickListener(item -> {
+            if(favorite.contains(path)){
+                favorite.remove(path);
+            }else{
+                favorite.add(path);
+            }
+            FirebaseDatabase.getInstance().getReference("Users/"+userId+"/favorite").setValue(favorite);
+            return true;
+        });
+
+
+        mDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                User user = dataSnapshot.getValue(User.class);
+                favorite = user.getFavorite();
+                if(favorite.contains(path)){
+                    topAppBar.getMenu().getItem(0).setIcon(R.drawable.ic_baseline_favorite_24_red);
+                }else{
+                    topAppBar.getMenu().getItem(0).setIcon(R.drawable.ic_baseline_favorite_border_24);
+                }
+
+
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+
+            }
+        });
+
+
+
 
         mDatabase = FirebaseDatabase.getInstance().getReference(path);
         mDatabase.addValueEventListener(new ValueEventListener() {
@@ -80,7 +113,6 @@ public class HotelDetail extends AppCompatActivity {
                 progressBar_cyclic_detail.setVisibility(View.VISIBLE);
                 comments_data.clear();
                 hotel = snapshot.getValue(Hotel.class);
-                Log.e("d", hotel.toString());
                 topAppBar.setTitle(hotel.getName());
                 tvHotelName.setText(hotel.getName());
                 //coment and rating
