@@ -4,6 +4,9 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,7 +14,13 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.bookinghotel.Adapter.BookedAdapter;
+import com.example.bookinghotel.Adapter.CanceledAdapter;
+import com.example.bookinghotel.Adapter.HotelAdapter;
 import com.example.bookinghotel.R;
+import com.example.bookinghotel.entity.Hotel;
+
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -54,6 +63,12 @@ public class CartFragment extends Fragment {
     LinearLayout booked, canceled;
     TextView booked_btn, canceled_btn;
 
+    RecyclerView rc_booked, rc_canceled;
+    private ArrayList<Hotel> data_booked = new ArrayList<>();
+    private ArrayList<Hotel> data_canceled = new ArrayList<>();
+    private BookedAdapter bookedAdapter;
+    private CanceledAdapter canceledAdapter;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -75,12 +90,29 @@ public class CartFragment extends Fragment {
         booked_btn = rootView.findViewById(R.id.booked_btn);
         canceled_btn = rootView.findViewById(R.id.cancel_btn);
 
+        // Recycler View
+        rc_booked = rootView.findViewById(R.id.list_booked);
+        rc_canceled = rootView.findViewById(R.id.list_canceled);
+
+        rc_booked.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        rc_booked.setHasFixedSize(true);
+        rc_booked.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
+        rc_canceled.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        rc_canceled.setHasFixedSize(true);
+        rc_canceled.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
         return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        bookedAdapter = new BookedAdapter(getActivity(), data_booked);
+        canceledAdapter = new CanceledAdapter(getActivity(), data_canceled);
+        rc_booked.setAdapter(bookedAdapter);
+        rc_canceled.setAdapter(canceledAdapter);
 
         booked_btn.setOnClickListener((View v) -> {
             booked.setVisibility(View.VISIBLE);
