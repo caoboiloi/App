@@ -11,29 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
-        <Button
-            android:id="@+id/btnUser"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="show user"/>
 
-        <Button
-            android:id="@+id/btnLogout"
-            android:layout_width="93dp"
-            android:layout_height="38dp"
-            android:text="Logout" />
-
-        <Button
-            android:id="@+id/btnHotel"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="hotel" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/btnShowHotel"
-            android:text="Hotel detail"
-            />
     </LinearLayout>
 
 </FrameLayout>

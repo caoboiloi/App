@@ -256,6 +256,7 @@ public class HomeFragment extends Fragment {
                 recyclerView.setAdapter(adapter);
                 String city = etDiemden.getText().toString();
 //                Log.e("test", startDate+" "+endDate);
+                hotels.clear();
                 if (city.trim().equals("")) {
                     return;
                 } else {
@@ -271,7 +272,6 @@ public class HomeFragment extends Fragment {
                     mDatabase.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            hotels.clear();
                             Log.e("asd", "begin "+readDate(startDate) +"  "+"end "+readDate(endDate));
                             for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 

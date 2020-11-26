@@ -42,11 +42,11 @@ public class FavoriteFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    Button btnShowUser, btnLogoout, btnHotel, btnShowHotel;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
-    ImageView ivImage;
+
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -84,10 +84,7 @@ public class FavoriteFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
-        btnLogoout = rootView.findViewById(R.id.btnLogout);
-        btnShowUser = rootView.findViewById(R.id.btnUser);
-        btnHotel = rootView.findViewById(R.id.btnHotel);
-        btnShowHotel = rootView.findViewById(R.id.btnShowHotel);
+
 
         return rootView;
     }
@@ -97,74 +94,74 @@ public class FavoriteFragment extends Fragment {
 
         super.onActivityCreated(savedInstanceState);
         //dang xuat
-        btnLogoout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                FirebaseAuth.getInstance().signOut();
-                Intent i = new Intent(getActivity(), Login_Signin.class);
-                startActivity(i);
-                getActivity().finish();
-            }
-        });
+//        btnLogoout.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                FirebaseAuth.getInstance().signOut();
+//                Intent i = new Intent(getActivity(), Login_Signin.class);
+//                startActivity(i);
+//                getActivity().finish();
+//            }
+//        });
 
         //read data user
-        btnShowUser.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
-                mDatabase.child(userId).addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-
-                        User user = dataSnapshot.getValue(User.class);
-
-                        Log.e("test", user.toString());
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        Log.e("test", "Failed to read value.");
-                    }
-                });
-
-            }
-        });
+//        btnShowUser.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+//                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+//                mDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//                        User user = dataSnapshot.getValue(User.class);
+//
+//                        Log.e("test", user.toString());
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(DatabaseError error) {
+//                        Log.e("test", "Failed to read value.");
+//                    }
+//                });
+//
+//            }
+//        });
         //   show all hotel
-        btnHotel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
-//                mDatabase.child("1").child("name").setValue("Hotel bigger123");
-                mDatabase.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
-                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-                            Hotel hotel = postSnapshot.getValue(Hotel.class);
-                            hotels.add(hotel);
-                        }
-                        for (Hotel i : hotels) {
-                            Log.e("test", i.toString());
-                        }
-
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
-
-            }
-        });
-        btnShowHotel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), HotelDetail.class);
-                getActivity().startActivity(intent);
-            }
-        });
+//        btnHotel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
+////                mDatabase.child("1").child("name").setValue("Hotel bigger123");
+//                mDatabase.addValueEventListener(new ValueEventListener() {
+//                    @Override
+//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+//                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+//                            Hotel hotel = postSnapshot.getValue(Hotel.class);
+//                            hotels.add(hotel);
+//                        }
+//                        for (Hotel i : hotels) {
+//                            Log.e("test", i.toString());
+//                        }
+//
+//
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                    }
+//                });
+//
+//            }
+//        });
+//        btnShowHotel.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent intent = new Intent(getActivity(), HotelDetail.class);
+//                getActivity().startActivity(intent);
+//            }
+//        });
     }
 }
