@@ -1,5 +1,7 @@
 package com.example.bookinghotel.entity;
 
+import java.util.ArrayList;
+
 public class User {
     private String name;
     private String email;
@@ -10,6 +12,7 @@ public class User {
     private String address;
     private String job;
     private String workplace;
+    ArrayList<String> favorite = new ArrayList<String>();
 
     public User() {
 
@@ -36,6 +39,14 @@ public class User {
         this.address = address;
         this.job = job;
         this.workplace = workplace;
+    }
+
+    public ArrayList<String> getFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(ArrayList<String> favorite) {
+        this.favorite = favorite;
     }
 
     public String getAddress() {

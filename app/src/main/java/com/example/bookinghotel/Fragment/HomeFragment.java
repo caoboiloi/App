@@ -63,6 +63,8 @@ import com.example.bookinghotel.entity.User;
 import com.example.bookinghotel.entity.Room;
 import com.example.bookinghotel.entity.Type;
 import com.example.bookinghotel.entity.Rating;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -170,6 +172,9 @@ public class HomeFragment extends Fragment {
         editor.putString("city", city);
         editor.putString("date", date);
         editor.putString("room", room);
+        Gson gson = new Gson();
+        String myJson = gson.toJson(hotels);
+        editor.putString("hotel", myJson);
         editor.apply();
     }
 
@@ -179,6 +184,14 @@ public class HomeFragment extends Fragment {
         String city = pref.getString("city","Hồ Chí Minh");
         String room = pref.getString("room","Medium");
         String date = pref.getString("date","2/12-5/12");
+        String hotel_pref = pref.getString("hotel",null);
+        if (hotel_pref !=null){
+            Gson gson = new Gson();
+            hotels = gson.fromJson(hotel_pref, new TypeToken<List<Hotel>>(){}.getType());
+            adapter = new HotelAdapter(getActivity(), hotels);
+            recyclerView.setAdapter(adapter);
+            adapter.notifyDataSetChanged();
+        }
         etDiemden.setText(city);
         tvRoomSize.setText(room);
         tvDate.setText(date);
@@ -276,7 +289,7 @@ public class HomeFragment extends Fragment {
                             for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
                                 Hotel hotel = postSnapshot.getValue(Hotel.class);
-
+                                hotel.setPath(postSnapshot.getRef().toString().replace("https://hotelbooking-5a74a.firebaseio.com/",""));
                                 ArrayList<Booked> booked = hotel.getBookeds();
                                 String typeRoom = tvRoomSize.getText().toString();
                                 Integer numberRoom = hotel.getRoom().getTypeByName(typeRoom).getTotal();
