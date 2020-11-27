@@ -97,6 +97,13 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+            <ProgressBar
+                android:paddingTop="50dp"
+                android:id="@+id/progressBar_cyclic"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/list_hotel_favourite"
                 android:layout_width="match_parent"

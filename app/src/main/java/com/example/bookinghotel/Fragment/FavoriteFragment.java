@@ -1,6 +1,7 @@
 package com.example.bookinghotel.Fragment;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -8,6 +9,9 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Base64;
 import android.util.Log;
@@ -16,9 +20,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
+import com.example.bookinghotel.Adapter.BookedAdapter;
+import com.example.bookinghotel.Adapter.HotelAdapter;
 import com.example.bookinghotel.HotelDetail;
 import com.example.bookinghotel.R;
+import com.example.bookinghotel.Screen.Home.Home;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
 import com.example.bookinghotel.entity.Hotel;
 import com.example.bookinghotel.entity.User;
@@ -30,6 +39,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.concurrent.Semaphore;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -47,6 +57,15 @@ public class FavoriteFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    ProgressBar progressBar_cyclic;
+    TextView favorite_btn;
+
+    private ArrayList<Hotel> hotels = new ArrayList<Hotel>();
+    private HotelAdapter adapter;
+    private SharedPreferences pref;
+    private RecyclerView recyclerView;
+
+    int temp = 0;
 
     public FavoriteFragment() {
         // Required empty public constructor
@@ -85,74 +104,146 @@ public class FavoriteFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_favorite, container, false);
 
+        recyclerView = rootView.findViewById(R.id.list_hotel_favourite);
+        progressBar_cyclic = rootView.findViewById(R.id.progressBar_cyclic);
+        favorite_btn = rootView.findViewById(R.id.favourite_btn);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        recyclerView.setHasFixedSize(true);
+        recyclerView.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         return rootView;
     }
+
+//    Tạo hướng đi giả cho dữ liệu
+
+    public interface OnGetDataListener {
+        void onSuccess(DataSnapshot dataSnapshot);
+        void onStart();
+        void onFailure();
+    }
+
+    public interface OnGetArrayHotels {
+        void onSuccess(ArrayList<Hotel> temp_hotels);
+        void onStart();
+        void onFailure();
+    }
+
+//    hàm load dữ liệu từ database
+//    Chạy vòng lặp vòng đời của firebase sẽ được load từ bất đồng bộ thành đồng bộ và lưu màng array list hotels ở hàm onSuccess
+
+    public void readDataStringFavorite(String userId, final OnGetArrayHotels Favoritelistener) {
+        Favoritelistener.onStart();
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+        mDatabase.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                User user = dataSnapshot.getValue(User.class);
+                for (String hotelPath : user.getFavorite()) {
+
+                    readDataOneHotel(hotelPath, new OnGetDataListener() {
+                        @Override
+                        public void onSuccess(DataSnapshot dataSnapshot) {
+                            temp += 1;
+                            Hotel hotel = dataSnapshot.getValue(Hotel.class);
+                            hotels.add(hotel);
+                            if (temp == user.getFavorite().size()) {
+                                Favoritelistener.onSuccess(hotels);
+                                temp = 0;
+                            }
+                        }
+                        @Override
+                        public void onStart() {
+                            //when starting
+                            Log.d("onStart", "Started");
+                        }
+
+                        @Override
+                        public void onFailure() {
+                            Log.d("onFailure", "Failed");
+                        }
+                    });
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.e("test", "Failed to read value.");
+                Favoritelistener.onFailure();
+            }
+        });
+    }
+
+//    hàm load dữ liệu từ database - path favorite
+
+    public void readDataOneHotel(String hotelPath, final OnGetDataListener listener) {
+        listener.onStart();
+        FirebaseDatabase.getInstance().getReference(hotelPath).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                listener.onSuccess(dataSnapshot);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                listener.onFailure();
+            }
+        });
+    }
+
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
 
         super.onActivityCreated(savedInstanceState);
-        //dang xuat
-//        btnLogoout.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                FirebaseAuth.getInstance().signOut();
-//                Intent i = new Intent(getActivity(), Login_Signin.class);
-//                startActivity(i);
-//                getActivity().finish();
-//            }
-//        });
+        progressBar_cyclic.setVisibility(View.VISIBLE);
+        adapter = new HotelAdapter(getActivity(), hotels);
+        recyclerView.setAdapter(adapter);
 
-        //read data user
-//        btnShowUser.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-//                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
-//                mDatabase.child(userId).addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                        User user = dataSnapshot.getValue(User.class);
-//
-//                        Log.e("test", user.toString());
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(DatabaseError error) {
-//                        Log.e("test", "Failed to read value.");
-//                    }
-//                });
-//
-//            }
-//        });
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+
+        readDataStringFavorite(userId, new OnGetArrayHotels() {
+            @Override
+            public void onSuccess(ArrayList<Hotel> temp_hotels) {
+                adapter.notifyDataSetChanged();
+                progressBar_cyclic.setVisibility(View.GONE);
+            }
+            @Override
+            public void onStart() {
+                //when starting
+                Log.d("onStart", "Started");
+            }
+
+            @Override
+            public void onFailure() {
+                Log.d("onFailure", "Failed");
+            }
+        });
+
         //   show all hotel
-//        btnHotel.setOnClickListener(new View.OnClickListener() {
+//        progressBar_cyclic.setVisibility(View.VISIBLE);
+//        adapter = new HotelAdapter(getActivity(), hotels);
+//        recyclerView.setAdapter(adapter);
+//
+//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
+//        mDatabase.addValueEventListener(new ValueEventListener() {
 //            @Override
-//            public void onClick(View view) {
-//                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
-////                mDatabase.child("1").child("name").setValue("Hotel bigger123");
-//                mDatabase.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        ArrayList<Hotel> hotels = new ArrayList<Hotel>();
-//                        for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-//                            Hotel hotel = postSnapshot.getValue(Hotel.class);
-//                            hotels.add(hotel);
-//                        }
-//                        for (Hotel i : hotels) {
-//                            Log.e("test", i.toString());
-//                        }
+//            public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
+//                    Hotel hotel = postSnapshot.getValue(Hotel.class);
+//                    hotels.add(hotel);
+//                }
+//                for (Hotel h : hotels) {
+//                    Log.e("test",h.toString());
+//                }
+//                adapter.notifyDataSetChanged();
+//                progressBar_cyclic.setVisibility(View.GONE);
+//            }
 //
-//
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError error) {
 //
 //            }
 //        });
