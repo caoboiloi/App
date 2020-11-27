@@ -198,57 +198,59 @@ public class FavoriteFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        SharedPreferences.Editor editor = pref.edit();
-        Gson gson = new Gson();
-        String myJson = gson.toJson(hotels);
-        editor.putString("favoriteHotel", myJson);
-        editor.apply();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        String hotel_pref = pref.getString("favoriteHotel",null);
-        if (hotel_pref !=null){
-            Gson gson = new Gson();
-            hotels = gson.fromJson(hotel_pref, new TypeToken<List<Hotel>>(){}.getType());
-            adapter = new HotelAdapter(getActivity(), hotels);
-            recyclerView.setAdapter(adapter);
-            adapter.notifyDataSetChanged();
-        }
-    }
+//    @Override
+//    public void onPause() {
+//        super.onPause();
+//        SharedPreferences.Editor editor = pref.edit();
+//        Gson gson = new Gson();
+//        String myJson = gson.toJson(hotels);
+//        editor.putString("favoriteHotel", myJson);
+//        editor.apply();
+//    }
+//
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        String hotel_pref = pref.getString("favoriteHotel",null);
+//        if (hotel_pref !=null){
+//            Gson gson = new Gson();
+//            hotels = gson.fromJson(hotel_pref, new TypeToken<List<Hotel>>(){}.getType());
+//            adapter = new HotelAdapter(getActivity(), hotels);
+//            recyclerView.setAdapter(adapter);
+//            adapter.notifyDataSetChanged();
+//        }
+//    }
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        String hotel_pref = pref.getString("favoriteHotel",null);
-        if (hotel_pref == null) {
-            progressBar_cyclic.setVisibility(View.VISIBLE);
-            adapter = new HotelAdapter(getActivity(), hotels);
-            recyclerView.setAdapter(adapter);
-            String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-            readDataStringFavorite(userId, new OnGetArrayHotels() {
-                @Override
-                public void onSuccess(ArrayList<Hotel> temp_hotels) {
-                    adapter.notifyDataSetChanged();
-                    progressBar_cyclic.setVisibility(View.GONE);
-                }
-                @Override
-                public void onStart() {
-                    //when starting
-                    Log.d("onStart", "Started");
-                }
+//        String hotel_pref = pref.getString("favoriteHotel",null);
+//        if (hotel_pref == null) {
+//
+//        }
 
-                @Override
-                public void onFailure() {
-                    Log.d("onFailure", "Failed");
-                }
-            });
-        }
-        
+        progressBar_cyclic.setVisibility(View.VISIBLE);
+        adapter = new HotelAdapter(getActivity(), hotels);
+        recyclerView.setAdapter(adapter);
+        String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        readDataStringFavorite(userId, new OnGetArrayHotels() {
+            @Override
+            public void onSuccess(ArrayList<Hotel> temp_hotels) {
+                adapter.notifyDataSetChanged();
+                progressBar_cyclic.setVisibility(View.GONE);
+            }
+            @Override
+            public void onStart() {
+                //when starting
+                Log.d("onStart", "Started");
+            }
+
+            @Override
+            public void onFailure() {
+                Log.d("onFailure", "Failed");
+            }
+        });
+
     }
 }
