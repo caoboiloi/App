@@ -1,5 +1,6 @@
 package com.example.bookinghotel.Fragment;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 
@@ -15,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -77,6 +79,8 @@ public class InfoFragment extends Fragment {
 
     TextView name_user, des_user, phone_user, email_user, address_user, sex_user, job_user, job_user_main, workplace_user;
 
+    TextView tv_edit_contact;
+
     ImageView btnLogoout, topAppBar;
 
     User user;
@@ -119,15 +123,27 @@ public class InfoFragment extends Fragment {
         job_user_main = rootView.findViewById(R.id.job_user_main);
         workplace_user = rootView.findViewById(R.id.workplace_user);
 
+        tv_edit_contact = rootView.findViewById(R.id.tv_edit_contact);
+
         btnLogoout = rootView.findViewById(R.id.btnLogout);
         topAppBar = rootView.findViewById(R.id.topAppBar);
 
         return rootView;
     }
 
+    private void dialogEditContact() {
+        Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.dialog_edit_contact);
+        dialog.show();
+    }
+
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        tv_edit_contact.setOnClickListener((View v) -> {
+            dialogEditContact();
+        });
 
         personalinfobtn.setOnClickListener(new View.OnClickListener() {
             @Override
