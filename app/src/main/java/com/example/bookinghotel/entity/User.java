@@ -12,6 +12,7 @@ public class User {
     private String address;
     private String job;
     private String workplace;
+    private ArrayList<Ticket> ticket = new ArrayList<>();
     ArrayList<String> favorite = new ArrayList<String>();
 
     public User() {
@@ -119,6 +120,14 @@ public class User {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public ArrayList<Ticket> getTicket() {
+        return ticket;
+    }
+
+    public void setTicket(ArrayList<Ticket> tickets) {
+        this.ticket = tickets;
     }
 
     @Override

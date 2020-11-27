@@ -193,7 +193,7 @@ public class InfoFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 user = dataSnapshot.getValue(User.class);
-
+                Log.e("asd", user.getTicket().toString());
 //              set data in TextView
                 name_user.setText(user.getName());
                 des_user.setText(user.getLove());

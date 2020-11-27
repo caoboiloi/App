@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ public class HotelDetail extends AppCompatActivity {
     ProgressBar progressBar_cyclic_detail;
     RecyclerView rvComment;
     TextView tvRatingAve, tvInfoRate, tvInfoRate1,tvHotelName;
+    Button btnBookLarge,btnBookMedium;
     ArrayList<Comment> comments_data = new ArrayList<>();
     CommentAdapter adapter;
     private DatabaseReference mDatabase;
@@ -55,6 +57,8 @@ public class HotelDetail extends AppCompatActivity {
         tvInfoRate1 = findViewById(R.id.tvInfoRate1);
         progressBar_cyclic_detail= findViewById(R.id.progressBar_cyclic_detail);
         tvHotelName = findViewById(R.id.tvHotelName);
+        btnBookLarge = findViewById(R.id.btnBookLarge);
+        btnBookMedium = findViewById(R.id.btnBookMedimum);
 
         Intent intent = getIntent();
         String path = intent.getExtras().getString("path", "");
@@ -154,6 +158,29 @@ public class HotelDetail extends AppCompatActivity {
                 progressBar_cyclic_detail.setVisibility(View.GONE);
             }
         });
+
+        btnBookLarge.setOnClickListener(v -> {
+
+            Intent intent1 = new Intent(this, BookRoom.class);
+            intent1.putExtra("price", hotel.getRoom().getLarge().getPrice());
+            ArrayList<Booked> bookeds = hotel.getBookeds();
+            Gson gson = new Gson();
+            String myJson = gson.toJson(bookeds);
+            intent1.putExtra("bookeds", myJson);
+            intent1.putExtra("numberRoom", hotel.getRoom().getLarge().getTotal());
+            startActivity(intent1);
+        });
+        btnBookMedium.setOnClickListener(v -> {
+            Intent intent1 = new Intent(this, BookRoom.class);
+            intent1.putExtra("price", hotel.getRoom().getMedium().getPrice());
+            ArrayList<Booked> bookeds = hotel.getBookeds();
+            Gson gson = new Gson();
+            String myJson = gson.toJson(bookeds);
+            intent1.putExtra("bookeds", myJson);
+            intent1.putExtra("numberRoom", hotel.getRoom().getMedium().getTotal());
+            startActivity(intent1);
+        });
+
 
 
     }
