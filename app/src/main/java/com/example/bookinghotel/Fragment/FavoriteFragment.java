@@ -249,38 +249,6 @@ public class FavoriteFragment extends Fragment {
                 }
             });
         }
-
-        //   show all hotel
-//        progressBar_cyclic.setVisibility(View.VISIBLE);
-//        adapter = new HotelAdapter(getActivity(), hotels);
-//        recyclerView.setAdapter(adapter);
-//
-//        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Hotel/HoChiMinh");
-//        mDatabase.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                for (DataSnapshot postSnapshot : snapshot.getChildren()) {
-//                    Hotel hotel = postSnapshot.getValue(Hotel.class);
-//                    hotels.add(hotel);
-//                }
-//                for (Hotel h : hotels) {
-//                    Log.e("test",h.toString());
-//                }
-//                adapter.notifyDataSetChanged();
-//                progressBar_cyclic.setVisibility(View.GONE);
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
-//        btnShowHotel.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent = new Intent(getActivity(), HotelDetail.class);
-//                getActivity().startActivity(intent);
-//            }
-//        });
+        
     }
 }

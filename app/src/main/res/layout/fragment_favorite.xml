@@ -105,9 +105,12 @@
                 android:layout_height="match_parent" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:background="@drawable/circularbordersolid"
                 android:id="@+id/list_hotel_favourite"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dip"
+                android:layout_marginBottom="20dip">
 
             </androidx.recyclerview.widget.RecyclerView>
         </LinearLayout>
