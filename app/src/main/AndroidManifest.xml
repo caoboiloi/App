@@ -13,11 +13,12 @@
         android:roundIcon="@drawable/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HotelDetail"></activity>
+        <activity android:name=".BookRoom"></activity>
+        <activity android:name=".HotelDetail" />
         <activity
             android:name=".Screen.Home.Home"
             android:theme="@style/AppTheme1" />
-        <activity android:name=".Screen.Login.Login_Signin"></activity>
+        <activity android:name=".Screen.Login.Login_Signin" />
         <activity
             android:name=".MainActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">

@@ -71,7 +71,6 @@
 
                 <TextView
                     android:id="@+id/tvHotelName"
-
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="Vinpearl Discorery 2 Nha Trang"
@@ -181,12 +180,111 @@
                 android:layout_height=".5dp"
                 android:layout_marginLeft="10dp"
                 android:background="#000000" />
-
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="300dp"
-                android:text="ád" />
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical"
+                android:padding="10dp">
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="10dp"
+                    android:text="Đặt phòng"
+                    android:textAllCaps="true"
+                    android:textStyle="bold" />
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/llMedium"
+                    >
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:id="@+id/ivMediumPictureMedium"
+                        android:src="@drawable/banner"
+                        android:paddingRight="30dp"
+                        />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingRight="20dp"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Giá 1 ngày 1 đêm (Phòng Medium) : "
+                            />
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textColor="@color/background"
+                            android:id="@+id/tvPriceMedium"
+                            android:text="100000"
+                            />
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Đặt phòng"
+                            android:background="@drawable/rounded_corner_button"
+                            app:backgroundTint="#388E3C"
+                            android:id="@+id/btnBookMedimum"/>
+                    </LinearLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_marginTop="20dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:id="@+id/llLarge"
+                    >
+                    <ImageView
+                        android:layout_width="50dp"
+                        android:layout_height="100dp"
+                        android:layout_weight="1"
+                        android:id="@+id/ivMediumPictureLarge"
+                        android:src="@drawable/banner"
+                        android:paddingRight="30dp"
+                        />
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical"
+                        android:paddingRight="20dp"
+                        >
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Giá 1 ngày 1 đêm (Phòng Large) : "
+                            />
+                        <TextView
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:textSize="20sp"
+                            android:textColor="@color/background"
+                            android:id="@+id/tvPriceLarge"
+                            android:text="100000"
+                            />
+                        <Button
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="Đặt phòng"
+                            android:background="@drawable/rounded_corner_button"
+                            app:backgroundTint="#388E3C"
+                            android:id="@+id/btnBookLarge"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
     </LinearLayout>
