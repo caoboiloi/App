@@ -28,7 +28,7 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:padding="10dp"
-            android:src="@drawable/ic_baseline_business_24_white" />
+            android:src="@drawable/ic_baseline_format_align_left_24" />
 
         <Space
             android:layout_width="wrap_content"
@@ -61,7 +61,7 @@
                 android:layout_height="40dp"
                 android:layout_centerInParent="true"
                 android:padding="6dp"
-                android:src="@drawable/ic_signout" />
+                android:src="@drawable/ic_baseline_notifications_24" />
 
             <!--            <ImageView-->
             <!--                android:layout_width="40dp"-->
