@@ -1,134 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.core.widget.NestedScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".Fragment.HomeFragment">
+    tools:context=".Fragment.FavoriteFragment"
+    android:background="@color/grey"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:paddingLeft="30dp"
-            android:paddingRight="30dp"
-            android:paddingTop="10dp"
-            android:paddingBottom="10dp"
+        android:layout_height="240dp"
+        android:background="#00838F" />
+
+    <LinearLayout
+        android:id="@+id/topbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:gravity="center_vertical"
+        android:padding="16dp">
+
+        <ImageView
+            android:clickable="true"
+            android:background="?selectableItemBackground"
+            android:id="@+id/topAppBar"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:padding="10dp"
+            android:src="@drawable/ic_baseline_business_24_white" />
+
+        <Space
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:elevation="25dp"
-            android:background="@drawable/rounded_corner_button">
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/outlinedTextField"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Điểm đến"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+            android:layout_weight="1" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:id="@+id/etDiemden"
-                    android:focusable="false"
-                    android:layout_height="wrap_content"
-                    android:editable="false" />
-                <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_width="match_parent"
-                    android:layout_height=".3dp"
-                    android:background="@android:color/black" />
-            </com.google.android.material.textfield.TextInputLayout>
-            <LinearLayout
-
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dip">
-                <LinearLayout
-                    android:id="@+id/llDate"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="10sp"
-                        android:text="Ngày"/>
-                    <TextView
-                        android:id="@+id/tvDate"
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="13 th12 -14th12"/>
-                </LinearLayout>
-                <TextView
-                    android:layout_width=".4dp"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/black" />
-                <LinearLayout
-                    android:paddingLeft="15dp"
-                    android:layout_weight="1"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical">
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textSize="10sp"
-                        android:text="Phòng"/>
-                    <TextView
-                        android:id="@+id/tvRoomSize"
-                        android:textStyle="bold"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Medium"/>
-                </LinearLayout>
-
-            </LinearLayout>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height=".3dp"
-                android:background="@android:color/black"
-
-                />
-            <Button
-                android:id="@+id/btnFind"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:textAllCaps="false"
-                android:layout_height="wrap_content"
-                android:background="@drawable/ripple_button"
-                android:textColor="@android:color/white"
-                android:gravity="center"
-                android:text="Tìm khách sạn"/>
-        </LinearLayout>
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <ProgressBar
-                android:paddingTop="50dp"
-                android:id="@+id/progressBar_cyclic"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-            <androidx.recyclerview.widget.RecyclerView
-                android:background="@android:color/white"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:id="@+id/recyclerView_hotel"
-                android:layout_marginTop="10dip">
-            </androidx.recyclerview.widget.RecyclerView>
-        </LinearLayout>
+            android:text="Home"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <RelativeLayout
+            android:layout_width="50dp"
+            android:layout_height="50dp">
 
 
+            <ImageView
+                android:clickable="true"
+                android:background="?selectableItemBackground"
+                android:id="@+id/btnLogout"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_centerInParent="true"
+                android:padding="6dp"
+                android:src="@drawable/ic_signout" />
+
+            <!--            <ImageView-->
+            <!--                android:layout_width="40dp"-->
+            <!--                android:layout_height="40dp"-->
+            <!--                android:layout_centerInParent="true"-->
+            <!--                android:padding="6dp"-->
+            <!--                android:src="@drawable/ic_notifications_white_24dp" />-->
+
+            <!--            <ImageView-->
+            <!--                android:layout_width="20dp"-->
+            <!--                android:layout_height="20dp"-->
+            <!--                android:layout_alignParentTop="true"-->
+            <!--                android:layout_alignParentEnd="true"-->
+            <!--                android:layout_margin="8dp"-->
+            <!--                android:padding="4dp"-->
+            <!--                android:src="@drawable/circleyellowfil" />-->
+        </RelativeLayout>
 
     </LinearLayout>
 
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/topbar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingRight="20dp">
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:paddingLeft="30dp"
+                android:paddingRight="30dp"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@drawable/circularbordersolid">
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/outlinedTextField"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Điểm đến"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:layout_width="match_parent"
+                        android:id="@+id/etDiemden"
+                        android:focusable="false"
+                        android:layout_height="wrap_content"
+                        android:editable="false" />
+                    <TextView
+                        android:layout_marginTop="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height=".3dp"
+                        android:background="@android:color/black" />
+                </com.google.android.material.textfield.TextInputLayout>
+                <LinearLayout
+
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="10dip">
+                    <LinearLayout
+                        android:id="@+id/llDate"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp"
+                            android:text="Ngày"/>
+                        <TextView
+                            android:id="@+id/tvDate"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="13 th12 -14th12"/>
+                    </LinearLayout>
+                    <TextView
+                        android:layout_width=".4dp"
+                        android:layout_height="match_parent"
+                        android:background="@android:color/black" />
+                    <LinearLayout
+                        android:paddingLeft="15dp"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="10sp"
+                            android:text="Phòng"/>
+                        <TextView
+                            android:id="@+id/tvRoomSize"
+                            android:textStyle="bold"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Medium"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height=".3dp"
+                    android:background="@android:color/black"
+
+                    />
+                <Button
+                    android:id="@+id/btnFind"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:textAllCaps="false"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/ripple_button"
+                    android:textColor="@android:color/white"
+                    android:gravity="center"
+                    android:text="Tìm khách sạn"/>
+            </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:orientation="vertical">
+                <ProgressBar
+                    android:paddingTop="50dp"
+                    android:id="@+id/progressBar_cyclic"
+                    android:visibility="gone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:background="@android:color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:id="@+id/recyclerView_hotel"
+                    android:layout_marginTop="10dip">
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+
+
+        </LinearLayout>
 
 
 
 
-</androidx.core.widget.NestedScrollView>
+
+    </androidx.core.widget.NestedScrollView>
+</RelativeLayout>
