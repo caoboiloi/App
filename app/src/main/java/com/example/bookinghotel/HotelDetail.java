@@ -12,6 +12,7 @@ import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,8 +43,10 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
 import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Locale;
 import java.util.stream.Collectors;
 
 public class HotelDetail extends AppCompatActivity {
@@ -90,6 +93,7 @@ public class HotelDetail extends AppCompatActivity {
         main_content1 = findViewById(R.id.main_content1);
 
         Intent intent = getIntent();
+
         String path = intent.getExtras().getString("path", "");
         String hotelname = intent.getExtras().getString("hotelname", "Hotel detail");
         topAppBar.setTitle(hotelname);
@@ -140,17 +144,19 @@ public class HotelDetail extends AppCompatActivity {
 
 
         mDatabase = FirebaseDatabase.getInstance().getReference(path);
+
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 progressBar_cyclic_detail.setVisibility(View.VISIBLE);
                 comments_data.clear();
                 hotel = snapshot.getValue(Hotel.class);
                 Log.e("Ad", String.valueOf(hotel));
                 topAppBar.setTitle(hotel.getName());
                 tvHotelName.setText(hotel.getName());
-                tvPriceLarge.setText(hotel.getRoom().getLarge().getPrice()+"");
-                tvPriceMedium.setText(hotel.getRoom().getMedium().getPrice()+"");
+                tvPriceLarge.setText(NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(hotel.getRoom().getLarge().getPrice()));
+                tvPriceMedium.setText(NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(hotel.getRoom().getMedium().getPrice()));
                 byte[] decodedString1 = Base64.decode(hotel.getImage(), Base64.DEFAULT);
                 Bitmap decodedByte1 = BitmapFactory.decodeByteArray(decodedString1, 0, decodedString1.length);
                 Bitmap bMapScaled1 = Bitmap.createScaledBitmap(decodedByte1, 1000, 400, true);
@@ -203,6 +209,12 @@ public class HotelDetail extends AppCompatActivity {
                     }
                 }
                 progressBar_cyclic_detail.setVisibility(View.GONE);
+                String status = intent.getStringExtra("status");
+                if(status != null){
+                    Snackbar snackbar = Snackbar
+                            .make(main_content1, "Đặt phòng thành công", Snackbar.LENGTH_SHORT);
+                    snackbar.show();
+                }
             }
 
             @Override

@@ -3,10 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="horizontal"
-    android:clickable="true"
-    android:background="@drawable/ripple_custome_hotel_row">
-
+    android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -79,7 +76,7 @@
                     style="?android:attr/ratingBarStyleSmall"
                     android:layout_marginBottom="4dip"/>
 
-\
+                \
 
                 <TextView
                     android:id="@+id/price_hotel_booked"
@@ -90,8 +87,8 @@
 
                 <TextView
                     android:layout_marginEnd="0dip"
-                    android:layout_marginTop="5dip"
-                    android:layout_marginBottom="5dip"
+                    android:layout_marginTop="15dip"
+                    android:layout_marginBottom="15dip"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:background="#000000"
@@ -100,24 +97,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ĐẶT THÀNH CÔNG"
-                    android:textColor="@color/mdtp_red"/>
-                <Button
+                    android:text="Đã hủy"
+                    android:textColor="#B71C1C"/>
 
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Hủy"
-                    app:icon="@drawable/ic_close_24dp"
-                    android:textColor="@color/white"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
-                    android:background="@drawable/ripple_button"
-                    app:backgroundTint="#C62828"
-                    app:iconTint="@color/white"
-                    android:id="@+id/btnCancelRoom"/>
             </LinearLayout>
         </LinearLayout>
     </LinearLayout>
-
-
-
 </LinearLayout>
