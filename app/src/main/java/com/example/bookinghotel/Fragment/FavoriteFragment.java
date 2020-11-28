@@ -152,6 +152,7 @@ public class FavoriteFragment extends Fragment {
                         public void onSuccess(DataSnapshot dataSnapshot) {
                             temp += 1;
                             Hotel hotel = dataSnapshot.getValue(Hotel.class);
+                            hotel.setPath(dataSnapshot.getRef().toString().replace("https://hotelbooking-5a74a.firebaseio.com/",""));
                             hotels.add(hotel);
                             if (temp == user.getFavorite().size()) {
                                 Favoritelistener.onSuccess(hotels);
