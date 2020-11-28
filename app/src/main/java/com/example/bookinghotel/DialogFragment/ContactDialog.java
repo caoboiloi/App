@@ -27,7 +27,7 @@ public class ContactDialog extends DialogFragment {
     private static final String TAG = "ContactDialog";
 
     RadioButton is_checked_male_contact, is_checked_female_contact;
-    EditText et_phone_contact, et_email_contact, et_address_contact;
+    EditText et_phone_contact, et_email_contact, et_address_contact, et_name_contact;
     TextView btn_cancel_contact, btn_save_contact;
 
     @Nullable
@@ -42,6 +42,7 @@ public class ContactDialog extends DialogFragment {
         et_address_contact = rootView.findViewById(R.id.et_address_contact);
         et_email_contact = rootView.findViewById(R.id.et_email_contact);
         et_phone_contact = rootView.findViewById(R.id.et_phone_contact);
+        et_name_contact = rootView.findViewById(R.id.et_name_contact);
 
         btn_cancel_contact = (TextView) rootView.findViewById(R.id.btn_cancel_contact);
         btn_save_contact = (TextView) rootView.findViewById(R.id.btn_save_contact);
@@ -54,6 +55,7 @@ public class ContactDialog extends DialogFragment {
             String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
             boolean is_checked_male = is_checked_male_contact.isChecked();
             boolean is_checked_female = is_checked_female_contact.isChecked();
+            String name = et_name_contact.getText().toString();
             String address = et_address_contact.getText().toString();
             String email = et_email_contact.getText().toString();
             String phone = et_phone_contact.getText().toString();
@@ -67,6 +69,10 @@ public class ContactDialog extends DialogFragment {
 
             if (!is_checked_female && !is_checked_male) {
                 Toast.makeText(getActivity(),"Vui lòng chọn giới tính", Toast.LENGTH_SHORT).show();
+            }
+            else if (name.equals("")) {
+                Toast.makeText(getActivity(),"Tên không hợp lệ", Toast.LENGTH_SHORT).show();
+                et_name_contact.requestFocus();
             }
             else if (phone.length() < 10) {
                 Toast.makeText(getActivity(),"Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
@@ -84,6 +90,7 @@ public class ContactDialog extends DialogFragment {
                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
                 mDatabase.child(userId).child("sex").setValue(sex);
+                mDatabase.child(userId).child("name").setValue(name);
                 mDatabase.child(userId).child("phone").setValue(phone);
                 mDatabase.child(userId).child("email").setValue(email);
                 mDatabase.child(userId).child("address").setValue(address);

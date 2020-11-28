@@ -335,6 +335,7 @@
                                 android:layout_weight="1" />
 
                             <TextView
+                                android:id="@+id/tv_edit_about_me"
                                 android:gravity="center"
                                 android:paddingStart="10dip"
                                 android:paddingEnd="10dip"

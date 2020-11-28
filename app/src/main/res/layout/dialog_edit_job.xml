@@ -20,66 +20,27 @@
             android:gravity="center"
             android:textSize="20dip"
             android:textStyle="bold"
-            android:text="Edit contact"/>
+            android:text="Edit job detail"/>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <RadioGroup
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal">
-                <TextView
-                    android:layout_gravity="center"
-                    android:gravity="center"
-                    android:layout_width="0dip"
-                    android:textSize="20dip"
-                    android:layout_height="match_parent"
-                    android:text="Sex"
-                    android:layout_weight="1"/>
-                <RadioButton
-                    android:id="@+id/is_checked_male_contact"
-                    android:text="Nam"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-                <RadioButton
-                    android:id="@+id/is_checked_female_contact"
-                    android:text="Nữ"
-                    android:layout_width="0dip"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"/>
-            </RadioGroup>
-
         </LinearLayout>
 
         <EditText
-            android:id="@+id/et_name_contact"
+            android:id="@+id/et_job"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Name"/>
 
         <EditText
-            android:id="@+id/et_phone_contact"
+            android:id="@+id/et_workplace_job"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Phone"
             android:inputType="phone"/>
-
-        <EditText
-            android:id="@+id/et_email_contact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Email"
-            android:inputType="textEmailAddress"/>
-
-        <EditText
-            android:id="@+id/et_address_contact"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Address" />
 
         <RelativeLayout
             android:layout_margin="20dip"
@@ -94,7 +55,7 @@
                 android:paddingStart="20dip"
                 android:paddingEnd="20dip"
                 android:layout_margin="10dip"
-                android:id="@+id/btn_cancel_contact"
+                android:id="@+id/btn_cancel_job"
                 android:clickable="true"
                 android:background="?selectableItemBackground"
                 android:layout_width="100dip"
@@ -110,7 +71,7 @@
                 android:paddingStart="20dip"
                 android:paddingEnd="20dip"
                 android:layout_margin="10dip"
-                android:id="@+id/btn_save_contact"
+                android:id="@+id/btn_save_job"
                 android:layout_alignParentEnd="true"
                 android:background="?selectableItemBackground"
                 android:clickable="true"
@@ -120,7 +81,7 @@
                 android:textSize="17dip"
                 android:text="Save"
                 android:layout_marginEnd="10dip"/>
-    </RelativeLayout>
+        </RelativeLayout>
 
 
     </LinearLayout>

@@ -24,6 +24,7 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bookinghotel.DialogFragment.AboutMeDialog;
 import com.example.bookinghotel.DialogFragment.ContactDialog;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
@@ -83,7 +84,7 @@ public class InfoFragment extends Fragment {
 
     TextView name_user, des_user, phone_user, email_user, address_user, sex_user, job_user, job_user_main, workplace_user;
 
-    TextView tv_edit_contact;
+    TextView tv_edit_contact, tv_edit_about_me;
 
     ImageView btnLogoout, topAppBar;
 
@@ -132,6 +133,7 @@ public class InfoFragment extends Fragment {
         workplace_user = rootView.findViewById(R.id.workplace_user);
 
         tv_edit_contact = rootView.findViewById(R.id.tv_edit_contact);
+        tv_edit_about_me = rootView.findViewById(R.id.tv_edit_about_me);
 
         btnLogoout = rootView.findViewById(R.id.btnLogout);
         topAppBar = rootView.findViewById(R.id.topAppBar);
@@ -147,8 +149,11 @@ public class InfoFragment extends Fragment {
         tv_edit_contact.setOnClickListener((View v) -> {
             ContactDialog contact_dialog = new ContactDialog();
             contact_dialog.show(getFragmentManager(),"ContactDialog");
+        });
 
-            Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
+        tv_edit_about_me.setOnClickListener((View v) -> {
+            AboutMeDialog about_dialog = new AboutMeDialog();
+            about_dialog.show(getFragmentManager(),"AboutMeDialog");
         });
 
         personalinfobtn.setOnClickListener(new View.OnClickListener() {
