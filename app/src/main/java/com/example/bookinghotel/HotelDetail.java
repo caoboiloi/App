@@ -7,10 +7,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
@@ -37,8 +41,10 @@ public class HotelDetail extends AppCompatActivity {
     MaterialToolbar topAppBar;
     ProgressBar progressBar_cyclic_detail;
     RecyclerView rvComment;
-    TextView tvRatingAve, tvInfoRate, tvInfoRate1,tvHotelName;
+    TextView tvRatingAve, tvInfoRate, tvInfoRate1,tvHotelName,tvPriceLarge,tvPriceMedium;
     Button btnBookLarge,btnBookMedium;
+    ImageView ivMediumPictureMedium, ivMediumPictureLarge;
+
     ArrayList<Comment> comments_data = new ArrayList<>();
     CommentAdapter adapter;
     private DatabaseReference mDatabase;
@@ -59,6 +65,11 @@ public class HotelDetail extends AppCompatActivity {
         tvHotelName = findViewById(R.id.tvHotelName);
         btnBookLarge = findViewById(R.id.btnBookLarge);
         btnBookMedium = findViewById(R.id.btnBookMedimum);
+        tvPriceLarge = findViewById(R.id.tvPriceLarge);
+        tvPriceMedium = findViewById(R.id.tvPriceMedium);
+        ivMediumPictureLarge = findViewById(R.id.ivMediumPictureLarge);
+        ivMediumPictureMedium = findViewById(R.id.ivMediumPictureMedium);
+
 
         Intent intent = getIntent();
         String path = intent.getExtras().getString("path", "");
@@ -119,6 +130,23 @@ public class HotelDetail extends AppCompatActivity {
                 hotel = snapshot.getValue(Hotel.class);
                 topAppBar.setTitle(hotel.getName());
                 tvHotelName.setText(hotel.getName());
+                tvPriceLarge.setText(hotel.getRoom().getLarge().getPrice()+"");
+                tvPriceMedium.setText(hotel.getRoom().getMedium().getPrice()+"");
+                if(hotel.getRoom().getLarge().getImage().size()>0){
+                    String pictureLarge = hotel.getRoom().getLarge().getImage().get(0);
+                    byte[] decodedString = Base64.decode(pictureLarge, Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    Bitmap bMapScaled = Bitmap.createScaledBitmap(decodedByte, 800, 300, true);
+                    ivMediumPictureLarge.setImageBitmap(bMapScaled);
+                }
+                if(hotel.getRoom().getMedium().getImage().size()>0){
+                    String pictureMedium = hotel.getRoom().getMedium().getImage().get(0);
+                    byte[] decodedString = Base64.decode(pictureMedium, Base64.DEFAULT);
+                    Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                    Bitmap bMapScaled = Bitmap.createScaledBitmap(decodedByte, 800, 300, true);
+                    ivMediumPictureMedium.setImageBitmap(bMapScaled);
+
+                }
                 //coment and rating
                 ArrayList<Rating> rating = hotel.getRating();
                 for (Rating i : rating) {
@@ -167,6 +195,7 @@ public class HotelDetail extends AppCompatActivity {
             Gson gson = new Gson();
             String myJson = gson.toJson(bookeds);
             intent1.putExtra("bookeds", myJson);
+            intent1.putExtra("type", "Large");
             intent1.putExtra("numberRoom", hotel.getRoom().getLarge().getTotal());
             startActivity(intent1);
         });
@@ -177,6 +206,7 @@ public class HotelDetail extends AppCompatActivity {
             Gson gson = new Gson();
             String myJson = gson.toJson(bookeds);
             intent1.putExtra("bookeds", myJson);
+            intent1.putExtra("type", "Medium");
             intent1.putExtra("numberRoom", hotel.getRoom().getMedium().getTotal());
             startActivity(intent1);
         });

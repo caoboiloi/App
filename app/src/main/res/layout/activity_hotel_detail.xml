@@ -218,7 +218,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Giá 1 ngày 1 đêm (Phòng Medium) : "
+                            android:text="Giá 1 ngày 1 đêm (Phòng Medium)"
                             />
                         <TextView
                             android:gravity="center"
@@ -263,7 +263,7 @@
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Giá 1 ngày 1 đêm (Phòng Large) : "
+                            android:text="Giá 1 ngày 1 đêm (Phòng Large)"
                             />
                         <TextView
                             android:gravity="center"

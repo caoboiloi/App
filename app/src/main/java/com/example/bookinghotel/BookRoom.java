@@ -35,11 +35,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BookRoom extends AppCompatActivity {
     FloatingActionButton ivBookBack;
     TextView tvBookPrice,tvSoPhong,tvNgayDat, tvNgayTra;
-    Button btnBookRoom, btnNgayDat,btnNgayTra;
+    Button btnBookRoom, btnNgayDat,btnNgayTra,btnBook;
     CoordinatorLayout main_content;
 
     @Override
@@ -56,15 +57,19 @@ public class BookRoom extends AppCompatActivity {
         tvNgayDat = findViewById(R.id.tvNgayDat);
         tvNgayTra = findViewById(R.id.tvNgayTra);
         btnNgayTra = findViewById(R.id.btnNgayTra);
+        btnBook = findViewById(R.id.btnBook);
 
         Intent intent = getIntent();
         Integer price = intent.getIntExtra("price",0);
         String boookeds = intent.getStringExtra("bookeds");
+        String type = intent.getStringExtra("type");
         Integer numberRoom = intent.getIntExtra("numberRoom",0);
         Gson gson = new Gson();
-        ArrayList<Booked> date = gson.fromJson(boookeds, new TypeToken<List<Booked>>() {
+        ArrayList<Booked> date1 = gson.fromJson(boookeds, new TypeToken<List<Booked>>() {
         }.getType());
-        Log.e("asd", date.toString());
+
+        //filter by type
+        ArrayList<Booked> date = (ArrayList<Booked>) date1.stream().filter(p->p.getTypeRoom().equals(type)).collect(Collectors.toList());
 
 
         tvBookPrice.setText(String.valueOf(price));
@@ -83,7 +88,6 @@ public class BookRoom extends AppCompatActivity {
             });
         });
         btnNgayDat.setOnClickListener(v -> {
-
 
 
             if(tvSoPhong.getText().toString().equals("Chưa có phòng nào được chọn")){
@@ -141,6 +145,7 @@ public class BookRoom extends AppCompatActivity {
                 DatePickerDialog dpd = DatePickerDialog.newInstance(
                         (view, year, monthOfYear, dayOfMonth) -> {
                             tvNgayDat.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
+                            tvNgayTra.setText("Chưa có");
                         },
                         now.get(Calendar.YEAR), // Initial year selection
                         now.get(Calendar.MONTH), // Initial month selection
@@ -228,6 +233,8 @@ public class BookRoom extends AppCompatActivity {
                 DatePickerDialog dpd = DatePickerDialog.newInstance(
                         (view, year, monthOfYear, dayOfMonth) -> {
                             tvNgayTra.setText(dayOfMonth+"/"+(monthOfYear+1)+"/"+year);
+                            Calendar calendarEnd = new GregorianCalendar(year,monthOfYear,dayOfMonth);
+
                         },
                         now.get(Calendar.YEAR), // Initial year selection
                         now.get(Calendar.MONTH), // Initial month selection
@@ -238,9 +245,52 @@ public class BookRoom extends AppCompatActivity {
                 dpd.setMinDate(ngayDatCalender);
                 Calendar[] calendarArrayListNew = new Calendar[calendarArrayList.size()];
                 calendarArrayListNew= calendarArrayList.toArray(calendarArrayListNew);
+                for(Calendar i : calendarArrayList){
+                    if(ngayDatCalender.before(i)){
+                        dpd.setMaxDate(i);
+                        break;
+                    }
+                }
                 dpd.setDisabledDays(calendarArrayListNew);
                 dpd.show(getSupportFragmentManager(), "Datepickerdialog");
             }
+        });
+        btnBook.setOnClickListener(v -> {
+            if(!tvNgayTra.getText().toString().equals("Chưa có") && !tvNgayTra.getText().toString().equals("Chưa có") ){
+                String[] ngayDat = tvNgayDat.getText().toString().split("/");
+                Calendar ngayDatCalender =  getCalendar(Integer.parseInt(ngayDat[2]),Integer.parseInt(ngayDat[1]) ,Integer.parseInt(ngayDat[0]));
+
+                String[] ngayTra = tvNgayTra.getText().toString().split("/");
+                Calendar ngayTraCalender =  getCalendar(Integer.parseInt(ngayTra[2]),Integer.parseInt(ngayTra[1]) ,Integer.parseInt(ngayTra[0]));
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
+                Log.e("Asd", dateFormat.format(ngayDatCalender.getTimeInMillis()) + " "+ dateFormat.format(ngayTraCalender.getTimeInMillis()));
+            }
+            else if(tvNgayDat.getText().toString().equals("Chưa có")){
+                Snackbar snackbar = Snackbar
+                        .make(main_content, "Bạn chưa chọn ngày đặt phòng", Snackbar.LENGTH_SHORT)
+                        .setAction("Chọn ngày", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //Code khi bấm vào nút thư lại ở đây
+                                btnNgayDat.performClick();
+                            }
+                        });
+                snackbar.show();
+            }else if(tvNgayTra.getText().toString().equals("Chưa có")){
+                Snackbar snackbar = Snackbar
+                        .make(main_content, "Bạn chưa chọn ngày trả phòng", Snackbar.LENGTH_SHORT)
+                        .setAction("Chọn ngày", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                //Code khi bấm vào nút thư lại ở đây
+                                btnNgayTra.performClick();
+                            }
+                        });
+                snackbar.show();
+            }
+
+
+
         });
 
     }

@@ -300,6 +300,7 @@
                 android:background="@drawable/rounded_corner_button"
                 android:paddingLeft="35dp"
                 android:paddingRight="35dp"
+                android:id="@+id/btnBook"
                 android:text="Đặt ngay"
                 app:backgroundTint="@color/background" />
         </LinearLayout>
