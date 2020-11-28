@@ -36,12 +36,14 @@ import com.google.gson.reflect.TypeToken;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.DateFormat;
+import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
@@ -96,7 +98,7 @@ public class BookRoom extends AppCompatActivity {
         //filter by type
 //        ArrayList<Booked> date = (ArrayList<Booked>) date1.stream().filter(p->p.getTypeRoom().equals(type)).collect(Collectors.toList());
 
-        tvBookPrice.setText(String.valueOf(price));
+        tvBookPrice.setText(NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(price));
         ivBookBack.setOnClickListener(v -> {
             finish();
         });
@@ -342,9 +344,12 @@ public class BookRoom extends AppCompatActivity {
                                 Snackbar snackbar = Snackbar
                                         .make(main_content, "Thành công", Snackbar.LENGTH_SHORT);
                                 snackbar.show();
-//                                Intent intent = new Intent(BookRoom.this, HotelDetail.class);
-//                                intent.putExtra("status","success");
-//                                startActivity(intent);
+                                Intent intent = new Intent(BookRoom.this, HotelDetail.class);
+                                intent.putExtra("path",path);
+                                intent.putExtra("hotelname","");
+                                intent.putExtra("status","booked");
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                startActivity(intent);
                                 finish();
                             }
                         }else{
@@ -360,7 +365,10 @@ public class BookRoom extends AppCompatActivity {
                                 snackbar.show();
 
                                 Intent intent = new Intent(BookRoom.this, HotelDetail.class);
-                                intent.putExtra("status","success");
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                                intent.putExtra("hotelname","");
+                                intent.putExtra("path",path);
+                                intent.putExtra("status","booked");
                                 startActivity(intent);
                                 finish();
 
