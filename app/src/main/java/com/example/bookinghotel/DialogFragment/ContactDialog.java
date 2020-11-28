@@ -18,6 +18,9 @@ import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.example.bookinghotel.R;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class ContactDialog extends DialogFragment {
 
@@ -54,6 +57,13 @@ public class ContactDialog extends DialogFragment {
             String address = et_address_contact.getText().toString();
             String email = et_email_contact.getText().toString();
             String phone = et_phone_contact.getText().toString();
+            String sex = "";
+            if (is_checked_male) {
+                sex = "Nam";
+            }
+            else if (is_checked_female) {
+                sex = "Nữ";
+            }
             Log.e("test","hello");
 //            InfoFragment fragment = (InfoFragment) getActivity().getSupportFragmentManager().findFragmentByTag("InfoFragment");
 //
@@ -73,6 +83,13 @@ public class ContactDialog extends DialogFragment {
                 et_address_contact.requestFocus();
             }
             else {
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
+                mDatabase.child(userId).child("sex").setValue(sex);
+                mDatabase.child(userId).child("phone").setValue(phone);
+                mDatabase.child(userId).child("email").setValue(email);
+                mDatabase.child(userId).child("address").setValue(address);
+
                 getDialog().dismiss();
             }
         });

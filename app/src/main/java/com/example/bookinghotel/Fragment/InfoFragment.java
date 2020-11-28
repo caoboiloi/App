@@ -147,6 +147,8 @@ public class InfoFragment extends Fragment {
         tv_edit_contact.setOnClickListener((View v) -> {
             ContactDialog contact_dialog = new ContactDialog();
             contact_dialog.show(getFragmentManager(),"ContactDialog");
+
+            Toast.makeText(getActivity(),"Cập nhật thành công",Toast.LENGTH_SHORT).show();
         });
 
         personalinfobtn.setOnClickListener(new View.OnClickListener() {
