@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
+import com.example.bookinghotel.Fragment.CartFragment;
+import com.example.bookinghotel.Screen.Home.Home;
 import com.example.bookinghotel.entity.Booked;
 import com.example.bookinghotel.entity.Ticket;
 import com.example.bookinghotel.entity.TimeBooked;
@@ -336,19 +339,31 @@ public class BookRoom extends AppCompatActivity {
                                 a1.get(idRoom).appendBegin(a.getTime());
                                 a1.get(idRoom).appendEnd(b.getTime());
                                 mDatabase1.child(type).setValue(a1);
-
-                                Log.e("Ad1", String.valueOf(a1));
+                                Snackbar snackbar = Snackbar
+                                        .make(main_content, "Thành công", Snackbar.LENGTH_SHORT);
+                                snackbar.show();
+                                Intent intent = new Intent(BookRoom.this, HotelDetail.class);
+                                intent.putExtra("status","success");
+                                startActivity(intent);
+                                finish();
                             }
                         }else{
                             if(!inserted[0]){
                                 inserted[0] = true;
                                 Ticket ticket = new Ticket(ngayDatCalender.getTimeInMillis(),ngayTraCalender.getTimeInMillis(),price*day,path,true);
-
-//
+                                mDatabase.child(String.valueOf(count)).setValue(ticket);
                                 a1.get(idRoom).appendBegin(a.getTime());
                                 a1.get(idRoom).appendEnd(b.getTime());
                                 mDatabase1.child(type).setValue(a1);
-                                Log.e("Ad1", String.valueOf(a1));
+                                Snackbar snackbar = Snackbar
+                                        .make(main_content, "Thành công", Snackbar.LENGTH_SHORT);
+                                snackbar.show();
+
+                                Intent intent = new Intent(BookRoom.this, HotelDetail.class);
+                                intent.putExtra("status","success");
+                                startActivity(intent);
+                                finish();
+
                             }
                         }
                     }
