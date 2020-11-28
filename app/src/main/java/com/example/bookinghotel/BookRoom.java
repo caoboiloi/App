@@ -342,9 +342,9 @@ public class BookRoom extends AppCompatActivity {
                                 Snackbar snackbar = Snackbar
                                         .make(main_content, "Thành công", Snackbar.LENGTH_SHORT);
                                 snackbar.show();
-                                Intent intent = new Intent(BookRoom.this, HotelDetail.class);
-                                intent.putExtra("status","success");
-                                startActivity(intent);
+//                                Intent intent = new Intent(BookRoom.this, HotelDetail.class);
+//                                intent.putExtra("status","success");
+//                                startActivity(intent);
                                 finish();
                             }
                         }else{

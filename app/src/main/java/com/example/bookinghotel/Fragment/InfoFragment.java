@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.ActionBar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -19,8 +20,11 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RadioButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.bookinghotel.DialogFragment.ContactDialog;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
 import com.example.bookinghotel.entity.Hotel;
@@ -85,6 +89,10 @@ public class InfoFragment extends Fragment {
 
     User user;
 
+    private FragmentActivity myContext;
+
+    private static final String TAG = "InfoFragment";
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -131,18 +139,14 @@ public class InfoFragment extends Fragment {
         return rootView;
     }
 
-    private void dialogEditContact() {
-        Dialog dialog = new Dialog(getActivity());
-        dialog.setContentView(R.layout.dialog_edit_contact);
-        dialog.show();
-    }
-
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
+        // Dialog
         tv_edit_contact.setOnClickListener((View v) -> {
-            dialogEditContact();
+            ContactDialog contact_dialog = new ContactDialog();
+            contact_dialog.show(getFragmentManager(),"ContactDialog");
         });
 
         personalinfobtn.setOnClickListener(new View.OnClickListener() {

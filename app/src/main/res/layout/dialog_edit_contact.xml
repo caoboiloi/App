@@ -39,11 +39,13 @@
                     android:text="Sex"
                     android:layout_weight="1"/>
                 <RadioButton
+                    android:id="@+id/is_checked_male_contact"
                     android:text="Nam"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
                     android:layout_weight="1"/>
                 <RadioButton
+                    android:id="@+id/is_checked_female_contact"
                     android:text="Nữ"
                     android:layout_width="0dip"
                     android:layout_height="match_parent"
@@ -53,18 +55,21 @@
         </LinearLayout>
 
         <EditText
+            android:id="@+id/et_phone_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Phone"
             android:inputType="phone"/>
 
         <EditText
+            android:id="@+id/et_email_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Email"
             android:inputType="textEmailAddress"/>
 
         <EditText
+            android:id="@+id/et_address_contact"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Address" />
@@ -78,6 +83,7 @@
             android:layout_gravity="center">
 
             <TextView
+                android:id="@+id/btn_cancel_contact"
                 android:clickable="true"
                 android:background="?selectableItemBackground"
                 android:layout_width="wrap_content"
@@ -88,6 +94,7 @@
                 android:layout_marginStart="10dip"/>
 
             <TextView
+                android:id="@+id/btn_save_contact"
                 android:layout_alignParentEnd="true"
                 android:background="?selectableItemBackground"
                 android:clickable="true"

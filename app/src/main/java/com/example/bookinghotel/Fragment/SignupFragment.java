@@ -154,15 +154,15 @@ public class SignupFragment extends Fragment {
                     Toast.makeText(myContext, "Bạn phải chọn giới tính", Toast.LENGTH_SHORT).show();
                 }
                 else if(address.equals("")) {
-                    Toast.makeText(myContext, "Địa chỉ không được để trống", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(myContext, "Địa chỉ không hợp lệ", Toast.LENGTH_SHORT).show();
                     etName.requestFocus();
                 }
                 else if(job.equals("")) {
-                    Toast.makeText(myContext, "Nghề nghiệp không được để trống", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(myContext, "Nghề nghiệp không hợp lệ", Toast.LENGTH_SHORT).show();
                     etName.requestFocus();
                 }
                 else if(workplace.equals("")) {
-                    Toast.makeText(myContext, "Nơi làm việc không được để trống", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(myContext, "Nơi làm việc không hợp lệ", Toast.LENGTH_SHORT).show();
                     etName.requestFocus();
                 }
                 else{
