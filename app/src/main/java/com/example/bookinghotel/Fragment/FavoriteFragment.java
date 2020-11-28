@@ -145,33 +145,37 @@ public class FavoriteFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 User user = dataSnapshot.getValue(User.class);
-                for (String hotelPath : user.getFavorite()) {
+                if (user.getFavorite().size() != 0) {
+                    for (String hotelPath : user.getFavorite()) {
 
-                    readDataOneHotel(hotelPath, new OnGetDataListener() {
-                        @Override
-                        public void onSuccess(DataSnapshot dataSnapshot) {
-                            temp += 1;
-                            Hotel hotel = dataSnapshot.getValue(Hotel.class);
-                            hotel.setPath(dataSnapshot.getRef().toString().replace("https://hotelbooking-5a74a.firebaseio.com/",""));
-                            hotels.add(hotel);
-                            if (temp == user.getFavorite().size()) {
-                                Favoritelistener.onSuccess(hotels);
-                                temp = 0;
+                        readDataOneHotel(hotelPath, new OnGetDataListener() {
+                            @Override
+                            public void onSuccess(DataSnapshot dataSnapshot) {
+                                temp += 1;
+                                Hotel hotel = dataSnapshot.getValue(Hotel.class);
+                                hotel.setPath(dataSnapshot.getRef().toString().replace("https://hotelbooking-5a74a.firebaseio.com/",""));
+                                hotels.add(hotel);
+                                if (temp == user.getFavorite().size()) {
+                                    Favoritelistener.onSuccess(hotels);
+                                    temp = 0;
+                                }
                             }
-                        }
-                        @Override
-                        public void onStart() {
-                            //when starting
-                            Log.d("onStart", "Started");
-                        }
+                            @Override
+                            public void onStart() {
+                                //when starting
+                                Log.d("onStart", "Started");
+                            }
 
-                        @Override
-                        public void onFailure() {
-                            Log.d("onFailure", "Failed");
-                        }
-                    });
+                            @Override
+                            public void onFailure() {
+                                Log.d("onFailure", "Failed");
+                            }
+                        });
+                    }
                 }
-
+                else {
+                    progressBar_cyclic.setVisibility(View.GONE);
+                }
             }
 
             @Override
@@ -238,8 +242,10 @@ public class FavoriteFragment extends Fragment {
         readDataStringFavorite(userId, new OnGetArrayHotels() {
             @Override
             public void onSuccess(ArrayList<Hotel> temp_hotels) {
-                adapter.notifyDataSetChanged();
-                progressBar_cyclic.setVisibility(View.GONE);
+                if (temp_hotels.size() != 0) {
+                    adapter.notifyDataSetChanged();
+                    progressBar_cyclic.setVisibility(View.GONE);
+                }
             }
             @Override
             public void onStart() {
