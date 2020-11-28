@@ -197,6 +197,7 @@ public class HotelDetail extends AppCompatActivity {
             intent1.putExtra("bookeds", myJson);
             intent1.putExtra("type", "Large");
             intent1.putExtra("numberRoom", hotel.getRoom().getLarge().getTotal());
+            intent1.putExtra("image",hotel.getRoom().getLarge().getImage().get(0));
             startActivity(intent1);
         });
         btnBookMedium.setOnClickListener(v -> {
@@ -207,6 +208,7 @@ public class HotelDetail extends AppCompatActivity {
             String myJson = gson.toJson(bookeds);
             intent1.putExtra("bookeds", myJson);
             intent1.putExtra("type", "Medium");
+            intent1.putExtra("image",hotel.getRoom().getMedium().getImage().get(0));
             intent1.putExtra("numberRoom", hotel.getRoom().getMedium().getTotal());
             startActivity(intent1);
         });

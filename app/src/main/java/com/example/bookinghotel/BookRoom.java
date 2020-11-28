@@ -5,7 +5,10 @@ import androidx.coordinatorlayout.widget.CoordinatorLayout;
 import androidx.core.util.Pair;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -42,6 +45,7 @@ public class BookRoom extends AppCompatActivity {
     TextView tvBookPrice,tvSoPhong,tvNgayDat, tvNgayTra;
     Button btnBookRoom, btnNgayDat,btnNgayTra,btnBook;
     CoordinatorLayout main_content;
+    ImageView ivBannerBook;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +62,7 @@ public class BookRoom extends AppCompatActivity {
         tvNgayTra = findViewById(R.id.tvNgayTra);
         btnNgayTra = findViewById(R.id.btnNgayTra);
         btnBook = findViewById(R.id.btnBook);
+        ivBannerBook = findViewById(R.id.ivBannerBook);
 
         Intent intent = getIntent();
         Integer price = intent.getIntExtra("price",0);
@@ -67,6 +72,13 @@ public class BookRoom extends AppCompatActivity {
         Gson gson = new Gson();
         ArrayList<Booked> date1 = gson.fromJson(boookeds, new TypeToken<List<Booked>>() {
         }.getType());
+        if(!intent.getStringExtra("image").trim().equals("")){
+            byte[] decodedString = Base64.decode(intent.getStringExtra("image"), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            Bitmap bMapScaled = Bitmap.createScaledBitmap(decodedByte, 1000, 400, true);
+            ivBannerBook.setImageBitmap(bMapScaled);
+        }
+
 
         //filter by type
         ArrayList<Booked> date = (ArrayList<Booked>) date1.stream().filter(p->p.getTypeRoom().equals(type)).collect(Collectors.toList());
