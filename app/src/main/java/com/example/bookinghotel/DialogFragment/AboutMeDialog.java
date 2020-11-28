@@ -12,6 +12,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.example.bookinghotel.Fragment.InfoFragment;
 import com.example.bookinghotel.R;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
@@ -42,11 +43,16 @@ public class AboutMeDialog extends DialogFragment {
 
             if (about_me.equals("")) {
                 Toast.makeText(getActivity(),"Giới thiệu không hợp lệ", Toast.LENGTH_SHORT).show();
+                et_about_me.requestFocus();
             }
             else {
                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
                 DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users");
                 mDatabase.child(userId).child("love").setValue(about_me);
+
+//                InfoFragment fragment = (InfoFragment) getActivity().getSupportFragmentManager().findFragmentByTag("InfoFragment");
+//
+//                fragment.percent_completed_user.setText("100%");
 
                 getDialog().dismiss();
             }

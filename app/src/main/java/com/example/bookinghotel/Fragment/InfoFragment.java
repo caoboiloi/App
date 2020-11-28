@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.bookinghotel.DialogFragment.AboutMeDialog;
 import com.example.bookinghotel.DialogFragment.ContactDialog;
+import com.example.bookinghotel.DialogFragment.JobDetailDialog;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
 import com.example.bookinghotel.entity.Hotel;
@@ -47,6 +48,8 @@ import java.util.ArrayList;
  * create an instance of this fragment.
  */
 public class InfoFragment extends Fragment {
+
+    private static final String TAG = "InfoFragment";
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -84,15 +87,15 @@ public class InfoFragment extends Fragment {
 
     TextView name_user, des_user, phone_user, email_user, address_user, sex_user, job_user, job_user_main, workplace_user;
 
-    TextView tv_edit_contact, tv_edit_about_me;
+    TextView tv_edit_contact, tv_edit_about_me, tv_edit_job;
+
+    public TextView percent_completed_user;
 
     ImageView btnLogoout, topAppBar;
 
     User user;
 
     private FragmentActivity myContext;
-
-    private static final String TAG = "InfoFragment";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -134,6 +137,9 @@ public class InfoFragment extends Fragment {
 
         tv_edit_contact = rootView.findViewById(R.id.tv_edit_contact);
         tv_edit_about_me = rootView.findViewById(R.id.tv_edit_about_me);
+        tv_edit_job = rootView.findViewById(R.id.tv_edit_job);
+
+        percent_completed_user = rootView.findViewById(R.id.percent_completed_user);
 
         btnLogoout = rootView.findViewById(R.id.btnLogout);
         topAppBar = rootView.findViewById(R.id.topAppBar);
@@ -154,6 +160,11 @@ public class InfoFragment extends Fragment {
         tv_edit_about_me.setOnClickListener((View v) -> {
             AboutMeDialog about_dialog = new AboutMeDialog();
             about_dialog.show(getFragmentManager(),"AboutMeDialog");
+        });
+
+        tv_edit_job.setOnClickListener((View v) -> {
+            JobDetailDialog job_dialog = new JobDetailDialog();
+            job_dialog.show(getFragmentManager(),"JobDetailDialog");
         });
 
         personalinfobtn.setOnClickListener(new View.OnClickListener() {

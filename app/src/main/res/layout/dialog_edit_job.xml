@@ -33,14 +33,13 @@
             android:id="@+id/et_job"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Name"/>
+            android:hint="Job"/>
 
         <EditText
             android:id="@+id/et_workplace_job"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Phone"
-            android:inputType="phone"/>
+            android:hint="Workplace"/>
 
         <RelativeLayout
             android:layout_margin="20dip"

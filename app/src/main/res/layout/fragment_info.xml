@@ -40,7 +40,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Profile"
+            android:text="PROFILE"
             android:textColor="@color/white"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -178,6 +178,7 @@
                             android:orientation="vertical">
 
                             <TextView
+                                android:id="@+id/percent_completed_user"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="97%"
@@ -535,6 +536,7 @@
 
 
                         <TextView
+                            android:id="@+id/tv_edit_job"
                             android:background="?selectableItemBackground"
                             android:clickable="true"
                             android:gravity="center"
