@@ -23,7 +23,6 @@
             android:id="@+id/image_hotel"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            android:background="@color/colorAccent"
             />
 
         <LinearLayout

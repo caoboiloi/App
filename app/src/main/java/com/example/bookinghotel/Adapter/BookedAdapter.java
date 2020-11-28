@@ -47,7 +47,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
     @NonNull
     @Override
     public BookedAdapter.MyHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        view = LayoutInflater.from(context).inflate(R.layout.custome_hotel_row, parent,false);
+        view = LayoutInflater.from(context).inflate(R.layout.custome_booked_row, parent,false);
         MyHolder holder = new MyHolder(view);
         return holder;
     }
@@ -105,19 +105,19 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
 
 
         View view;
-        TextView name_hotel;
-        TextView type_hotel;
-        TextView price_hotel, hotel_location;
-        ImageView image_hotel;
-        RatingBar hotel_rating;
+        TextView date_hotel_booked, date_hotel_booked_main;
+        TextView city_hotel_booked;
+        TextView price_hotel_booked;
+        ImageView image_hotel_booked;
+        RatingBar rating_hotel_booked;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
-            name_hotel = itemView.findViewById(R.id.name_hotel);
-            type_hotel = itemView.findViewById(R.id.type_hotel);
-            price_hotel = itemView.findViewById(R.id.price_hotel);
-            image_hotel = itemView.findViewById(R.id.image_hotel);
-            hotel_location = itemView.findViewById(R.id.hotel_location);
-            hotel_rating = itemView.findViewById(R.id.hotel_rating);
+            date_hotel_booked = itemView.findViewById(R.id.date_hotel_booked);
+            date_hotel_booked_main = itemView.findViewById(R.id.date_hotel_booked_main);
+            city_hotel_booked = itemView.findViewById(R.id.city_hotel_booked);
+            price_hotel_booked = itemView.findViewById(R.id.price_hotel_booked);
+            image_hotel_booked = itemView.findViewById(R.id.image_hotel_booked);
+            rating_hotel_booked = itemView.findViewById(R.id.rating_hotel_booked);
             this.view = itemView;
         }
     }
