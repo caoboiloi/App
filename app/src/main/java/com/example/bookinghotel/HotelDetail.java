@@ -14,9 +14,13 @@ import android.util.Base64;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
+import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bookinghotel.Adapter.CommentAdapter;
 import com.example.bookinghotel.entity.Booked;
@@ -28,6 +32,7 @@ import com.example.bookinghotel.entity.TimeBooked;
 import com.example.bookinghotel.entity.User;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
+import com.google.android.material.snackbar.Snackbar;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -36,7 +41,9 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 public class HotelDetail extends AppCompatActivity {
@@ -44,15 +51,18 @@ public class HotelDetail extends AppCompatActivity {
     ProgressBar progressBar_cyclic_detail;
     RecyclerView rvComment;
     TextView tvRatingAve, tvInfoRate, tvInfoRate1,tvHotelName,tvPriceLarge,tvPriceMedium;
-    Button btnBookLarge,btnBookMedium;
+    Button btnBookLarge,btnBookMedium,btnComment,addComment;
     ImageView ivMediumPictureMedium, ivMediumPictureLarge,ivHotel;
+    EditText etComment;
+    RatingBar rateting;
+    LinearLayout llComnent,main_content1;
 
     ArrayList<Comment> comments_data = new ArrayList<>();
     CommentAdapter adapter;
     private DatabaseReference mDatabase;
     Hotel hotel = new Hotel();
     ArrayList<String> favorite = new ArrayList<>();
-
+    Integer id = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -72,7 +82,12 @@ public class HotelDetail extends AppCompatActivity {
         ivMediumPictureLarge = findViewById(R.id.ivMediumPictureLarge);
         ivMediumPictureMedium = findViewById(R.id.ivMediumPictureMedium);
         ivHotel = findViewById(R.id.ivHotel);
-
+        btnComment = findViewById(R.id.btnComment);
+        etComment= findViewById(R.id.etComment);
+        rateting = findViewById(R.id.rateting);
+        addComment= findViewById(R.id.addComment);
+        llComnent = findViewById(R.id.llComnent);
+        main_content1 = findViewById(R.id.main_content1);
 
         Intent intent = getIntent();
         String path = intent.getExtras().getString("path", "");
@@ -164,7 +179,7 @@ public class HotelDetail extends AppCompatActivity {
                         comments_data.add(comment);
                     }
                 }
-
+                Collections.reverse(comments_data);
                 LinearLayoutManager manager = new LinearLayoutManager(HotelDetail.this, LinearLayoutManager.HORIZONTAL, false);
                 rvComment.setLayoutManager(manager);
                 rvComment.setAdapter(adapter);
@@ -175,7 +190,7 @@ public class HotelDetail extends AppCompatActivity {
                     tvInfoRate1.setText("Chưa có đánh giá");
                 } else {
                     Float ave = hotel.getAveRating();
-                    tvRatingAve.setText(ave + "");
+                    tvRatingAve.setText(new DecimalFormat("#.#").format(ave) + "");
                     tvInfoRate.setText("Dựa trên " + (rating.size() - 1) + " nhận xét trên mạng");
                     if (ave >= 4.5) {
                         tvInfoRate1.setText("Rất tốt");
@@ -230,6 +245,70 @@ public class HotelDetail extends AppCompatActivity {
             intent1.putExtra("image",hotel.getRoom().getMedium().getImage().get(0));
             intent1.putExtra("numberRoom", hotel.getRoom().getMedium().getTotal());
             startActivity(intent1);
+        });
+        DatabaseReference UserData = FirebaseDatabase.getInstance().getReference("Users");
+        UserData.child(userId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                User user = dataSnapshot.getValue(User.class);
+                btnComment.setOnClickListener(v -> {
+                    String comment = etComment.getText().toString();
+
+                    float rating = rateting.getRating();
+                    if (comment.equals("")){
+                        Snackbar snackbar = Snackbar
+                                .make(main_content1, "Bạn chưa nhập comment", Snackbar.LENGTH_SHORT)
+                                .setAction("Comment", new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+                                        //Code khi bấm vào nút thư lại ở đây
+                                        etComment.requestFocus();
+                                    }
+                                });
+                        snackbar.show();
+                    }else if(rating == 0){
+                        Snackbar snackbar = Snackbar
+                                .make(main_content1, "Bạn chưa đánh giá", Snackbar.LENGTH_SHORT);
+                        snackbar.show();
+                    }else{
+
+                        Integer stt;
+                        if(id == 0){
+                            stt= hotel.getRating().size();
+                        }else{
+                            stt = id;
+                        }
+
+                        llComnent.setVisibility(View.GONE);
+                        Rating comment1 = new Rating(comment,user.getName(), (int) rating, userId);
+                        FirebaseDatabase.getInstance().getReference(path+"/rating/"+stt).setValue(comment1);
+
+                    }
+                });
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.e("test", "Failed to read value.");
+            }
+        });
+
+        addComment.setOnClickListener(v -> {
+            llComnent.setVisibility(View.VISIBLE);
+            ArrayList<Rating> ratings = hotel.getRating();
+            for (int i = 0; i < ratings.size(); i++) {
+                if(ratings.get(i)==null){
+                    continue;
+                }
+                if(ratings.get(i).getUserId().equals(userId)){
+                    id = i;
+                    etComment.setText(ratings.get(i).getComment());
+                    rateting.setRating(ratings.get(i).getStar());
+                    break;
+                }
+            }
         });
 
 
