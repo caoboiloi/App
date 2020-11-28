@@ -69,36 +69,39 @@
             android:layout_height="wrap_content"
             android:hint="Address" />
 
-        <LinearLayout
+        <RelativeLayout
+            android:background="@drawable/rounded_corner_button"
             android:layout_margin="20dip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:layout_gravity="center">
 
-            <Button
+            <TextView
                 android:clickable="true"
-                android:background="@drawable/rounded_corner_button"
-                android:layout_width="0dip"
+                android:background="?selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:gravity="left|bottom"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:textSize="17dip"
+                android:text="Cancel"
+                android:layout_marginStart="10dip"/>
+
+            <TextView
+                android:layout_alignParentEnd="true"
+                android:background="?selectableItemBackground"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="right|bottom"
+                android:textSize="17dip"
                 android:text="Save"
                 android:layout_marginEnd="10dip"/>
 
-            <TextView
-                android:layout_width="0dip"
-                android:layout_height="40dip"
-                android:background="#000000"/>
 
-            <Button
-                android:clickable="true"
-                android:background="@drawable/rounded_corner_button"
-                android:layout_width="0dip"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:text="Cancel"
-                android:layout_marginStart="10dip"/>
-    </LinearLayout>
+
+
+    </RelativeLayout>
 
 
     </LinearLayout>
