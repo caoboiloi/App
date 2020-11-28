@@ -200,6 +200,16 @@
                     android:layout_height="match_parent"
                     android:text="Nữ" />
             </RadioGroup>
+
+            <Button
+                android:id="@+id/choose_gallery_img_avatar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                style="@style/RedButton"
+                android:background="@drawable/ripple_button"
+                android:text="Chọn ảnh đại diện"
+                app:backgroundTint="#FFFF4444"/>
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

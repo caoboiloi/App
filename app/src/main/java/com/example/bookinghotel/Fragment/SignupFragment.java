@@ -1,11 +1,15 @@
 package com.example.bookinghotel.Fragment;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +17,8 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,6 +43,10 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.Calendar;
 
 /**
@@ -57,9 +67,10 @@ public class SignupFragment extends Fragment {
     private FragmentActivity myContext;
     EditText etConfirm, etName, etPhone, etEmail, etPass, etAddress, etJob, etWorkplace;
     TextView tvError;
-    Button btnSignup;
+    Button btnSignup, choose_gallery_img_avatar;
     RadioButton rbMale, rbFemale;
 
+    private static final int GALLERY_REQUEST_CODE = 123;
 
     public SignupFragment() {
         // Required empty public constructor
@@ -111,12 +122,42 @@ public class SignupFragment extends Fragment {
         rbFemale  = rootView.findViewById(R.id.rbFemale);
         etConfirm = rootView.findViewById(R.id.etConfirm);
         tvError = rootView.findViewById(R.id.tverror);
+
+        choose_gallery_img_avatar = rootView.findViewById(R.id.choose_gallery_img_avatar);
         return rootView;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            Uri imagePath = data.getData();
+            Bitmap bitmap = null;
+            String img_base_64 = "";
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(myContext.getContentResolver(),imagePath);
+
+                ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+                bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
+                byte[] byteArray = byteArrayOutputStream.toByteArray();
+
+                img_base_64 = Base64.encodeToString(byteArray, Base64.DEFAULT);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            Log.e("hahahaha",img_base_64);
+        }
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+        choose_gallery_img_avatar.setOnClickListener((View v) -> {
+            Intent intent = new Intent();
+            intent.setType("image/*");
+            intent.setAction(Intent.ACTION_GET_CONTENT);
+            startActivityForResult(Intent.createChooser(intent,"Pick an image"),GALLERY_REQUEST_CODE);
+        });
 
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
