@@ -68,7 +68,7 @@ public class HotelAdapter extends RecyclerView.Adapter<HotelAdapter.MyHolder> {
 
         byte[] decodedString = Base64.decode(h.getImage(), Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        Bitmap bMapScaled = Bitmap.createScaledBitmap(decodedByte, 600, 800, true);
+        Bitmap bMapScaled = Bitmap.createScaledBitmap(decodedByte, 800, 1300, true);
         holder.image_hotel.setImageBitmap(bMapScaled);
 
 

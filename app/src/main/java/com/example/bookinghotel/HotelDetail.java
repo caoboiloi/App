@@ -45,7 +45,7 @@ public class HotelDetail extends AppCompatActivity {
     RecyclerView rvComment;
     TextView tvRatingAve, tvInfoRate, tvInfoRate1,tvHotelName,tvPriceLarge,tvPriceMedium;
     Button btnBookLarge,btnBookMedium;
-    ImageView ivMediumPictureMedium, ivMediumPictureLarge;
+    ImageView ivMediumPictureMedium, ivMediumPictureLarge,ivHotel;
 
     ArrayList<Comment> comments_data = new ArrayList<>();
     CommentAdapter adapter;
@@ -71,6 +71,7 @@ public class HotelDetail extends AppCompatActivity {
         tvPriceMedium = findViewById(R.id.tvPriceMedium);
         ivMediumPictureLarge = findViewById(R.id.ivMediumPictureLarge);
         ivMediumPictureMedium = findViewById(R.id.ivMediumPictureMedium);
+        ivHotel = findViewById(R.id.ivHotel);
 
 
         Intent intent = getIntent();
@@ -135,6 +136,11 @@ public class HotelDetail extends AppCompatActivity {
                 tvHotelName.setText(hotel.getName());
                 tvPriceLarge.setText(hotel.getRoom().getLarge().getPrice()+"");
                 tvPriceMedium.setText(hotel.getRoom().getMedium().getPrice()+"");
+                byte[] decodedString1 = Base64.decode(hotel.getImage(), Base64.DEFAULT);
+                Bitmap decodedByte1 = BitmapFactory.decodeByteArray(decodedString1, 0, decodedString1.length);
+                Bitmap bMapScaled1 = Bitmap.createScaledBitmap(decodedByte1, 1000, 400, true);
+                ivHotel.setImageBitmap(bMapScaled1);
+
                 if(hotel.getRoom().getLarge().getImage().size()>0){
                     String pictureLarge = hotel.getRoom().getLarge().getImage().get(0);
                     byte[] decodedString = Base64.decode(pictureLarge, Base64.DEFAULT);

@@ -95,6 +95,7 @@ public class Home extends AppCompatActivity {
         toolbar.setTitle("Hotel");
         loadFragment(new HomeFragment());
 
+
     }
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {

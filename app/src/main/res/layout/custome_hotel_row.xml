@@ -17,13 +17,14 @@
             android:layout_marginTop="10dip"
             android:layout_marginBottom="10dip"
             android:layout_width="0dip"
-            android:layout_height="180dip"
+            android:layout_height="match_parent"
             android:layout_weight="1"
             android:layout_marginEnd="20dip"
             android:id="@+id/image_hotel"
             android:adjustViewBounds="true"
             android:scaleType="centerInside"
-            android:background="@color/colorAccent"
+            android:background="@color/white"
+
             />
 
         <LinearLayout

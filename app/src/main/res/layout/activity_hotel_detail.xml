@@ -61,6 +61,7 @@
                 android:id="@+id/ivHotel"
                 android:layout_width="match_parent"
                 android:layout_height="300dp"
+                android:scaleType="fitXY"
                 android:src="@raw/test" />
 
             <LinearLayout
