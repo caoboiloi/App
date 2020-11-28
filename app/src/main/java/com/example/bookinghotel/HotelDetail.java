@@ -20,9 +20,11 @@ import android.widget.TextView;
 
 import com.example.bookinghotel.Adapter.CommentAdapter;
 import com.example.bookinghotel.entity.Booked;
+import com.example.bookinghotel.entity.BookedRoom;
 import com.example.bookinghotel.entity.Comment;
 import com.example.bookinghotel.entity.Hotel;
 import com.example.bookinghotel.entity.Rating;
+import com.example.bookinghotel.entity.TimeBooked;
 import com.example.bookinghotel.entity.User;
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.appbar.MaterialToolbar;
@@ -128,6 +130,7 @@ public class HotelDetail extends AppCompatActivity {
                 progressBar_cyclic_detail.setVisibility(View.VISIBLE);
                 comments_data.clear();
                 hotel = snapshot.getValue(Hotel.class);
+                Log.e("Ad", String.valueOf(hotel));
                 topAppBar.setTitle(hotel.getName());
                 tvHotelName.setText(hotel.getName());
                 tvPriceLarge.setText(hotel.getRoom().getLarge().getPrice()+"");
@@ -192,10 +195,16 @@ public class HotelDetail extends AppCompatActivity {
             Intent intent1 = new Intent(this, BookRoom.class);
             intent1.putExtra("price", hotel.getRoom().getLarge().getPrice());
             ArrayList<Booked> bookeds = hotel.getBookeds();
+            ArrayList<TimeBooked> bookedRoom = hotel.getBookedRoom().getLarge();
+
             Gson gson = new Gson();
             String myJson = gson.toJson(bookeds);
             intent1.putExtra("bookeds", myJson);
+            String myJson1 = gson.toJson(bookedRoom);
+
+            intent1.putExtra("bookedRoom", myJson1);
             intent1.putExtra("type", "Large");
+            intent1.putExtra("path", intent.getExtras().getString("path", ""));
             intent1.putExtra("numberRoom", hotel.getRoom().getLarge().getTotal());
             intent1.putExtra("image",hotel.getRoom().getLarge().getImage().get(0));
             startActivity(intent1);
@@ -204,9 +213,13 @@ public class HotelDetail extends AppCompatActivity {
             Intent intent1 = new Intent(this, BookRoom.class);
             intent1.putExtra("price", hotel.getRoom().getMedium().getPrice());
             ArrayList<Booked> bookeds = hotel.getBookeds();
+            ArrayList<TimeBooked> bookedRoom = hotel.getBookedRoom().getMedium();
             Gson gson = new Gson();
             String myJson = gson.toJson(bookeds);
+            String myJson1 = gson.toJson(bookedRoom);
             intent1.putExtra("bookeds", myJson);
+            intent1.putExtra("bookedRoom", myJson1);
+            intent1.putExtra("path", path);
             intent1.putExtra("type", "Medium");
             intent1.putExtra("image",hotel.getRoom().getMedium().getImage().get(0));
             intent1.putExtra("numberRoom", hotel.getRoom().getMedium().getTotal());

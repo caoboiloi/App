@@ -1,8 +1,8 @@
 package com.example.bookinghotel;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.coordinatorlayout.widget.CoordinatorLayout;
-import androidx.core.util.Pair;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -11,33 +11,36 @@ import android.os.Bundle;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import com.example.bookinghotel.entity.Booked;
-import com.example.bookinghotel.entity.Hotel;
-import com.google.android.material.datepicker.CalendarConstraints;
-import com.google.android.material.datepicker.DateValidatorPointForward;
-import com.google.android.material.datepicker.MaterialDatePicker;
-import com.google.android.material.datepicker.MaterialPickerOnPositiveButtonClickListener;
+import com.example.bookinghotel.entity.Ticket;
+import com.example.bookinghotel.entity.TimeBooked;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
+import com.google.firebase.database.ValueEventListener;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 public class BookRoom extends AppCompatActivity {
@@ -67,11 +70,18 @@ public class BookRoom extends AppCompatActivity {
         Intent intent = getIntent();
         Integer price = intent.getIntExtra("price",0);
         String boookeds = intent.getStringExtra("bookeds");
+        String bookedRoomStr = intent.getStringExtra("bookedRoom");
         String type = intent.getStringExtra("type");
+        String path = intent.getStringExtra("path");
         Integer numberRoom = intent.getIntExtra("numberRoom",0);
+        AtomicReference<Integer> totalDate = new AtomicReference<>(0);
+
         Gson gson = new Gson();
-        ArrayList<Booked> date1 = gson.fromJson(boookeds, new TypeToken<List<Booked>>() {
+
+        ArrayList<TimeBooked> bookedRoom = gson.fromJson(bookedRoomStr, new TypeToken<List<TimeBooked>>() {
         }.getType());
+
+        Log.e("Ad1", String.valueOf(bookedRoom));
         if(!intent.getStringExtra("image").trim().equals("")){
             byte[] decodedString = Base64.decode(intent.getStringExtra("image"), Base64.DEFAULT);
             Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
@@ -81,8 +91,7 @@ public class BookRoom extends AppCompatActivity {
 
 
         //filter by type
-        ArrayList<Booked> date = (ArrayList<Booked>) date1.stream().filter(p->p.getTypeRoom().equals(type)).collect(Collectors.toList());
-
+//        ArrayList<Booked> date = (ArrayList<Booked>) date1.stream().filter(p->p.getTypeRoom().equals(type)).collect(Collectors.toList());
 
         tvBookPrice.setText(String.valueOf(price));
         ivBookBack.setOnClickListener(v -> {
@@ -115,16 +124,20 @@ public class BookRoom extends AppCompatActivity {
                 snackbar.show();
             }else{
                 Integer idPhong = Integer.valueOf(tvSoPhong.getText().toString().split(" ")[1]) -1;
-                while (date.size()<numberRoom){
-                    date.add(null);
+                while (bookedRoom.size()<numberRoom){
+                    bookedRoom.add(null);
                 }
-
+                Log.e("Ad1", String.valueOf(bookedRoom));
+                Log.e("Ad1", String.valueOf(idPhong));
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd ");
                 ArrayList<Calendar> calendarArrayList = new ArrayList<>();
-                if(date.get(idPhong)!= null){
-                    ArrayList<Long> bookedBegin = date.get(idPhong).getBegin();
-                    ArrayList<Long> bookedEnd = date.get(idPhong).getEnd();
+
+                if(bookedRoom.get(idPhong)!= null){
+                    Log.e("Ad1","begin "+ String.valueOf(bookedRoom.get(idPhong).getBegin()));
+                    ArrayList<Long> bookedBegin = bookedRoom.get(idPhong).getBegin();
+                    Log.e("Ad1","begin "+ String.valueOf(bookedBegin));
+                    ArrayList<Long> bookedEnd = bookedRoom.get(idPhong).getEnd();
                     for (int i = 0; i < bookedBegin.size(); i++) {
                         String[] test,test1;
                         test = dateFormat.format(bookedBegin.get(i)).split("/");
@@ -167,6 +180,7 @@ public class BookRoom extends AppCompatActivity {
                 Calendar[] calendarArrayListNew = new Calendar[calendarArrayList.size()];
                 calendarArrayListNew= calendarArrayList.toArray(calendarArrayListNew);
                 dpd.setDisabledDays(calendarArrayListNew);
+                totalDate.set(calendarArrayList.size());
                 dpd.show(getSupportFragmentManager(), "Datepickerdialog");
             }
 
@@ -202,17 +216,16 @@ public class BookRoom extends AppCompatActivity {
                 return;
             }else{
                 Integer idPhong = Integer.valueOf(tvSoPhong.getText().toString().split(" ")[1]) -1;
-                while (date.size()<numberRoom){
-                    Log.e("Ad",date.toString());
-                    date.add(null);
+                while (bookedRoom.size()<numberRoom){
+                    bookedRoom.add(null);
                 }
 
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy MMM dd ");
                 ArrayList<Calendar> calendarArrayList = new ArrayList<>();
-                if(date.get(idPhong)!= null){
-                    ArrayList<Long> bookedBegin = date.get(idPhong).getBegin();
-                    ArrayList<Long> bookedEnd = date.get(idPhong).getEnd();
+                if(bookedRoom.get(idPhong)!= null){
+                    ArrayList<Long> bookedBegin = bookedRoom.get(idPhong).getBegin();
+                    ArrayList<Long> bookedEnd = bookedRoom.get(idPhong).getEnd();
                     for (int i = 0; i < bookedBegin.size(); i++) {
                         String[] test,test1;
                         test = dateFormat.format(bookedBegin.get(i)).split("/");
@@ -257,6 +270,7 @@ public class BookRoom extends AppCompatActivity {
                 dpd.setMinDate(ngayDatCalender);
                 Calendar[] calendarArrayListNew = new Calendar[calendarArrayList.size()];
                 calendarArrayListNew= calendarArrayList.toArray(calendarArrayListNew);
+                Log.e("Ad1", "size "+String.valueOf(calendarArrayList.size()));
                 for(Calendar i : calendarArrayList){
                     if(ngayDatCalender.before(i)){
                         dpd.setMaxDate(i);
@@ -276,6 +290,74 @@ public class BookRoom extends AppCompatActivity {
                 Calendar ngayTraCalender =  getCalendar(Integer.parseInt(ngayTra[2]),Integer.parseInt(ngayTra[1]) ,Integer.parseInt(ngayTra[0]));
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/YYYY");
                 Log.e("Asd", dateFormat.format(ngayDatCalender.getTimeInMillis()) + " "+ dateFormat.format(ngayTraCalender.getTimeInMillis()));
+
+                //get UserId
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                //get ticket
+                DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users/"+userId+"/ticket");
+
+                final Boolean[] inserted = {false};
+
+
+                mDatabase.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        GenericTypeIndicator<List<Ticket>> t = new GenericTypeIndicator<List<Ticket>>() {};
+                        List<Ticket> tickets = snapshot.getValue(t);
+                        snapshot.getChildrenCount();
+                        int count = 0;
+                        Date a = new Date(ngayDatCalender.getTimeInMillis());
+                        Date b = new Date(ngayTraCalender.getTimeInMillis());
+                        long diffInMillies = b.getTime() - a.getTime();
+                        long day = TimeUnit.DAYS.convert(diffInMillies,TimeUnit.MILLISECONDS) + 1;
+                        DatabaseReference mDatabase1 = FirebaseDatabase.getInstance().getReference(path+"/bookedRoom");
+                        Integer idRoom = Integer.valueOf(tvSoPhong.getText().toString().split(" ")[1]) -1;
+                        TimeBooked temp = bookedRoom.get(idRoom);
+                        if(temp == null){
+                            temp = null;
+                        }
+                        Log.e("Ad1", String.valueOf(temp));
+                        ArrayList<TimeBooked> a1 = new ArrayList<TimeBooked>();
+                        for (int i = 0; i < bookedRoom.size(); i++) {
+                            if(bookedRoom.get(i) ==null){
+                                a1.add(new TimeBooked());
+                            }
+                            else{
+                                a1.add(bookedRoom.get(i));
+                            }
+                        }
+                        if(tickets != null){
+                            count = tickets.size();
+
+                            if(!inserted[0]){
+                                inserted[0] = true;
+                                Ticket ticket = new Ticket(ngayDatCalender.getTimeInMillis(),ngayTraCalender.getTimeInMillis(),price*day,path,true);
+                                mDatabase.child(String.valueOf(count)).setValue(ticket);
+                                a1.get(idRoom).appendBegin(a.getTime());
+                                a1.get(idRoom).appendEnd(b.getTime());
+                                mDatabase1.child(type).setValue(a1);
+
+                                Log.e("Ad1", String.valueOf(a1));
+                            }
+                        }else{
+                            if(!inserted[0]){
+                                inserted[0] = true;
+                                Ticket ticket = new Ticket(ngayDatCalender.getTimeInMillis(),ngayTraCalender.getTimeInMillis(),price*day,path,true);
+
+//
+                                a1.get(idRoom).appendBegin(a.getTime());
+                                a1.get(idRoom).appendEnd(b.getTime());
+                                mDatabase1.child(type).setValue(a1);
+                                Log.e("Ad1", String.valueOf(a1));
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+
+                    }
+                });
             }
             else if(tvNgayDat.getText().toString().equals("Chưa có")){
                 Snackbar snackbar = Snackbar

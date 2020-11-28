@@ -2,6 +2,8 @@ package com.example.bookinghotel.entity;
 
 import android.util.Log;
 
+import com.example.bookinghotel.BookRoom;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -14,12 +16,14 @@ public class Hotel {
     Room room;
     ArrayList<Rating> rating = new  ArrayList<Rating>();
     ArrayList<Booked> bookeds = new ArrayList<Booked>();
+    BookedRoom bookedRoom = new BookedRoom();
     String path;
     public Hotel() {
     }
 
 
-    public Hotel(Integer id,double lat, double longitude, String name, Room room, ArrayList<Rating> rating,String image, ArrayList<Booked> bookeds) {
+
+    public Hotel(Integer id, double lat, double longitude, String name, Room room, ArrayList<Rating> rating, String image) {
         this.id =id;
         this.lat = lat;
         this.longitude = longitude;
@@ -27,9 +31,14 @@ public class Hotel {
         this.room = room;
         this.rating = rating;
         this.image = image;
-        this.bookeds = bookeds;
+    }
+    public BookedRoom getBookedRoom() {
+        return bookedRoom;
     }
 
+    public void setBookedRoom(BookedRoom bookedRoom) {
+        this.bookedRoom = bookedRoom;
+    }
     public String getPath() {
         return path;
     }
@@ -123,6 +132,7 @@ public class Hotel {
                 ", name='" + name + '\'' +
                 ", romm='" + room.toString() + '\'' +
                 ", booked='" + bookeds.toString() + '\'' +
+                ", booked='" + bookedRoom.toString() + '\'' +
                 '}';
     }
     public boolean isEmpty(String string) {
