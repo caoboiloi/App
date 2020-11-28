@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     android:id="@+id/dialog_edit_contact"
-    android:background="@drawable/rounded_corner_button"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_margin="20dip"
+        android:layout_marginStart="20dip"
+        android:layout_marginEnd="20dip"
+        android:layout_marginTop="20dip"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -75,7 +76,6 @@
             android:hint="Address" />
 
         <RelativeLayout
-            android:background="@drawable/rounded_corner_button"
             android:layout_margin="20dip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -83,31 +83,37 @@
             android:layout_gravity="center">
 
             <TextView
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:paddingStart="20dip"
+                android:paddingEnd="20dip"
+                android:layout_margin="10dip"
                 android:id="@+id/btn_cancel_contact"
                 android:clickable="true"
                 android:background="?selectableItemBackground"
-                android:layout_width="wrap_content"
-                android:gravity="left|bottom"
-                android:layout_height="wrap_content"
+                android:layout_width="100dip"
+                android:gravity="center"
+                android:layout_height="40dip"
                 android:textSize="17dip"
                 android:text="Cancel"
                 android:layout_marginStart="10dip"/>
 
             <TextView
+                android:paddingTop="10dip"
+                android:paddingBottom="10dip"
+                android:paddingStart="20dip"
+                android:paddingEnd="20dip"
+                android:layout_margin="10dip"
                 android:id="@+id/btn_save_contact"
                 android:layout_alignParentEnd="true"
                 android:background="?selectableItemBackground"
                 android:clickable="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="right|bottom"
+                android:layout_width="100dip"
+                android:layout_height="40dip"
+                android:gravity="center"
                 android:textSize="17dip"
                 android:text="Save"
                 android:layout_marginEnd="10dip"/>
-
-
-
-
     </RelativeLayout>
 
 
