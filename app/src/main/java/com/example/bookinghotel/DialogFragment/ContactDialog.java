@@ -64,9 +64,7 @@ public class ContactDialog extends DialogFragment {
             else if (is_checked_female) {
                 sex = "Nữ";
             }
-            Log.e("test","hello");
-//            InfoFragment fragment = (InfoFragment) getActivity().getSupportFragmentManager().findFragmentByTag("InfoFragment");
-//
+
             if (!is_checked_female && !is_checked_male) {
                 Toast.makeText(getActivity(),"Vui lòng chọn giới tính", Toast.LENGTH_SHORT).show();
             }
@@ -89,6 +87,8 @@ public class ContactDialog extends DialogFragment {
                 mDatabase.child(userId).child("phone").setValue(phone);
                 mDatabase.child(userId).child("email").setValue(email);
                 mDatabase.child(userId).child("address").setValue(address);
+
+//                InfoFragment fragment = (InfoFragment) getActivity().getSupportFragmentManager().findFragmentByTag("InfoFragment");
 
                 getDialog().dismiss();
             }
