@@ -97,45 +97,19 @@ public class CanceledAdapter extends RecyclerView.Adapter<CanceledAdapter.MyHold
 
             }
 
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
-//        holder.name_hotel.setText(h.getName());
-//        Integer price = h.getRoom().getLarge().getPrice();
-//        Locale locale = new Locale("vi", "VN");
-//        NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
-//        holder.price_hotel.setText(fmt.format(price)+" ");
-//
-//
-////        SET BASE64 IMG
-//
-//        byte[] decodedString = Base64.decode(h.getImage(), Base64.DEFAULT);
-//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//        Bitmap bMapScaled = Bitmap.createScaledBitmap(decodedByte, 600, 800, true);
-//        holder.image_hotel.setImageBitmap(bMapScaled);
-//
-//
-//        holder.hotel_rating.setRating(h.getAveRating());
-//
-//        try {
-//            List<Address> addresses = geocoder.getFromLocation(h.getLat(), h.getLongitude(), 1);
-//            holder.hotel_location.setText(addresses.get(0).getAddressLine(0));
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(context, HotelDetail.class);
-//                intent.putExtra("path",  h.getPath());
-//                intent.putExtra("hotelname",  h.getName());
-//                context.startActivity(intent);
-//            }
-//        });
+        holder.btnDatLai.setOnClickListener(v -> {
+            Log.e("ticket", "asd");
+            Intent intent = new Intent(context, HotelDetail.class);
+            intent.putExtra("path", ticket.getPath());
+            intent.putExtra("hotelname", "Hotel detail");
+            context.startActivity(intent);
+        });
 
     }
 
@@ -156,6 +130,7 @@ public class CanceledAdapter extends RecyclerView.Adapter<CanceledAdapter.MyHold
         ImageView image_hotel_booked;
         RatingBar rating_hotel_booked;
         ProgressBar loading;
+        Button btnDatLai;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             date_hotel_booked_main = itemView.findViewById(R.id.date_hotel_booked_main);
@@ -165,6 +140,7 @@ public class CanceledAdapter extends RecyclerView.Adapter<CanceledAdapter.MyHold
             rating_hotel_booked = itemView.findViewById(R.id.rating_hotel_booked);
             name_hotel_booked = itemView.findViewById(R.id.name_hotel_booked);
             loading = itemView.findViewById(R.id.loading);
+            btnDatLai = itemView.findViewById(R.id.btnDatLai);
             this.view = itemView;
         }
     }

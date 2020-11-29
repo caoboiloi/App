@@ -77,14 +77,19 @@ import java.util.Map;
 // Main Activity
 public class Home extends AppCompatActivity {
     private ActionBar toolbar;
-    BottomNavigationView navigation;
+    static BottomNavigationView navigation;
+
+    public static void setHide() {
+        navigation.animate().translationY(navigation.getHeight());
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         getSupportActionBar().hide();
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
+        navigation = (BottomNavigationView) findViewById(R.id.bottom_navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
         // attaching bottom sheet behaviour - hide / show on scroll
