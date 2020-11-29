@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:id="@+id/main_content1"
+    tools:context=".HotelDetail">
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:elevation="0dp"
+            app:liftOnScroll="true">
+
+            <com.google.android.material.appbar.MaterialToolbar
+                android:id="@+id/topAppBar"
+                style="@style/ThemeOverlay.App.BottomNavigationView"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:background="@android:color/white"
+                app:layout_scrollFlags="scroll|enterAlways|snap"
+                app:menu="@menu/menu_booked_detail"
+                app:navigationIcon="@drawable/ic_baseline_arrow_back_ios_24"
+                app:title="Xác nhận đặt phòng" />
+
+        </com.google.android.material.appbar.AppBarLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <ProgressBar
+            android:layout_gravity="center"
+            android:id="@+id/progressBar_cyclic_detail"
+            android:visibility="gone"
+            android:scaleX="0.1"
+            android:scaleY="0.1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/grey">
+
+            <LinearLayout
+                android:backgroundTint="@color/grey"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ivHotel"
+                    android:layout_width="match_parent"
+                    android:layout_height="300dp"
+                    android:scaleType="fitXY"
+                    android:src="@raw/test" />
+
+                <LinearLayout
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dip"
+                    android:layout_marginBottom="5dip">
+
+                    <TextView
+                        android:id="@+id/tvHotelName"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Vinpearl Discorery 2 Nha Trang"
+                        android:textAllCaps="true"
+                        android:textSize="30sp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:text="địa chỉ"
+                        android:textAllCaps="true"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:orientation="horizontal"
+                        android:gravity="center">
+
+                        <ImageView
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:src="@drawable/ic_location_24dp" />
+
+                        <LinearLayout
+                            android:layout_width="0dip"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="12"
+                            android:orientation="vertical"
+                            android:layout_gravity="center"
+                            android:gravity="left">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="38A Nguyễn hiền, Vũng tàu, Việt nam"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:textColor="@color/blue"
+                                android:text="Xem đường đi"
+                                android:textSize="13dip"/>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:text="Liên hệ chỗ nghỉ"
+                        android:textAllCaps="true"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dip"
+                            android:background="#F4B9B9"/>
+                        <LinearLayout
+                            android:layout_marginTop="7dip"
+                            android:layout_marginBottom="7dip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic_baseline_email_24" />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="12"
+                                android:text="Gửi email"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dip"
+                            android:background="#F4B9B9"/>
+
+                        <LinearLayout
+                            android:layout_marginTop="7dip"
+                            android:layout_marginBottom="7dip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic_baseline_local_phone_24" />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="12"
+                                android:text="Gọi điện"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dip"
+                            android:background="#F4B9B9"/>
+
+                        <LinearLayout
+                            android:layout_marginTop="15dip"
+                            android:layout_marginBottom="15dip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+
+                            <LinearLayout
+                                android:layout_marginStart="5dip"
+                                android:layout_marginTop="7dip"
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dip"
+                                    android:textSize="15dip"
+                                    android:textStyle="bold"
+                                    android:text="Nhận phòng"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:text="09 thg 7 2018"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="từ 14:00"/>
+
+                            </LinearLayout>
+
+                            <TextView
+                                android:layout_width="1dip"
+                                android:layout_height="match_parent"
+                                android:background="#F4B9B9"/>
+
+                            <LinearLayout
+                                android:layout_marginStart="5dip"
+                                android:layout_marginTop="7dip"
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical">
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginBottom="5dip"
+                                    android:textSize="15dip"
+                                    android:textStyle="bold"
+                                    android:text="Trả phòng"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:textStyle="bold"
+                                    android:text="012 thg 7 2018"/>
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="đến 12:00"/>
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dip"
+                            android:background="#F4B9B9"/>
+
+                        <LinearLayout
+                            android:layout_marginTop="7dip"
+                            android:layout_marginBottom="7dip"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center">
+
+                            <ImageView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:src="@drawable/ic_baseline_ballot_24" />
+
+                            <TextView
+                                android:layout_width="0dip"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="12"
+                                android:text="Đổi ngày"/>
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="1dip"
+                            android:background="#F4B9B9"/>
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:textSize="17dip"
+                                android:textStyle="bold"
+                                android:textColor="@color/mdtp_red"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Tổng giá"/>
+
+                            <TextView
+                                android:textSize="17dip"
+                                android:textStyle="bold"
+                                android:textColor="@color/mdtp_red"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="VNĐ 2.000.000"
+                                android:gravity="right|bottom"/>
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:background="@color/white"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:paddingBottom="10dp"
+                        android:text="Chi tiết phòng"
+                        android:textAllCaps="true"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="3dp"
+                        android:orientation="vertical"
+                        android:gravity="center">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="15dip"
+                            android:text="Loại phòng: Medium"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textStyle="bold"
+                            android:textSize="15dip"
+                            android:text="Số phòng: 01"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+
+            </LinearLayout>
+        </ScrollView>
+    </LinearLayout>
+</LinearLayout>
