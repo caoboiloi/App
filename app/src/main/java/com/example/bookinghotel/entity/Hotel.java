@@ -107,10 +107,11 @@ public class Hotel {
         Integer total = 0 ;
         Integer numberRating=0;
         if(this.rating != null) {
-            for (int i = 1; i < this.rating.size() ; i++) {
+            for (int i = 0; i < this.rating.size() ; i++) {
                 numberRating += 1;
                 total += this.rating.get(i).getStar();
             }
+
             return (float) total / (numberRating);
         }
         return 0;
