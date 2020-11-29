@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Parcelable;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -23,9 +25,13 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bookinghotel.HotelDetail;
 import com.example.bookinghotel.R;
+import com.example.bookinghotel.Screen.Home.Home;
 import com.example.bookinghotel.entity.Hotel;
 import com.example.bookinghotel.entity.Ticket;
 import com.example.bookinghotel.entity.User;
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -38,20 +44,34 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> {
 
     private List<Ticket> data;
+    private List<Ticket> datatemp = new ArrayList<>();
     private Context context;
     private View view;
     Geocoder geocoder;
     public BookedAdapter(Context context, List<Ticket> data) {
-        this.data = data;
+        this.data = new ArrayList<>();
         this.context = context;
         geocoder = new Geocoder(context, Locale.getDefault());
+        Date now = new Date();
+        this.datatemp = data;
+        data =(ArrayList<Ticket>) data.stream().filter(p->p.getStatus()).collect(Collectors.toList());
+        ArrayList<Ticket> onprogress = (ArrayList<Ticket>) data.stream().filter(p->p.getEnd() > now.getTime()).collect(Collectors.toList());
+        ArrayList<Ticket> done = (ArrayList<Ticket>) data.stream().filter(p->p.getEnd() <= now.getTime()).collect(Collectors.toList());
+        this.data.addAll(onprogress);
+        this.data.addAll(done);
+
     }
 
 
@@ -77,6 +97,14 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
         holder.date_hotel_booked_main.setText(ngayBatDau +"-"+ngayKetThuc);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(ticket.getPath());
         holder.loading.setVisibility(View.VISIBLE);
+        Date now = new Date();
+        if(ketthuc.getTime() < now.getTime()){
+            holder.tvstatus.setText("Đã hoàn thành");
+            holder.btnCancelRoom.setVisibility(View.GONE);
+            holder.btnDatLai.setVisibility(View.VISIBLE);
+            holder.tvstatus.setTextColor(Color.parseColor("#ffff8800"));
+
+        }
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -103,40 +131,50 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
 
             }
         });
-//        holder.name_hotel.setText(h.getName());
-//        Integer price = h.getRoom().getLarge().getPrice();
-//        Locale locale = new Locale("vi", "VN");
-//        NumberFormat fmt = NumberFormat.getCurrencyInstance(locale);
-//        holder.price_hotel.setText(fmt.format(price)+" ");
-//
-//
-////        SET BASE64 IMG
-//
-//        byte[] decodedString = Base64.decode(h.getImage(), Base64.DEFAULT);
-//        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-//        Bitmap bMapScaled = Bitmap.createScaledBitmap(decodedByte, 600, 800, true);
-//        holder.image_hotel.setImageBitmap(bMapScaled);
-//
-//
-//        holder.hotel_rating.setRating(h.getAveRating());
-//
-//        try {
-//            List<Address> addresses = geocoder.getFromLocation(h.getLat(), h.getLongitude(), 1);
-//            holder.hotel_location.setText(addresses.get(0).getAddressLine(0));
-//
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        holder.itemView.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                Intent intent = new Intent(context, HotelDetail.class);
-//                intent.putExtra("path",  h.getPath());
-//                intent.putExtra("hotelname",  h.getName());
-//                context.startActivity(intent);
-//            }
-//        });
+        holder.btnDatLai.setOnClickListener(v -> {
+            Log.e("ticket", "asd");
+            Intent intent = new Intent(context, HotelDetail.class);
+            intent.putExtra("path", ticket.getPath());
+            intent.putExtra("hotelname", "Hotel detail");
+            context.startActivity(intent);
+        });
+        holder.btnCancelRoom.setOnClickListener(v -> {
+            new MaterialAlertDialogBuilder(context).setTitle("Huỷ phòng").setMessage("Bạn có chắc chắn muốn hủy phòng đã đặt ?")
+                // Respond to neutral button press
+            .setNegativeButton("Hủy bỏ", (dialog, which) -> {
+                dialog.dismiss();
+            })
+            .setPositiveButton("Xác nhận hủy phòng", (dialog, which) -> {
+                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                for (int i = 0; i < this.datatemp.size(); i++) {
+                    if (this.datatemp.get(i) == ticket){
+                        DatabaseReference mDatabase1 = FirebaseDatabase.getInstance().getReference("Users/"+userId+"/ticket/"+i+"/status");
+                        mDatabase1.setValue(false);
+                        break;
+                    }
+                }
+                dialog.dismiss();
+                Snackbar snackbar = Snackbar
+                        .make(holder.view, "Bạn đã hủy phòng thành công", Snackbar.LENGTH_LONG)
+                        .setAction("Undo", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                for (int i = 0; i < datatemp.size(); i++) {
+                                    if (datatemp.get(i) == ticket){
+                                        DatabaseReference mDatabase1 = FirebaseDatabase.getInstance().getReference("Users/"+userId+"/ticket/"+i+"/status");
+                                        mDatabase1.setValue(true);
+                                        break;
+                                    }
+                                }
+                            }
+                        });
+
+                snackbar.show();
+                Home.setHide();
+            }).show();
+
+        });
 
     }
 
@@ -151,13 +189,14 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
 
 
         View view;
-        TextView  date_hotel_booked_main;
+        TextView  date_hotel_booked_main,tvstatus;
         TextView city_hotel_booked;
         TextView price_hotel_booked,name_hotel_booked;
         ImageView image_hotel_booked;
         RatingBar rating_hotel_booked;
         ProgressBar loading;
-        Button btnCancelRoom;
+        Button btnCancelRoom,btnDatLai;
+        LinearLayout llbooked;
         public MyHolder(@NonNull View itemView) {
             super(itemView);
             date_hotel_booked_main = itemView.findViewById(R.id.date_hotel_booked_main);
@@ -168,6 +207,9 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
             name_hotel_booked = itemView.findViewById(R.id.name_hotel_booked);
             loading = itemView.findViewById(R.id.loading);
             btnCancelRoom = itemView.findViewById(R.id.btnCancelRoom);
+            tvstatus = itemView.findViewById(R.id.tvstatus);
+            btnDatLai = itemView.findViewById(R.id.btnDatLai);
+            llbooked= itemView.findViewById(R.id.llbooked);
             this.view = itemView;
         }
     }

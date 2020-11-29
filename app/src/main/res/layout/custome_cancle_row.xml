@@ -87,8 +87,8 @@
 
                 <TextView
                     android:layout_marginEnd="0dip"
-                    android:layout_marginTop="15dip"
-                    android:layout_marginBottom="15dip"
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
                     android:layout_width="match_parent"
                     android:layout_height="1dip"
                     android:background="#000000"
@@ -98,7 +98,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Đã hủy"
+                    android:layout_marginBottom="5dp"
                     android:textColor="#B71C1C"/>
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Đặt lại"
+                    android:visibility="visible"
+                    android:textColor="@color/white"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
+                    android:background="@drawable/ripple_button"
+                    app:backgroundTint="#00897B"
+                    app:iconTint="@color/white"
+                    android:id="@+id/btnDatLai"/>
 
             </LinearLayout>
         </LinearLayout>
