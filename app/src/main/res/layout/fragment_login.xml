@@ -40,7 +40,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Mật khẩu"
+            android:hint="Password"
             app:boxStrokeColor="@android:color/holo_blue_light"
             app:endIconMode="password_toggle"
             app:errorEnabled="true"
@@ -62,7 +62,7 @@
                 android:id="@+id/cbRemember"
                 android:layout_marginTop="-20dip"
                 android:buttonTint="#03A9F4"
-                android:text="Nhớ mật khẩu" />
+                android:text="Remember password" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -74,7 +74,7 @@
             android:background="@drawable/ripple_button"
             android:backgroundTint="@android:color/holo_red_light"
             app:backgroundTint="#FFFF4444"
-            android:text="Đăng Nhập" />
+            android:text="Log in" />
 
 
     </LinearLayout>

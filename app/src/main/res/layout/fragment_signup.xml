@@ -23,7 +23,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Họ tên"
+                android:hint="Name"
                 app:boxStrokeColor="@android:color/holo_blue_light"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
@@ -44,7 +44,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Số điện thoại"
+                android:hint="phone"
                 app:boxStrokeColor="@android:color/holo_blue_light"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
@@ -142,7 +142,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Mật khẩu"
+                android:hint="Password"
                 app:endIconMode="password_toggle"
                 app:boxStrokeColor="@android:color/holo_blue_light"
                 app:errorEnabled="true"
@@ -163,7 +163,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Xác nhận mật khẩu"
+                android:hint="Confirm password"
                 app:endIconMode="password_toggle"
                 app:boxStrokeColor="@android:color/holo_blue_light"
                 app:errorEnabled="true"
@@ -216,7 +216,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     style="@style/RedButton"
-                    android:text="Chọn ảnh đại diện"/>
+                    android:text="Select avatar"/>
 
                 <ImageView
                     android:id="@+id/show_avatar"
@@ -238,7 +238,7 @@
                 android:layout_height="wrap_content"
 
                 android:background="@drawable/ripple_button"
-                android:text="Đăng Ký"
+                android:text="Sign up"
                 app:backgroundTint="#FFFF4444" />
         </LinearLayout>
     </ScrollView>
