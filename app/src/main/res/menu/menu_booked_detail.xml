@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/question_menu_booked_detail"
+        android:icon="@drawable/ic_question_mark_button_svgrepo_com"
+        android:contentDescription="Favorite"
+        app:showAsAction="ifRoom"
+        android:title="Question" />
+
+
+</menu>
