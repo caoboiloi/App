@@ -183,7 +183,7 @@ public class HotelDetail extends AppCompatActivity {
                 for (Rating i : rating) {
                     if (i != null) {
 
-                        Comment comment = new Comment(i.getName(), i.getComment(), i.getStar());
+                        Comment comment = new Comment(i.getName(), i.getComment(), i.getStar(), userId);
                         comments_data.add(comment);
                         count ++;
 
@@ -202,9 +202,10 @@ public class HotelDetail extends AppCompatActivity {
                     tvInfoRate.setText("Chưa có đánh giá");
                     tvInfoRate1.setText("Chưa có đánh giá");
                 } else {
+                    Log.e("asdasd", String.valueOf(hotel.getRating()));
                     Float ave = hotel.getAveRating();
                     tvRatingAve.setText(new DecimalFormat("#.#").format(ave) + "");
-                    tvInfoRate.setText("Dựa trên " + (rating.size() - 1) + " nhận xét trên mạng");
+                    tvInfoRate.setText("Dựa trên " + (rating.size()) + " nhận xét trên mạng");
                     if (ave >= 4.5) {
                         tvInfoRate1.setText("Rất tốt");
                     } else if (ave < 4.5 && ave >= 4) {
@@ -288,15 +289,22 @@ public class HotelDetail extends AppCompatActivity {
                         snackbar.show();
                     }else{
 
-                        Integer stt;
-                        if(id == 0){
-                            stt= hotel.getRating().size();
+                        Integer stt = 0;
+                        Integer count =0;
+                        if(comments_data.size() == 0){
+                            stt= 0;
                         }else{
-                            stt = id;
+                            for(Comment i:comments_data){
+                                if(i.getUserId().equals(userId)){
+                                    stt = count;
+                                }
+                                count++;
+                            }
                         }
 
                         llComnent.setVisibility(View.GONE);
                         Rating comment1 = new Rating(comment,user.getName(), (int) rating, userId);
+                        Log.e("test", String.valueOf(stt));
                         FirebaseDatabase.getInstance().getReference(path+"/rating/"+stt).setValue(comment1);
 
                     }

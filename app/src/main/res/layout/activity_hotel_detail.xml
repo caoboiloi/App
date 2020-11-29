@@ -189,11 +189,7 @@
                     android:id="@+id/rvComment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height=".5dp"
-                    android:layout_marginLeft="10dp"
-                    android:background="#000000" />
+
                 <LinearLayout
                     android:layout_marginTop="20dp"
                     android:visibility="gone"
