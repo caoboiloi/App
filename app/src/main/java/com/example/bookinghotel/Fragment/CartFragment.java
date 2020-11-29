@@ -131,6 +131,7 @@ public class CartFragment extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 GenericTypeIndicator<List<Ticket>> t = new GenericTypeIndicator<List<Ticket>>() {};
                 List<Ticket> tickets = snapshot.getValue(t);
+
                 final ArrayList<Ticket>[] tickets1 = new ArrayList[]{(ArrayList<Ticket>) tickets.stream().filter(p -> 1==1).collect(Collectors.toList())};
                 bookedAdapter = new BookedAdapter(getActivity(), tickets1[0]);
                 rc_booked.setAdapter(bookedAdapter);

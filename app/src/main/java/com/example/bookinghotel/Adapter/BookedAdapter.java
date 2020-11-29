@@ -28,6 +28,7 @@ import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Home.Home;
 import com.example.bookinghotel.entity.Hotel;
 import com.example.bookinghotel.entity.Ticket;
+import com.example.bookinghotel.entity.TimeBooked;
 import com.example.bookinghotel.entity.User;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
@@ -44,6 +45,7 @@ import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -51,6 +53,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> {
@@ -123,6 +126,72 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+                holder.btnCancelRoom.setOnClickListener(v -> {
+                    new MaterialAlertDialogBuilder(context).setTitle("Huỷ phòng").setMessage("Bạn có chắc chắn muốn hủy phòng đã đặt ?")
+                            // Respond to neutral button press
+                            .setNegativeButton("Hủy bỏ", (dialog, which) -> {
+                                dialog.dismiss();
+                            })
+                            .setPositiveButton("Xác nhận hủy phòng", (dialog, which) -> {
+                                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                for (int i = 0; i < datatemp.size(); i++) {
+                                    if (datatemp.get(i) == ticket){
+                                        DatabaseReference mDatabase1 = FirebaseDatabase.getInstance().getReference("Users/"+userId+"/ticket/"+i+"/status");
+                                        mDatabase1.setValue(false);
+                                        break;
+                                    }
+                                }
+                                Long price = ticket.getPrice();
+                                Date batdau = new Date(ticket.getBegin());
+                                Date kethuc = new Date(ticket.getEnd());
+                                long diffInMillies = kethuc.getTime() - batdau.getTime();
+                                long days = TimeUnit.DAYS.convert(diffInMillies, TimeUnit.MILLISECONDS);
+
+                                String type;
+                                if(hotel.getRoom().getMedium().getPrice() == (price/(days +1 ))){
+                                    type= "Medium";
+                                }else{
+                                    type= "Large";
+                                }
+                                DatabaseReference mDatabase1 = FirebaseDatabase.getInstance().getReference(ticket.getPath()+"/bookedRoom/"+ticket.getPathRoom());
+                                int IdRoom = Integer.parseInt(ticket.getPathRoom().split("/")[1]);
+                                String typeRoom = ticket.getPathRoom().split("/")[0];
+                                if (typeRoom.equals("Medium")){
+                                   TimeBooked  room = hotel.getBookedRoom().getMedium().get(IdRoom);
+                                   if(room.getBegin().contains(ticket.getBegin()) && room.getEnd().contains(ticket.getEnd())){
+                                       int positon = room.getBegin().indexOf(ticket.getBegin());
+                                       room.getBegin().remove(position);
+                                       room.getEnd().remove(position);
+                                       mDatabase1.setValue(room);
+                                   }
+                                }else{
+                                    TimeBooked  room = hotel.getBookedRoom().getLarge().get(IdRoom);
+                                    if(room.getBegin().contains(ticket.getBegin()) && room.getEnd().contains(ticket.getEnd())){
+                                        int posotopn = room.getBegin().indexOf(ticket.getBegin());
+                                        room.getBegin().remove(position);
+                                        room.getEnd().remove(position);
+                                        mDatabase1.setValue(room);
+                                    }
+                                }
+
+//                                mDatabase1.addValueEventListener(new ValueEventListener() {
+//                                    @Override
+//                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+//                                        TimeBooked timeBooked = snapshot.getValue(TimeBooked.class);
+//                                        timeBooked.getBegin().remove(ticket.getBegin());
+//                                        timeBooked.getEnd().remove(ticket.getEnd());
+//                                    }
+//
+//                                    @Override
+//                                    public void onCancelled(@NonNull DatabaseError error) {
+//
+//                                    }
+//                                });
+                                dialog.dismiss();
+
+                            }).show();
+
+                });
 
             }
 
@@ -132,49 +201,12 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
             }
         });
         holder.btnDatLai.setOnClickListener(v -> {
-            Log.e("ticket", "asd");
             Intent intent = new Intent(context, HotelDetail.class);
             intent.putExtra("path", ticket.getPath());
             intent.putExtra("hotelname", "Hotel detail");
             context.startActivity(intent);
         });
-        holder.btnCancelRoom.setOnClickListener(v -> {
-            new MaterialAlertDialogBuilder(context).setTitle("Huỷ phòng").setMessage("Bạn có chắc chắn muốn hủy phòng đã đặt ?")
-                // Respond to neutral button press
-            .setNegativeButton("Hủy bỏ", (dialog, which) -> {
-                dialog.dismiss();
-            })
-            .setPositiveButton("Xác nhận hủy phòng", (dialog, which) -> {
-                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                for (int i = 0; i < this.datatemp.size(); i++) {
-                    if (this.datatemp.get(i) == ticket){
-                        DatabaseReference mDatabase1 = FirebaseDatabase.getInstance().getReference("Users/"+userId+"/ticket/"+i+"/status");
-                        mDatabase1.setValue(false);
-                        break;
-                    }
-                }
-                dialog.dismiss();
-                Snackbar snackbar = Snackbar
-                        .make(holder.view, "Bạn đã hủy phòng thành công", Snackbar.LENGTH_LONG)
-                        .setAction("Undo", new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-                                for (int i = 0; i < datatemp.size(); i++) {
-                                    if (datatemp.get(i) == ticket){
-                                        DatabaseReference mDatabase1 = FirebaseDatabase.getInstance().getReference("Users/"+userId+"/ticket/"+i+"/status");
-                                        mDatabase1.setValue(true);
-                                        break;
-                                    }
-                                }
-                            }
-                        });
 
-                snackbar.show();
-                Home.setHide();
-            }).show();
-
-        });
 
     }
 

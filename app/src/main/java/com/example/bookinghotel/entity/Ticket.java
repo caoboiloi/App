@@ -6,15 +6,25 @@ public class Ticket {
     Long price;
     String path;
     Boolean status;
+    String pathRoom;
     public Ticket() {
     }
 
-    public Ticket(Long begin, Long end, Long price, String path, boolean status) {
+    public Ticket(Long begin, Long end, Long price, String path, boolean status, String pathRoom) {
         this.begin = begin;
         this.end = end;
         this.price = price;
         this.path = path;
         this.status = status;
+        this.pathRoom = pathRoom;
+    }
+
+    public String getPathRoom() {
+        return pathRoom;
+    }
+
+    public void setPathRoom(String pathRoom) {
+        this.pathRoom = pathRoom;
     }
 
     public Boolean getStatus() {
@@ -65,6 +75,7 @@ public class Ticket {
                 ", price=" + price +
                 ", path='" + path + '\'' +
                 ", status=" + status +
+                ", partroom=" + pathRoom +
                 '}';
     }
 }

@@ -76,16 +76,14 @@ import java.util.Map;
 
 // Main Activity
 public class Home extends AppCompatActivity {
-    private ActionBar toolbar;
+    private static ActionBar toolbar;
     static BottomNavigationView navigation;
 
-    public static void setHide() {
-        navigation.animate().translationY(navigation.getHeight());
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_home);
         getSupportActionBar().hide();
 
@@ -97,8 +95,16 @@ public class Home extends AppCompatActivity {
         layoutParams.setBehavior(new BottomNavigationBehavior());
 
         toolbar = getSupportActionBar();
-        toolbar.setTitle("Hotel");
-        loadFragment(new HomeFragment());
+
+        Intent intent = getIntent();
+        if(intent.getStringExtra("status") != null){
+            toolbar.setTitle("Cart");
+            loadFragment(new CartFragment());
+            
+        }else{
+            toolbar.setTitle("Hotel");
+            loadFragment(new HomeFragment());
+        }
 
 
     }

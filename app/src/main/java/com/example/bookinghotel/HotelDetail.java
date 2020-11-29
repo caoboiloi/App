@@ -210,6 +210,7 @@ public class HotelDetail extends AppCompatActivity {
                 }
                 progressBar_cyclic_detail.setVisibility(View.GONE);
                 String status = intent.getStringExtra("status");
+
                 if(status != null){
                     Snackbar snackbar = Snackbar
                             .make(main_content1, "Đặt phòng thành công", Snackbar.LENGTH_SHORT);

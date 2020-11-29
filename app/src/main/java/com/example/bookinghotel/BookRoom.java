@@ -74,6 +74,7 @@ public class BookRoom extends AppCompatActivity {
 
         Intent intent = getIntent();
         Integer price = intent.getIntExtra("price",0);
+
         String boookeds = intent.getStringExtra("bookeds");
         String bookedRoomStr = intent.getStringExtra("bookedRoom");
         String type = intent.getStringExtra("type");
@@ -336,7 +337,7 @@ public class BookRoom extends AppCompatActivity {
 
                             if(!inserted[0]){
                                 inserted[0] = true;
-                                Ticket ticket = new Ticket(ngayDatCalender.getTimeInMillis(),ngayTraCalender.getTimeInMillis(),price*day,path,true);
+                                Ticket ticket = new Ticket(ngayDatCalender.getTimeInMillis(),ngayTraCalender.getTimeInMillis(),price*day,path,true,type+"/"+idRoom);
                                 mDatabase.child(String.valueOf(count)).setValue(ticket);
                                 a1.get(idRoom).appendBegin(a.getTime());
                                 a1.get(idRoom).appendEnd(b.getTime());
@@ -344,9 +345,7 @@ public class BookRoom extends AppCompatActivity {
                                 Snackbar snackbar = Snackbar
                                         .make(main_content, "Thành công", Snackbar.LENGTH_SHORT);
                                 snackbar.show();
-                                Intent intent = new Intent(BookRoom.this, HotelDetail.class);
-                                intent.putExtra("path",path);
-                                intent.putExtra("hotelname","");
+                                Intent intent = new Intent(BookRoom.this, Home.class);
                                 intent.putExtra("status","booked");
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
@@ -355,7 +354,7 @@ public class BookRoom extends AppCompatActivity {
                         }else{
                             if(!inserted[0]){
                                 inserted[0] = true;
-                                Ticket ticket = new Ticket(ngayDatCalender.getTimeInMillis(),ngayTraCalender.getTimeInMillis(),price*day,path,true);
+                                Ticket ticket = new Ticket(ngayDatCalender.getTimeInMillis(),ngayTraCalender.getTimeInMillis(),price*day,path,true,type+"/"+idRoom);
                                 mDatabase.child(String.valueOf(count)).setValue(ticket);
                                 a1.get(idRoom).appendBegin(a.getTime());
                                 a1.get(idRoom).appendEnd(b.getTime());
@@ -364,10 +363,8 @@ public class BookRoom extends AppCompatActivity {
                                         .make(main_content, "Thành công", Snackbar.LENGTH_SHORT);
                                 snackbar.show();
 
-                                Intent intent = new Intent(BookRoom.this, HotelDetail.class);
+                                Intent intent = new Intent(BookRoom.this, Home.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                                intent.putExtra("hotelname","");
-                                intent.putExtra("path",path);
                                 intent.putExtra("status","booked");
                                 startActivity(intent);
                                 finish();
