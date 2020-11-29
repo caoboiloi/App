@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.bookinghotel.HotelDetail;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Home.Home;
+import com.example.bookinghotel.ShowBookedActivity;
 import com.example.bookinghotel.entity.Hotel;
 import com.example.bookinghotel.entity.Ticket;
 import com.example.bookinghotel.entity.TimeBooked;
@@ -101,7 +102,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
         Date ketthuc = new Date(ticket.getEnd());
         String ngayBatDau = dateFormat.format(batdau);
         String ngayKetThuc = dateFormat.format(ketthuc);
-        holder.date_hotel_booked_main.setText(ngayBatDau +"-"+ngayKetThuc);
+        holder.date_hotel_booked_main.setText(ngayBatDau +" - "+ngayKetThuc);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(ticket.getPath());
         holder.loading.setVisibility(View.VISIBLE);
         Date now = new Date();
@@ -123,10 +124,11 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
                 holder.name_hotel_booked.setText(hotel.getName());
                 holder.rating_hotel_booked.setRating(hotel.getAveRating());
                 holder.loading.setVisibility(View.GONE);
+                String city_hotel_booked = "";
                 try {
-
                     List<Address> addresses = geocoder.getFromLocation(hotel.getLat(), hotel.getLongitude(), 1);
                     holder.city_hotel_booked.setText(addresses.get(0).getAdminArea());
+                    city_hotel_booked = addresses.get(0).getAdminArea();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -185,6 +187,30 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
 
                             }).show();
 
+                });
+
+                String finalCity_hotel_booked = city_hotel_booked;
+                holder.itemView.setOnClickListener((View v) -> {
+                    Intent intent = new Intent(context, ShowBookedActivity.class);
+                    intent.putExtra("city_hotel_booked", finalCity_hotel_booked);
+//                    intent.putExtra("image_hotel_booked",  bMapScaled1);
+                    intent.putExtra("name_hotel_booked", hotel.getName());
+                    intent.putExtra("date_hotel_booked_start",ngayBatDau);
+                    intent.putExtra("date_hotel_booked_finish",ngayKetThuc);
+                    intent.putExtra("price_hotel_booked",ticket.getPrice());
+                    String type_room = "";
+                    String num_room = "";
+                    if (ticket.getPathRoom().contains("Medium")) {
+                        type_room = "Medium";
+                        num_room = ticket.getPathRoom().substring(ticket.getPathRoom().lastIndexOf("/") + 1);
+                    }
+                    else if (ticket.getPathRoom().contains("Large")) {
+                        type_room = "Large";
+                        num_room = ticket.getPathRoom().substring(ticket.getPathRoom().lastIndexOf("/") + 1);
+                    }
+                    intent.putExtra("type_room_hotel_booked",type_room);
+                    intent.putExtra("num_room_hotel_booked",num_room);
+                    context.startActivity(intent);
                 });
 
             }
