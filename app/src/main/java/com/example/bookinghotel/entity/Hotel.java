@@ -15,7 +15,6 @@ public class Hotel {
     String name;
     Room room;
     ArrayList<Rating> rating = new  ArrayList<Rating>();
-    ArrayList<Booked> bookeds = new ArrayList<Booked>();
     BookedRoom bookedRoom = new BookedRoom();
     String path;
     public Hotel() {
@@ -47,13 +46,7 @@ public class Hotel {
         this.path = path;
     }
 
-    public ArrayList<Booked> getBookeds() {
-        return bookeds;
-    }
 
-    public void setBookeds(ArrayList<Booked> bookeds) {
-        this.bookeds = bookeds;
-    }
 
     public String getImage() {
         return image;
@@ -131,7 +124,6 @@ public class Hotel {
                 ", averating=" + getAveRating() +
                 ", name='" + name + '\'' +
                 ", romm='" + room.toString() + '\'' +
-                ", booked='" + bookeds.toString() + '\'' +
                 ", booked='" + bookedRoom.toString() + '\'' +
                 '}';
     }

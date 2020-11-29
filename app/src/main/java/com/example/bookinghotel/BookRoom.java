@@ -75,7 +75,6 @@ public class BookRoom extends AppCompatActivity {
         Intent intent = getIntent();
         Integer price = intent.getIntExtra("price",0);
 
-        String boookeds = intent.getStringExtra("bookeds");
         String bookedRoomStr = intent.getStringExtra("bookedRoom");
         String type = intent.getStringExtra("type");
         String path = intent.getStringExtra("path");

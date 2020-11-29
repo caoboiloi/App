@@ -235,12 +235,10 @@ public class HotelDetail extends AppCompatActivity {
 
             Intent intent1 = new Intent(this, BookRoom.class);
             intent1.putExtra("price", hotel.getRoom().getLarge().getPrice());
-            ArrayList<Booked> bookeds = hotel.getBookeds();
             ArrayList<TimeBooked> bookedRoom = hotel.getBookedRoom().getLarge();
 
             Gson gson = new Gson();
-            String myJson = gson.toJson(bookeds);
-            intent1.putExtra("bookeds", myJson);
+
             String myJson1 = gson.toJson(bookedRoom);
 
             intent1.putExtra("bookedRoom", myJson1);
@@ -253,12 +251,9 @@ public class HotelDetail extends AppCompatActivity {
         btnBookMedium.setOnClickListener(v -> {
             Intent intent1 = new Intent(this, BookRoom.class);
             intent1.putExtra("price", hotel.getRoom().getMedium().getPrice());
-            ArrayList<Booked> bookeds = hotel.getBookeds();
             ArrayList<TimeBooked> bookedRoom = hotel.getBookedRoom().getMedium();
             Gson gson = new Gson();
-            String myJson = gson.toJson(bookeds);
             String myJson1 = gson.toJson(bookedRoom);
-            intent1.putExtra("bookeds", myJson);
             intent1.putExtra("bookedRoom", myJson1);
             intent1.putExtra("path", path);
             intent1.putExtra("type", "Medium");

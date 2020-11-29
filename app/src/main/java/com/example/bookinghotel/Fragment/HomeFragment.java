@@ -290,34 +290,12 @@ public class HomeFragment extends Fragment {
 
                                 Hotel hotel = postSnapshot.getValue(Hotel.class);
                                 hotel.setPath(postSnapshot.getRef().toString().replace("https://hotelbooking-5a74a.firebaseio.com/",""));
-                                ArrayList<Booked> booked = hotel.getBookeds();
                                 String typeRoom = tvRoomSize.getText().toString();
-                                Integer numberRoom = hotel.getRoom().getTypeByName(typeRoom).getTotal();
-                                //getALl booked
-                                ArrayList<Booked> bookeds = hotel.getBookeds();
-                                //filter by roomsize
-                                ArrayList<Booked> bookedsFilter = (ArrayList<Booked>) bookeds.stream().filter(p->p.getTypeRoom().equals(typeRoom)).collect(Collectors.toList());
 
-//                                check
-                                if(bookedsFilter.size() < hotel.getRoom().getTypeByName(typeRoom).getTotal()){
-                                    hotels.add(hotel);
-                                }else{
-                                    for(Booked i : bookedsFilter){
-                                        ArrayList<Long> begin = i.getBegin();
-                                        ArrayList<Long> end = i.getEnd();
-                                        for (int j = 0; j < begin.size(); j++) {
-//                                            Log.e("a",begin.get(j)+" "+end.get(j) );
+//                                ArrayList<Booked> bookedsFilter = (ArrayList<Booked>) bookeds.stream().filter(p->p.getTypeRoom().equals(typeRoom)).collect(Collectors.toList());
 
-                                            if(startDate <= end.get(j) && startDate >= begin.get(j) || endDate <= end.get(j) && endDate >= begin.get(j)){
-                                                Log.e("asd", "Da dc book : begin1 "+readDate(begin.get(j)) +"  "+"end1 "+readDate(end.get(j)));
-                                                break;
-                                            }
-                                            if(j == begin.size()-1){
-                                                hotels.add(hotel);
-                                            }
-                                        }
-                                    }
-                                }
+
+                                hotels.add(hotel);
 
                             }
 //
@@ -333,28 +311,6 @@ public class HomeFragment extends Fragment {
                 }
             }
         });
-
-//        read location
-//        btnLocation.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-//                    if (!hasPermission(LOCATION)) {
-//                        requestLocation(view);
-//                    }
-//                    if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
-//                        requestLocation(view);
-//
-//                    } else {
-//                        try {
-//                            getLocation();
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                }
-//
-//        });
 
     }
     String readDate(Long a){
