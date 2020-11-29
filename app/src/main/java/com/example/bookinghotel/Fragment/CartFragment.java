@@ -22,6 +22,7 @@ import com.example.bookinghotel.Adapter.BookedAdapter;
 import com.example.bookinghotel.Adapter.CanceledAdapter;
 import com.example.bookinghotel.Adapter.HotelAdapter;
 import com.example.bookinghotel.R;
+import com.example.bookinghotel.Screen.Home.Home;
 import com.example.bookinghotel.entity.Booked;
 import com.example.bookinghotel.entity.Hotel;
 import com.example.bookinghotel.entity.Ticket;
@@ -155,6 +156,7 @@ public class CartFragment extends Fragment {
                             rc_booked.setAdapter(bookedAdapter);
                             bookedAdapter.notifyDataSetChanged();
                             canceled_btn.setTextColor(getResources().getColor(R.color.grey));
+                            Home.showNavbar();
                         });
 
                         canceled_btn.setOnClickListener((View v) -> {
@@ -164,6 +166,7 @@ public class CartFragment extends Fragment {
                             bookedAdapter.notifyDataSetChanged();
                             canceled_btn.setTextColor(getResources().getColor(R.color.blue));
                             booked_btn.setTextColor(getResources().getColor(R.color.grey));
+                            Home.showNavbar();
                         });
                     }
 

@@ -168,6 +168,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
                                        room.getBegin().remove(position);
                                        room.getEnd().remove(position);
                                        mDatabase1.setValue(room);
+                                       Home.showNavbar();
                                    }
                                 }else{
                                     TimeBooked  room = hotel.getBookedRoom().getLarge().get(IdRoom);
@@ -176,6 +177,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
                                         room.getBegin().remove(position);
                                         room.getEnd().remove(position);
                                         mDatabase1.setValue(room);
+                                        Home.showNavbar();
                                     }
                                 }
 
