@@ -344,7 +344,6 @@ public class BookRoom extends AppCompatActivity {
                                 mDatabase1.child(type).setValue(a1);
                                 Intent intent = new Intent(BookRoom.this, Home.class);
                                 intent.putExtra("status","booked");
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 startActivity(intent);
                                 finish();
                             }
@@ -358,7 +357,6 @@ public class BookRoom extends AppCompatActivity {
                                 mDatabase1.child(type).setValue(a1);
 
                                 Intent intent = new Intent(BookRoom.this, Home.class);
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                                 intent.putExtra("status","booked");
                                 startActivity(intent);
                                 finish();

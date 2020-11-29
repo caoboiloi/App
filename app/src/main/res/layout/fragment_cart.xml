@@ -119,6 +119,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:background="@drawable/circularbordersolid"
                 android:id="@+id/list_booked"
