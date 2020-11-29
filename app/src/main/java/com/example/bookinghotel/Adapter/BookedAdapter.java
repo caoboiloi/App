@@ -70,14 +70,18 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
         Date now = new Date();
         this.datatemp = data;
         data =(ArrayList<Ticket>) data.stream().filter(p->p.getStatus()).collect(Collectors.toList());
+
+
         ArrayList<Ticket> onprogress = (ArrayList<Ticket>) data.stream().filter(p->p.getEnd() > now.getTime()).collect(Collectors.toList());
         ArrayList<Ticket> done = (ArrayList<Ticket>) data.stream().filter(p->p.getEnd() <= now.getTime()).collect(Collectors.toList());
+        Collections.reverse(onprogress);
+        Collections.reverse(done);
+
         this.data.addAll(onprogress);
         this.data.addAll(done);
 
+
     }
-
-
 
     @NonNull
     @Override
@@ -134,6 +138,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
                             })
                             .setPositiveButton("Xác nhận hủy phòng", (dialog, which) -> {
                                 String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
+                                dialog.dismiss();
                                 for (int i = 0; i < datatemp.size(); i++) {
                                     if (datatemp.get(i) == ticket){
                                         DatabaseReference mDatabase1 = FirebaseDatabase.getInstance().getReference("Users/"+userId+"/ticket/"+i+"/status");
@@ -174,20 +179,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
                                     }
                                 }
 
-//                                mDatabase1.addValueEventListener(new ValueEventListener() {
-//                                    @Override
-//                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                        TimeBooked timeBooked = snapshot.getValue(TimeBooked.class);
-//                                        timeBooked.getBegin().remove(ticket.getBegin());
-//                                        timeBooked.getEnd().remove(ticket.getEnd());
-//                                    }
-//
-//                                    @Override
-//                                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                    }
-//                                });
-                                dialog.dismiss();
+
 
                             }).show();
 

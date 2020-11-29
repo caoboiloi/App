@@ -342,9 +342,6 @@ public class BookRoom extends AppCompatActivity {
                                 a1.get(idRoom).appendBegin(a.getTime());
                                 a1.get(idRoom).appendEnd(b.getTime());
                                 mDatabase1.child(type).setValue(a1);
-                                Snackbar snackbar = Snackbar
-                                        .make(main_content, "Thành công", Snackbar.LENGTH_SHORT);
-                                snackbar.show();
                                 Intent intent = new Intent(BookRoom.this, Home.class);
                                 intent.putExtra("status","booked");
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -359,9 +356,6 @@ public class BookRoom extends AppCompatActivity {
                                 a1.get(idRoom).appendBegin(a.getTime());
                                 a1.get(idRoom).appendEnd(b.getTime());
                                 mDatabase1.child(type).setValue(a1);
-                                Snackbar snackbar = Snackbar
-                                        .make(main_content, "Thành công", Snackbar.LENGTH_SHORT);
-                                snackbar.show();
 
                                 Intent intent = new Intent(BookRoom.this, Home.class);
                                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

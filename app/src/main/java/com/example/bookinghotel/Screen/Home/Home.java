@@ -79,7 +79,6 @@ public class Home extends AppCompatActivity {
     private static ActionBar toolbar;
     static BottomNavigationView navigation;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,10 +99,11 @@ public class Home extends AppCompatActivity {
         if(intent.getStringExtra("status") != null){
             toolbar.setTitle("Cart");
             loadFragment(new CartFragment());
-            
+            navigation.setSelectedItemId(R.id.navigation_cart);
         }else{
             toolbar.setTitle("Hotel");
             loadFragment(new HomeFragment());
+            navigation.setSelectedItemId(R.id.navigation_shop);
         }
 
 

@@ -1,5 +1,6 @@
 package com.example.bookinghotel.Fragment;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -78,7 +79,7 @@ public class CartFragment extends Fragment {
 
     LinearLayout booked, canceled;
     TextView booked_btn, canceled_btn;
-
+    Context context;
     RecyclerView rc_booked, rc_canceled;
 
     private BookedAdapter bookedAdapter;
@@ -119,6 +120,12 @@ public class CartFragment extends Fragment {
         rc_canceled.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
 
         return rootView;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        this.context = context;
     }
 
     @Override
@@ -166,4 +173,5 @@ public class CartFragment extends Fragment {
 
 
     }
+
 }
