@@ -233,6 +233,13 @@
                 </LinearLayout>
             </LinearLayout>
 
+            <ProgressBar
+                android:paddingTop="50dp"
+                android:id="@+id/progressBar_cyclic"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+
             <!--Option Bar-->
 
             <LinearLayout

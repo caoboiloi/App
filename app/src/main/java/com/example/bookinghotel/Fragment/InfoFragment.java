@@ -23,6 +23,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +85,7 @@ public class InfoFragment extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
+    ProgressBar progressBar_cyclic;
 
     LinearLayout personalinfo, booking_details, review;
     TextView personalinfobtn, booking_details_btn, reviewbtn;
@@ -141,6 +143,8 @@ public class InfoFragment extends Fragment {
         tv_edit_contact = rootView.findViewById(R.id.tv_edit_contact);
         tv_edit_about_me = rootView.findViewById(R.id.tv_edit_about_me);
         tv_edit_job = rootView.findViewById(R.id.tv_edit_job);
+
+        progressBar_cyclic = rootView.findViewById(R.id.progressBar_cyclic);
 
         percent_completed_user = rootView.findViewById(R.id.percent_completed_user);
 
@@ -227,6 +231,7 @@ public class InfoFragment extends Fragment {
         topAppBar.setOnClickListener((View v) -> {
         });
 
+        progressBar_cyclic.setVisibility(View.VISIBLE);
         DatabaseReference UserData = FirebaseDatabase.getInstance().getReference("Users");
 
 //      Load user from id
@@ -236,8 +241,14 @@ public class InfoFragment extends Fragment {
             public void onDataChange(DataSnapshot dataSnapshot) {
 
                 user = dataSnapshot.getValue(User.class);
-                Log.e("asd", user.getTicket().toString());
 //              set data in TextView
+                Log.e("test",user.getLove());
+                if (!user.getLove().equals("")) {
+                    percent_completed_user.setText("100%");
+                }
+                else {
+                    percent_completed_user.setText("97%");
+                }
                 name_user.setText(user.getName());
                 des_user.setText(user.getLove());
                 email_user.setText(user.getEmail());
@@ -253,6 +264,8 @@ public class InfoFragment extends Fragment {
                 Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
                 Bitmap bMapScaled = Bitmap.createScaledBitmap(decodedByte, 800, 1300, true);
                 show_img_info.setImageBitmap(bMapScaled);
+
+                progressBar_cyclic.setVisibility(View.GONE);
             }
 
             @Override

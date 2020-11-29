@@ -44,7 +44,7 @@
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="phone"
+                android:hint="Phone"
                 app:boxStrokeColor="@android:color/holo_blue_light"
                 app:endIconMode="clear_text"
                 app:errorEnabled="true"
