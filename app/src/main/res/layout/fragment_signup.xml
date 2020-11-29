@@ -201,14 +201,30 @@
                     android:text="Nữ" />
             </RadioGroup>
 
-            <Button
-                android:id="@+id/choose_gallery_img_avatar"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                style="@style/RedButton"
-                android:background="@drawable/ripple_button"
-                android:text="Chọn ảnh đại diện"
-                app:backgroundTint="#FFFF4444"/>
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_marginTop="10dip"
+                    android:layout_marginBottom="10dip"
+                    android:id="@+id/choose_gallery_img_avatar"
+                    android:background="?selectableItemBackground"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    style="@style/RedButton"
+                    android:text="Chọn ảnh đại diện"/>
+
+                <ImageView
+                    android:id="@+id/show_avatar"
+                    android:layout_width="100dip"
+                    android:layout_height="100dip"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/icon_launcher"/>
+            </LinearLayout>
 
             <TextView
                 android:layout_width="match_parent"

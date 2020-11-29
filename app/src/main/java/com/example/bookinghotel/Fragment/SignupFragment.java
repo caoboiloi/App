@@ -26,6 +26,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -66,9 +67,13 @@ public class SignupFragment extends Fragment {
     private String mParam2;
     private FragmentActivity myContext;
     EditText etConfirm, etName, etPhone, etEmail, etPass, etAddress, etJob, etWorkplace;
-    TextView tvError;
-    Button btnSignup, choose_gallery_img_avatar;
+    TextView tvError, choose_gallery_img_avatar;
+    Button btnSignup;
+    ImageView show_avatar;
     RadioButton rbMale, rbFemale;
+
+//    String basa64 img
+    String img_base_64 = "";
 
     private static final int GALLERY_REQUEST_CODE = 123;
 
@@ -124,6 +129,8 @@ public class SignupFragment extends Fragment {
         tvError = rootView.findViewById(R.id.tverror);
 
         choose_gallery_img_avatar = rootView.findViewById(R.id.choose_gallery_img_avatar);
+
+        show_avatar = rootView.findViewById(R.id.show_avatar);
         return rootView;
     }
 
@@ -132,7 +139,6 @@ public class SignupFragment extends Fragment {
         if (requestCode == GALLERY_REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
             Uri imagePath = data.getData();
             Bitmap bitmap = null;
-            String img_base_64 = "";
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(myContext.getContentResolver(),imagePath);
 
@@ -144,7 +150,9 @@ public class SignupFragment extends Fragment {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Log.e("hahahaha",img_base_64);
+
+//            show avatart
+            show_avatar.setImageURI(imagePath);
         }
     }
 
@@ -206,6 +214,9 @@ public class SignupFragment extends Fragment {
                     Toast.makeText(myContext, "Nơi làm việc không hợp lệ", Toast.LENGTH_SHORT).show();
                     etName.requestFocus();
                 }
+                else if(img_base_64.equals("")) {
+                    Toast.makeText(myContext, "Vui lòng chọn ảnh đại diện", Toast.LENGTH_SHORT).show();
+                }
                 else{
                     final ProgressDialog progress = new ProgressDialog(getActivity());
                     progress.setMessage("Đang đăng kí...");
@@ -233,7 +244,7 @@ public class SignupFragment extends Fragment {
                                                 sex = "Nam";
                                             else if (rbFemale.isChecked())
                                                 sex = "Nữ";
-                                            User u = new User(name, email, id,"", phone, sex, address, job, workplace);
+                                            User u = new User(name, email, id,"", phone, sex, address, job, workplace, img_base_64);
                                             mDatabase.child(id).setValue(u);
                                             Intent intent = new Intent(getActivity(), Home.class);
                                             startActivity(intent);
