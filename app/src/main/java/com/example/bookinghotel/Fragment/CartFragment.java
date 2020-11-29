@@ -107,6 +107,7 @@ public class CartFragment extends Fragment {
         canceled_btn = rootView.findViewById(R.id.cancel_btn);
 
 
+
         // Recycler View
         rc_booked = rootView.findViewById(R.id.list_booked);
         rc_canceled = rootView.findViewById(R.id.list_canceled);
@@ -132,35 +133,41 @@ public class CartFragment extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         String userId = FirebaseAuth.getInstance().getCurrentUser().getUid();
-        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users/"+userId+"/ticket");
+        DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference("Users/" + userId + "/ticket");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                GenericTypeIndicator<List<Ticket>> t = new GenericTypeIndicator<List<Ticket>>() {};
+                GenericTypeIndicator<List<Ticket>> t = new GenericTypeIndicator<List<Ticket>>() {
+                };
                 List<Ticket> tickets = snapshot.getValue(t);
+                if (tickets != null) {
+                    if (tickets.size() > 0) {
 
-                final ArrayList<Ticket>[] tickets1 = new ArrayList[]{(ArrayList<Ticket>) tickets.stream().filter(p -> 1==1).collect(Collectors.toList())};
-                bookedAdapter = new BookedAdapter(getActivity(), tickets1[0]);
-                rc_booked.setAdapter(bookedAdapter);
 
-                booked_btn.setOnClickListener((View v) -> {
-                    tickets1[0] = (ArrayList<Ticket>) tickets;
-                    booked_btn.setTextColor(getResources().getColor(R.color.blue));
-                    bookedAdapter = new BookedAdapter(getActivity(), tickets1[0]);
-                    rc_booked.setAdapter(bookedAdapter);
-                    bookedAdapter.notifyDataSetChanged();
-                    canceled_btn.setTextColor(getResources().getColor(R.color.grey));
-                });
+                        final ArrayList<Ticket>[] tickets1 = new ArrayList[]{(ArrayList<Ticket>) tickets.stream().filter(p -> 1 == 1).collect(Collectors.toList())};
+                        bookedAdapter = new BookedAdapter(getActivity(), tickets1[0]);
+                        rc_booked.setAdapter(bookedAdapter);
 
-                canceled_btn.setOnClickListener((View v) -> {
-                    tickets1[0] = (ArrayList<Ticket>) tickets.stream().filter(p->!p.getStatus()).collect(Collectors.toList());
-                    canceledAdapter = new CanceledAdapter(getActivity(), tickets1[0]);
-                    rc_booked.setAdapter(canceledAdapter);
-                    bookedAdapter.notifyDataSetChanged();
-                    canceled_btn.setTextColor(getResources().getColor(R.color.blue));
-                    booked_btn.setTextColor(getResources().getColor(R.color.grey));
-                });
+                        booked_btn.setOnClickListener((View v) -> {
+                            tickets1[0] = (ArrayList<Ticket>) tickets;
+                            booked_btn.setTextColor(getResources().getColor(R.color.blue));
+                            bookedAdapter = new BookedAdapter(getActivity(), tickets1[0]);
+                            rc_booked.setAdapter(bookedAdapter);
+                            bookedAdapter.notifyDataSetChanged();
+                            canceled_btn.setTextColor(getResources().getColor(R.color.grey));
+                        });
 
+                        canceled_btn.setOnClickListener((View v) -> {
+                            tickets1[0] = (ArrayList<Ticket>) tickets.stream().filter(p -> !p.getStatus()).collect(Collectors.toList());
+                            canceledAdapter = new CanceledAdapter(getActivity(), tickets1[0]);
+                            rc_booked.setAdapter(canceledAdapter);
+                            bookedAdapter.notifyDataSetChanged();
+                            canceled_btn.setTextColor(getResources().getColor(R.color.blue));
+                            booked_btn.setTextColor(getResources().getColor(R.color.grey));
+                        });
+                    }
+
+                }
             }
 
             @Override
@@ -168,8 +175,6 @@ public class CartFragment extends Fragment {
 
             }
         });
-
-
 
 
     }
