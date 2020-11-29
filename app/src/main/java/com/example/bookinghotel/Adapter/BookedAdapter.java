@@ -27,6 +27,7 @@ import com.example.bookinghotel.HotelDetail;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Home.Home;
 import com.example.bookinghotel.ShowBookedActivity;
+import com.example.bookinghotel.Singleton;
 import com.example.bookinghotel.entity.Hotel;
 import com.example.bookinghotel.entity.Ticket;
 import com.example.bookinghotel.entity.TimeBooked;
@@ -124,11 +125,11 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
                 holder.name_hotel_booked.setText(hotel.getName());
                 holder.rating_hotel_booked.setRating(hotel.getAveRating());
                 holder.loading.setVisibility(View.GONE);
-                String city_hotel_booked = "";
+                String address_hotel_booked = "";
                 try {
                     List<Address> addresses = geocoder.getFromLocation(hotel.getLat(), hotel.getLongitude(), 1);
                     holder.city_hotel_booked.setText(addresses.get(0).getAdminArea());
-                    city_hotel_booked = addresses.get(0).getAdminArea();
+                    address_hotel_booked = addresses.get(0).getAddressLine(0);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -189,15 +190,16 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
 
                 });
 
-                String finalCity_hotel_booked = city_hotel_booked;
+                String finalAddress_hotel_booked = address_hotel_booked;
                 holder.itemView.setOnClickListener((View v) -> {
                     Intent intent = new Intent(context, ShowBookedActivity.class);
-                    intent.putExtra("city_hotel_booked", finalCity_hotel_booked);
-//                    intent.putExtra("image_hotel_booked",  bMapScaled1);
+                    intent.putExtra("address_hotel_booked", finalAddress_hotel_booked);
+                    Singleton image_hotel_booked = new Singleton();
+                    image_hotel_booked.setBaseImg(hotel.getImage());
                     intent.putExtra("name_hotel_booked", hotel.getName());
                     intent.putExtra("date_hotel_booked_start",ngayBatDau);
                     intent.putExtra("date_hotel_booked_finish",ngayKetThuc);
-                    intent.putExtra("price_hotel_booked",ticket.getPrice());
+                    intent.putExtra("price_hotel_booked",NumberFormat.getCurrencyInstance(new Locale("vi", "VN")).format(ticket.getPrice()));
                     String type_room = "";
                     String num_room = "";
                     if (ticket.getPathRoom().contains("Medium")) {
