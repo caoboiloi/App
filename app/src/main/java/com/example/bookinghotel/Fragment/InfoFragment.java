@@ -2,6 +2,8 @@ package com.example.bookinghotel.Fragment;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,6 +14,7 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -91,7 +94,7 @@ public class InfoFragment extends Fragment {
 
     public TextView percent_completed_user;
 
-    ImageView btnLogoout, topAppBar;
+    ImageView btnLogoout, topAppBar, show_img_info;
 
     User user;
 
@@ -143,6 +146,8 @@ public class InfoFragment extends Fragment {
 
         btnLogoout = rootView.findViewById(R.id.btnLogout);
         topAppBar = rootView.findViewById(R.id.topAppBar);
+
+        show_img_info = rootView.findViewById(R.id.show_img_info);
 
         return rootView;
     }
@@ -242,6 +247,12 @@ public class InfoFragment extends Fragment {
                 job_user.setText(user.getJob());
                 job_user_main.setText(user.getJob());
                 workplace_user.setText(user.getWorkplace());
+
+                // Convert base 64 string to bitmap
+                byte[] decodedString = Base64.decode(user.getImage(), Base64.DEFAULT);
+                Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+                Bitmap bMapScaled = Bitmap.createScaledBitmap(decodedByte, 800, 1300, true);
+                show_img_info.setImageBitmap(bMapScaled);
             }
 
             @Override

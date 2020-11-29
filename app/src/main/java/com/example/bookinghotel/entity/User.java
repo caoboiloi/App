@@ -12,6 +12,7 @@ public class User {
     private String address;
     private String job;
     private String workplace;
+    private String image;
     private ArrayList<Ticket> ticket = new ArrayList<>();
     ArrayList<String> favorite = new ArrayList<String>();
 
@@ -29,6 +30,7 @@ public class User {
         this.address = address;
         this.job = job;
         this.workplace = workplace;
+        this.image = "";
     }
 
     public User(String name, String email, String love, String phone, String sex, String address, String job, String workplace) {
@@ -40,6 +42,28 @@ public class User {
         this.address = address;
         this.job = job;
         this.workplace = workplace;
+        this.image = "";
+    }
+
+    public User(String name, String email, String id, String love, String phone, String sex, String address, String job, String workplace, String image) {
+        this.name = name;
+        this.email = email;
+        this.id = id;
+        this.love = love;
+        this.phone = phone;
+        this.sex = sex;
+        this.address = address;
+        this.job = job;
+        this.workplace = workplace;
+        this.image = image;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public ArrayList<String> getFavorite() {
