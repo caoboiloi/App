@@ -179,10 +179,17 @@ public class HotelDetail extends AppCompatActivity {
                 }
                 //coment and rating
                 ArrayList<Rating> rating = hotel.getRating();
+                int count =1;
                 for (Rating i : rating) {
                     if (i != null) {
+
                         Comment comment = new Comment(i.getName(), i.getComment(), i.getStar());
                         comments_data.add(comment);
+                        count ++;
+
+                    }
+                    if(count == 5){
+                        break;
                     }
                 }
                 Collections.reverse(comments_data);

@@ -78,7 +78,9 @@ import java.util.Map;
 public class Home extends AppCompatActivity {
     private static ActionBar toolbar;
     static BottomNavigationView navigation;
-
+    public static void showNavbar(){
+        navigation.animate().translationY(0);
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
