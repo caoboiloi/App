@@ -164,7 +164,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
                                 if (typeRoom.equals("Medium")){
                                    TimeBooked  room = hotel.getBookedRoom().getMedium().get(IdRoom);
                                    if(room.getBegin().contains(ticket.getBegin()) && room.getEnd().contains(ticket.getEnd())){
-                                       int positon = room.getBegin().indexOf(ticket.getBegin());
+                                       int position = room.getBegin().indexOf(ticket.getBegin());
                                        room.getBegin().remove(position);
                                        room.getEnd().remove(position);
                                        mDatabase1.setValue(room);
@@ -172,7 +172,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
                                 }else{
                                     TimeBooked  room = hotel.getBookedRoom().getLarge().get(IdRoom);
                                     if(room.getBegin().contains(ticket.getBegin()) && room.getEnd().contains(ticket.getEnd())){
-                                        int posotopn = room.getBegin().indexOf(ticket.getBegin());
+                                        int position = room.getBegin().indexOf(ticket.getBegin());
                                         room.getBegin().remove(position);
                                         room.getEnd().remove(position);
                                         mDatabase1.setValue(room);
