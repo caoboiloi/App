@@ -202,7 +202,6 @@ public class HotelDetail extends AppCompatActivity {
                     tvInfoRate.setText("Chưa có đánh giá");
                     tvInfoRate1.setText("Chưa có đánh giá");
                 } else {
-                    Log.e("asdasd", String.valueOf(hotel.getRating()));
                     Float ave = hotel.getAveRating();
                     tvRatingAve.setText(new DecimalFormat("#.#").format(ave) + "");
                     tvInfoRate.setText("Dựa trên " + (rating.size()) + " nhận xét trên mạng");
