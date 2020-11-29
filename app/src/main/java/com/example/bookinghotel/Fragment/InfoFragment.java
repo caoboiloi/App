@@ -30,6 +30,7 @@ import android.widget.Toast;
 
 import com.example.bookinghotel.DialogFragment.AboutMeDialog;
 import com.example.bookinghotel.DialogFragment.ContactDialog;
+import com.example.bookinghotel.DialogFragment.ImageDialog;
 import com.example.bookinghotel.DialogFragment.JobDetailDialog;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
@@ -176,6 +177,11 @@ public class InfoFragment extends Fragment {
             job_dialog.show(getFragmentManager(),"JobDetailDialog");
         });
 
+        show_img_info.setOnClickListener((View v) -> {
+            ImageDialog img_dialog = new ImageDialog();
+            img_dialog.show(getFragmentManager(),"ImageDialog");
+        });
+
         personalinfobtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -242,7 +248,6 @@ public class InfoFragment extends Fragment {
 
                 user = dataSnapshot.getValue(User.class);
 //              set data in TextView
-                Log.e("test",user.getLove());
                 if (!user.getLove().equals("")) {
                     percent_completed_user.setText("100%");
                 }
