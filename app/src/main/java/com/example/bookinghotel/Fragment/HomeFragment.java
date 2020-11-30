@@ -304,7 +304,6 @@ public class HomeFragment extends Fragment {
                     mDatabase.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            Log.e("asd", "begin "+readDate(startDate) +"  "+"end "+readDate(endDate));
                             for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
                                 Hotel hotel = postSnapshot.getValue(Hotel.class);
@@ -313,8 +312,9 @@ public class HomeFragment extends Fragment {
 
 //                                ArrayList<Booked> bookedsFilter = (ArrayList<Booked>) bookeds.stream().filter(p->p.getTypeRoom().equals(typeRoom)).collect(Collectors.toList());
 
-
                                 hotels.add(hotel);
+                                //filter
+
 
                             }
                             adapter.notifyDataSetChanged();
