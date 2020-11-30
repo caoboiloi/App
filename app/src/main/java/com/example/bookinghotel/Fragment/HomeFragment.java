@@ -38,7 +38,6 @@ import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Home.Home;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
 import com.example.bookinghotel.entity.Booked;
-import com.example.bookinghotel.entity.BookedRoom;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
@@ -305,17 +304,19 @@ public class HomeFragment extends Fragment {
                     mDatabase.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                             for (DataSnapshot postSnapshot : snapshot.getChildren()) {
 
                                 Hotel hotel = postSnapshot.getValue(Hotel.class);
                                 hotel.setPath(postSnapshot.getRef().toString().replace("https://hotelbooking-5a74a.firebaseio.com/",""));
                                 String typeRoom = tvRoomSize.getText().toString();
 
+//                                ArrayList<Booked> bookedsFilter = (ArrayList<Booked>) bookeds.stream().filter(p->p.getTypeRoom().equals(typeRoom)).collect(Collectors.toList());
+
                                 hotels.add(hotel);
+                                //filter
+
 
                             }
-
                             adapter.notifyDataSetChanged();
                             progressBar_cyclic.setVisibility(View.GONE);
                         }
