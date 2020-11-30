@@ -290,20 +290,29 @@ public class HotelDetail extends AppCompatActivity {
 
                         Integer stt = 0;
                         Integer count =0;
-                        if(comments_data.size() == 0){
+                        boolean commented = false;
+                        ArrayList<Rating> ratings = hotel.getRating();
+                        if(ratings.size() == 0){
                             stt= 0;
                         }else{
-                            for(Comment i:comments_data){
-                                if(i.getUserId().equals(userId)){
-                                    stt = count;
+
+                            for (int i = 0; i < ratings.size(); i++) {
+                                if(ratings.get(i)==null){
+                                    continue;
                                 }
-                                count++;
+                                if(ratings.get(i).getUserId().equals(userId)){
+                                    stt = i;
+                                    commented = true;
+                                    break;
+                                }
+                            }
+                            if (!commented){
+                                stt = ratings.size();
                             }
                         }
 
                         llComnent.setVisibility(View.GONE);
                         Rating comment1 = new Rating(comment,user.getName(), (int) rating, userId);
-                        Log.e("test", String.valueOf(stt));
                         FirebaseDatabase.getInstance().getReference(path+"/rating/"+stt).setValue(comment1);
 
                     }
