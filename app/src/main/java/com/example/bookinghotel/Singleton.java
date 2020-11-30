@@ -11,8 +11,6 @@ public class Singleton {
     // variable of type String
     private static String baseImg = "";
 
-    private static ArrayList<Review> reviews = null;
-
     // private constructor restricted to this class itself
     public Singleton() {}
 
@@ -32,11 +30,4 @@ public class Singleton {
         Singleton.baseImg = baseImg;
     }
 
-    public ArrayList<Review> getReviews() {
-        return reviews;
-    }
-
-    public void setReviews(Review r) {
-        Singleton.reviews.add(r);
-    }
 }
