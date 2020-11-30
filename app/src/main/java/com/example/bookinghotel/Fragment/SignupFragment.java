@@ -188,19 +188,9 @@ public class SignupFragment extends Fragment {
                     Toast.makeText(myContext, "Số điện thoại không hợp lệ", Toast.LENGTH_SHORT).show();
                     etPhone.requestFocus();
                 }
-                else if(email.equals("") || !email.trim().matches(emailPattern)){
+                else if(email.equals("") || !email.trim().matches(emailPattern)) {
                     Toast.makeText(myContext, "Email không hợp lệ", Toast.LENGTH_SHORT).show();
                     etEmail.requestFocus();
-                }else if (pass.length() < 8){
-                    Toast.makeText(myContext, "Mật khẩu phải trên 7 kí tự", Toast.LENGTH_SHORT).show();
-                    etPass.requestFocus();
-                }
-                else if(!pass.equals(confirmPass)){
-                    Toast.makeText(myContext, "Xác nhận mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
-                    etConfirm.requestFocus();
-                }
-                else if(!rbFemale.isChecked() && !rbMale.isChecked()){
-                    Toast.makeText(myContext, "Bạn phải chọn giới tính", Toast.LENGTH_SHORT).show();
                 }
                 else if(address.equals("")) {
                     Toast.makeText(myContext, "Địa chỉ không hợp lệ", Toast.LENGTH_SHORT).show();
@@ -213,6 +203,17 @@ public class SignupFragment extends Fragment {
                 else if(workplace.equals("")) {
                     Toast.makeText(myContext, "Nơi làm việc không hợp lệ", Toast.LENGTH_SHORT).show();
                     etWorkplace.requestFocus();
+                }
+                else if (pass.length() < 8){
+                    Toast.makeText(myContext, "Mật khẩu phải trên 7 kí tự", Toast.LENGTH_SHORT).show();
+                    etPass.requestFocus();
+                }
+                else if(!pass.equals(confirmPass)){
+                    Toast.makeText(myContext, "Xác nhận mật khẩu không chính xác", Toast.LENGTH_SHORT).show();
+                    etConfirm.requestFocus();
+                }
+                else if(!rbFemale.isChecked() && !rbMale.isChecked()){
+                    Toast.makeText(myContext, "Bạn phải chọn giới tính", Toast.LENGTH_SHORT).show();
                 }
                 else if(img_base_64.equals("")) {
                     Toast.makeText(myContext, "Vui lòng chọn ảnh đại diện", Toast.LENGTH_SHORT).show();
