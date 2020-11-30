@@ -7,6 +7,8 @@ import android.content.SharedPreferences;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.LocationManager;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -49,6 +51,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.io.IOException;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -195,7 +199,22 @@ public class HomeFragment extends Fragment {
         etDiemden.setText(city);
         tvRoomSize.setText(room);
         tvDate.setText(date);
-//        btnFind.performClick();
+        if(hotel_pref!= null){
+            boolean connected = false;
+            ConnectivityManager connectivityManager = (ConnectivityManager)getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+            if(connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_MOBILE).getState() == NetworkInfo.State.CONNECTED ||
+                    connectivityManager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState() == NetworkInfo.State.CONNECTED) {
+                connected = true;
+            }
+            else
+                connected = false;
+            if(connected){
+                btnFind.performClick();
+
+            }
+        }
+
+
     }
 
     @Override
@@ -298,7 +317,6 @@ public class HomeFragment extends Fragment {
                                 hotels.add(hotel);
 
                             }
-//
                             adapter.notifyDataSetChanged();
                             progressBar_cyclic.setVisibility(View.GONE);
                         }
