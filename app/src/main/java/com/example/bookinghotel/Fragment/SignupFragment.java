@@ -204,15 +204,15 @@ public class SignupFragment extends Fragment {
                 }
                 else if(address.equals("")) {
                     Toast.makeText(myContext, "Địa chỉ không hợp lệ", Toast.LENGTH_SHORT).show();
-                    etName.requestFocus();
+                    etAddress.requestFocus();
                 }
                 else if(job.equals("")) {
                     Toast.makeText(myContext, "Nghề nghiệp không hợp lệ", Toast.LENGTH_SHORT).show();
-                    etName.requestFocus();
+                    etJob.requestFocus();
                 }
                 else if(workplace.equals("")) {
                     Toast.makeText(myContext, "Nơi làm việc không hợp lệ", Toast.LENGTH_SHORT).show();
-                    etName.requestFocus();
+                    etWorkplace.requestFocus();
                 }
                 else if(img_base_64.equals("")) {
                     Toast.makeText(myContext, "Vui lòng chọn ảnh đại diện", Toast.LENGTH_SHORT).show();
