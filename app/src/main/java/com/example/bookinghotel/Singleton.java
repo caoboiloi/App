@@ -1,11 +1,17 @@
 package com.example.bookinghotel;
 
+import com.example.bookinghotel.entity.Review;
+
+import java.util.ArrayList;
+
 public class Singleton {
     // static variable single_instance of type Singleton
     private static Singleton single_instance = null;
 
     // variable of type String
     private static String baseImg = "";
+
+    private static ArrayList<Review> reviews = null;
 
     // private constructor restricted to this class itself
     public Singleton() {}
@@ -24,5 +30,13 @@ public class Singleton {
 
     public void setBaseImg(String baseImg) {
         Singleton.baseImg = baseImg;
+    }
+
+    public ArrayList<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(Review r) {
+        Singleton.reviews.add(r);
     }
 }
