@@ -14,6 +14,7 @@ public class User {
     private String workplace;
     private String image;
     private ArrayList<Ticket> ticket = new ArrayList<>();
+    private ArrayList<Review> review = new ArrayList<>();
     ArrayList<String> favorite = new ArrayList<String>();
 
     public User() {
@@ -56,6 +57,14 @@ public class User {
         this.job = job;
         this.workplace = workplace;
         this.image = image;
+    }
+
+    public ArrayList<Review> getReview() {
+        return review;
+    }
+
+    public void setReview(ArrayList<Review> review) {
+        this.review = review;
     }
 
     public String getImage() {

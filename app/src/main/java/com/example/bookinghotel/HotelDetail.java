@@ -29,6 +29,7 @@ import com.example.bookinghotel.entity.BookedRoom;
 import com.example.bookinghotel.entity.Comment;
 import com.example.bookinghotel.entity.Hotel;
 import com.example.bookinghotel.entity.Rating;
+import com.example.bookinghotel.entity.Review;
 import com.example.bookinghotel.entity.TimeBooked;
 import com.example.bookinghotel.entity.User;
 import com.google.android.material.appbar.AppBarLayout;
@@ -311,8 +312,34 @@ public class HotelDetail extends AppCompatActivity {
                             }
                         }
 
+                        boolean reviewed = false;
+                        ArrayList<Review> reviews = user.getReview();
+                        Integer r_stt = 0;
+                        if(reviews.size() == 0){
+                            r_stt = 0;
+                        }else{
+
+                            for (int i = 0; i < reviews.size(); i++) {
+                                if(reviews.get(i)==null){
+                                    continue;
+                                }
+                                if(reviews.get(i).getName().equals(hotel.getName())){
+                                    r_stt = i;
+                                    reviewed = true;
+                                    break;
+                                }
+                            }
+                            if (!reviewed){
+                                r_stt = reviews.size();
+                            }
+                        }
+
                         llComnent.setVisibility(View.GONE);
                         Rating comment1 = new Rating(comment,user.getName(), (int) rating, userId);
+                        Review review = new Review(hotel.getName(),hotel.getImage(),comment, (int) rating);
+
+                        FirebaseDatabase.getInstance().getReference("Users/" + userId + "/review/" + r_stt).setValue(review);
+
                         FirebaseDatabase.getInstance().getReference(path+"/rating/"+stt).setValue(comment1);
 
                     }

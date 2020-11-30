@@ -13,6 +13,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+import androidx.recyclerview.widget.DividerItemDecoration;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.util.Base64;
 import android.util.Log;
@@ -28,6 +31,8 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bookinghotel.Adapter.HotelAdapter;
+import com.example.bookinghotel.Adapter.ReviewAdapter;
 import com.example.bookinghotel.DialogFragment.AboutMeDialog;
 import com.example.bookinghotel.DialogFragment.ContactDialog;
 import com.example.bookinghotel.DialogFragment.ImageDialog;
@@ -35,6 +40,7 @@ import com.example.bookinghotel.DialogFragment.JobDetailDialog;
 import com.example.bookinghotel.R;
 import com.example.bookinghotel.Screen.Login.Login_Signin;
 import com.example.bookinghotel.entity.Hotel;
+import com.example.bookinghotel.entity.Review;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
@@ -101,6 +107,10 @@ public class InfoFragment extends Fragment {
 
     User user;
 
+    private ReviewAdapter adapter;
+    private ArrayList<Review> reviews = new ArrayList<>();
+    private RecyclerView rc_hotel_review;
+
     private FragmentActivity myContext;
 
     @Override
@@ -154,12 +164,20 @@ public class InfoFragment extends Fragment {
 
         show_img_info = rootView.findViewById(R.id.show_img_info);
 
+        rc_hotel_review = rootView.findViewById(R.id.rc_review_hotel);
+
+        rc_hotel_review.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        rc_hotel_review.setHasFixedSize(true);
+        rc_hotel_review.addItemDecoration(new DividerItemDecoration(getActivity(), DividerItemDecoration.VERTICAL));
+
         return rootView;
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+
+
 
         // Dialog
         tv_edit_contact.setOnClickListener((View v) -> {
@@ -263,6 +281,13 @@ public class InfoFragment extends Fragment {
                 job_user.setText(user.getJob());
                 job_user_main.setText(user.getJob());
                 workplace_user.setText(user.getWorkplace());
+
+                if (user.getReview().size() != 0) {
+                    reviews.addAll(user.getReview());
+                }
+                adapter = new ReviewAdapter(getActivity(), reviews);
+                adapter.notifyDataSetChanged();
+                rc_hotel_review.setAdapter(adapter);
 
                 // Convert base 64 string to bitmap
                 byte[] decodedString = Base64.decode(user.getImage(), Base64.DEFAULT);
