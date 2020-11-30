@@ -73,7 +73,7 @@ public class CanceledAdapter extends RecyclerView.Adapter<CanceledAdapter.MyHold
         Date ketthuc = new Date(ticket.getEnd());
         String ngayBatDau = dateFormat.format(batdau);
         String ngayKetThuc = dateFormat.format(ketthuc);
-        holder.date_hotel_booked_main.setText(ngayBatDau +"-"+ngayKetThuc);
+        holder.date_hotel_booked_main.setText(ngayBatDau +" - "+ngayKetThuc);
         DatabaseReference mDatabase = FirebaseDatabase.getInstance().getReference(ticket.getPath());
         holder.loading.setVisibility(View.VISIBLE);
         mDatabase.addValueEventListener(new ValueEventListener() {

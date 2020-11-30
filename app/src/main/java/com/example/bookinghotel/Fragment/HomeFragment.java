@@ -208,10 +208,10 @@ public class HomeFragment extends Fragment {
             }
             else
                 connected = false;
-            if(connected){
-                btnFind.performClick();
-
-            }
+//            if(connected){
+//                btnFind.performClick();
+//
+//            }
         }
 
 

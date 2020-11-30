@@ -211,7 +211,7 @@ public class BookedAdapter extends RecyclerView.Adapter<BookedAdapter.MyHolder> 
                         num_room = ticket.getPathRoom().substring(ticket.getPathRoom().lastIndexOf("/") + 1);
                     }
                     intent.putExtra("type_room_hotel_booked",type_room);
-                    intent.putExtra("num_room_hotel_booked",num_room);
+                    intent.putExtra("num_room_hotel_booked",String.valueOf(Integer.parseInt(num_room) + 1));
                     context.startActivity(intent);
                 });
 
